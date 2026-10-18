@@ -49,18 +49,23 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .brand h1{font-family:var(--font-display);font-weight:700;font-size:1.4rem;line-height:1.05;margin:0;letter-spacing:.01em}
 .brand p{margin:2px 0 0;font-size:.8rem;font-weight:800;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tools{display:flex;gap:8px;align-items:center;flex:none}
-.gems{display:inline-flex;align-items:center;gap:6px;height:46px;padding:0 14px 0 8px;border-radius:99px;background:#fff;box-shadow:0 4px 0 var(--shadow);font-family:var(--font-display);font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums}
-.gems svg{width:26px;height:34px}
+.gems{display:inline-flex;align-items:center;gap:6px;height:46px;padding:0 14px 0 8px;border-radius:99px;background:#fff;box-shadow:0 4px 0 var(--shadow);font-family:var(--font-display);font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums;transition:transform .12s}
+.gems:hover{transform:translateY(-1px)}
+.gems .gem-ic{width:24px;height:32px;flex:none}
+.gems .tier-ic{width:30px;height:30px;flex:none}
+.pill-sep{width:2px;height:24px;border-radius:2px;background:var(--line);margin:0 2px}
+.tier-name{font-size:.95rem;font-weight:600}
 .gems.bump{animation:bump .3s ease}
-@media (max-width:760px){ .brand p, .hide-sm{display:none!important} .tools{gap:6px} .b3{min-width:42px;min-height:42px} .gems{height:42px;padding:0 10px 0 6px;font-size:1rem} .gems svg{width:22px;height:28px} }
-@media (max-width:480px){ .b3 .lbl{display:none} .b3.star-btn{padding:0} .brand h1{font-size:1.02rem} .brand .logo{width:30px;height:40px} }
+@media (max-width:760px){ .brand p, .hide-sm{display:none!important} .tools{gap:6px} .b3{min-width:42px;min-height:42px} .gems{height:42px;padding:0 10px 0 6px;font-size:1rem;gap:4px} .gems .gem-ic{width:19px;height:26px} .gems .tier-ic{width:26px;height:26px} }
+@media (max-width:480px){ .b3 .lbl{display:none} .b3.star-btn{padding:0} .brand h1{font-size:.95rem;line-height:1.1} .brand .logo{width:28px;height:38px} .tier-name{display:none} .tools{gap:5px} .b3{min-width:40px;min-height:40px} }
+@media (max-width:400px){ .brand .logo{display:none} }
 
 /* ---------- layout ---------- */
 main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:22px;align-items:start;
   padding-block:20px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 @media (max-width:920px){ main{grid-template-columns:minmax(0,1fr);gap:16px;padding-block:14px 28px} .panel .cta{order:-2} }
 
-.scene-card{position:relative;width:100%;max-width:calc((100vh - 130px) * 1.6129);max-width:calc((100dvh - 130px) * 1.6129);margin-inline:auto;
+.scene-card{position:relative;width:100%;max-width:calc((100vh - 260px) * 1.6129);max-width:calc((100dvh - 260px) * 1.6129);min-width:min(100%,560px);margin-inline:auto;
   border-radius:30px;overflow:hidden;background:#BFE6FF;box-shadow:0 6px 0 var(--shadow), 0 18px 40px -18px rgba(120,80,40,.35);border:6px solid #fff}
 @media (max-width:920px){ .scene-card{max-width:100%;border-radius:22px;border-width:4px} }
 @media (max-width:560px){ .scene-chip{top:6px;right:6px;min-height:32px;min-width:0;padding:0 10px;font-size:.8rem;gap:5px} .scene-chip svg{width:15px;height:15px} }
@@ -306,6 +311,103 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
 .fly{position:fixed;left:0;top:0;width:22px;height:29px;z-index:90;pointer-events:none}
 #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:85}
 
+
+/* ---------- v4: mission strip under the scene ---------- */
+.stage-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.strip{padding:14px 16px 16px}
+.strip-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-bottom:12px}
+.strip-head h2{margin:0;font-family:var(--font-display);font-size:1.15rem;font-weight:700}
+.strip-prog{font-weight:900;font-size:.85rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.strip-now{display:none;font-weight:900;font-size:.85rem;color:var(--blue-d)}
+.strip-tools{margin-left:auto;display:flex;gap:8px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 12px;border-radius:99px;background:var(--cream);border:2px solid var(--line);font-weight:900;font-size:.82rem;color:#3E7D45}
+.chip svg{width:16px;height:16px}
+.chip.done{background:var(--green-bg);border-color:var(--green-line)}
+.b3.small{min-height:38px;padding:0 12px;font-size:.88rem;border-radius:14px}
+.b3.small svg{width:17px;height:17px}
+.nodes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+.node{position:relative;display:flex;justify-content:center}
+.node::before{content:"";position:absolute;top:24px;left:-50%;right:50%;height:6px;border-radius:3px;background:#EFE4D3}
+.node:first-child::before{display:none}
+.node.done::before,.node.now::before{background:var(--green)}
+.node button{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;padding:0;border-radius:16px}
+.ntile{width:54px;height:54px;border-radius:17px;display:grid;place-items:center;background:var(--c);color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.14),0 0 0 5px #fff;transition:transform .15s}
+.node button:hover .ntile{transform:translateY(-2px)}
+.ntile svg{width:28px;height:28px}
+.nlabel{font-family:var(--font-display);font-weight:600;font-size:.88rem;line-height:1.1;text-align:center}
+.node.now .ntile{animation:hopy 1.2s ease-in-out infinite;box-shadow:inset 0 -4px 0 rgba(0,0,0,.14),0 0 0 5px #fff,0 0 0 10px color-mix(in srgb, var(--c) 28%, transparent)}
+.node.next .ntile{background:#EFE6D8;color:#B9AC97;box-shadow:inset 0 -4px 0 rgba(0,0,0,.06),0 0 0 5px #fff}
+.node.next .nlabel{color:var(--ink-faint)}
+.node.done .ntile{background:#fff;color:var(--green);box-shadow:0 0 0 5px #fff}
+.node.done .ntile svg{width:48px;height:48px}
+.node.done .nlabel{color:#6B8F4E;text-decoration:line-through;text-decoration-thickness:2px}
+.node.node-chest .ntile svg{width:40px;height:36px}
+.node.node-chest.now .ntile{background:#4E4366;animation:bump 1s ease-in-out infinite;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2),0 0 0 5px #fff,0 0 0 10px rgba(255,201,60,.6)}
+.node.node-chest.next .ntile svg{filter:grayscale(1);opacity:.5}
+.node.node-chest.done .ntile svg{width:48px;height:48px}
+@media (max-width:620px){
+  .nlabel{display:none}
+  .strip-now{display:inline}
+  .ntile{width:42px;height:42px;border-radius:13px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.14),0 0 0 4px #fff}
+  .ntile svg{width:22px;height:22px}
+  .node.done .ntile svg{width:38px;height:38px}
+  .node.node-chest .ntile svg{width:32px;height:28px}
+  .node::before{top:18px;height:5px}
+  .strip-tools{margin-left:0;width:100%;justify-content:space-between}
+}
+
+/* level card */
+.level{display:flex;flex-direction:column;gap:10px}
+.level.flash{animation:bump .5s ease 2}
+.lv-top{display:flex;align-items:center;gap:12px}
+.lv-top svg{width:70px;height:70px;flex:none}
+.eyebrow{display:block;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.lv-top b{font-family:var(--font-display);font-size:1.4rem;font-weight:700;display:block;line-height:1.1}
+.lv-top small{display:block;font-size:.85rem;font-weight:800;color:var(--ink-soft)}
+.level .rbar{margin-top:0}
+.tiers{list-style:none;margin:2px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}
+.tiers li{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;border-radius:14px;text-align:center}
+.tiers svg{width:34px;height:34px}
+.tiers span{font-size:.72rem;font-weight:900;line-height:1.2}
+.tiers small{font-size:.68rem;font-weight:800;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.tiers li.lock svg{filter:grayscale(1);opacity:.4}
+.tiers li.lock span{color:var(--ink-faint)}
+.tiers li.cur{background:var(--cream);box-shadow:inset 0 0 0 2px var(--line)}
+.earn{margin:0;font-size:.78rem;font-weight:800;color:var(--ink-soft);line-height:1.4}
+
+/* exam mode: hide every hint on screen */
+.app{transition:filter .35s}
+.exam .app{filter:blur(18px) saturate(.7);pointer-events:none;user-select:none}
+.exam #quiz{background:rgba(58,51,80,.62)}
+.leave{margin:6px 18px 4px;padding:12px 14px;border-radius:18px;background:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;box-shadow:0 3px 0 #E5CDAA}
+.leave b{font-family:var(--font-display);font-size:1.05rem}
+.leave span{font-weight:700;color:var(--ink-soft);font-size:.9rem;flex:1;min-width:12ch}
+.leave-btns{display:flex;gap:8px;width:100%;justify-content:flex-end}
+.b3.red{--b:var(--red);--bd:#C94B4B;color:#fff}
+
+/* sound settings */
+.aud{display:grid;gap:12px}
+.aud-row{background:#fff;border-radius:18px;padding:12px 14px;box-shadow:0 3px 0 #E5CDAA;display:grid;gap:8px}
+.aud-line{display:flex;align-items:center;gap:10px}
+.aud-line > svg{width:24px;height:24px;flex:none;color:var(--blue-d)}
+.aud-line label{flex:1;font-family:var(--font-display);font-weight:600;font-size:1.05rem}
+.aud-line output{font-weight:900;font-size:.85rem;color:var(--ink-soft);font-variant-numeric:tabular-nums;min-width:4ch;text-align:right}
+.switch{appearance:none;-webkit-appearance:none;width:52px;height:30px;border-radius:99px;background:#E3D6C4;position:relative;cursor:pointer;flex:none;margin:0;transition:background .2s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 0 rgba(0,0,0,.12);transition:transform .2s}
+.switch:checked{background:var(--green)}
+.switch:checked::after{transform:translateX(22px)}
+.aud input[type=range]{width:100%;height:30px;margin:0;accent-color:var(--blue)}
+.track{display:flex;align-items:center;gap:8px;padding-top:4px;border-top:2px dashed #F1E6D6;font-weight:800;font-size:.9rem;color:var(--ink-soft)}
+.track b{flex:1;color:var(--ink);font-family:var(--font-display);font-weight:600;font-size:1rem}
+
+/* level-up + prize */
+.lu-medal{width:170px;height:170px;animation:rise .7s cubic-bezier(.3,1.5,.5,1) both}
+
+/* birds */
+.wing{transform-box:fill-box;transform-origin:15% 100%;animation:wingflap .3s ease-in-out infinite alternate}
+#bird2 .wing{animation-delay:-.1s}#bird3 .wing{animation-delay:-.18s}
+@keyframes wingflap{from{transform:rotate(-12deg)}to{transform:rotate(70deg)}}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
@@ -334,6 +436,13 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
     <symbol id="i-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
     <symbol id="i-shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3.5c4 0 6 10 10 10H21M3 17h3.5c1.6 0 2.8-1.6 3.8-3.6M14 7h7M18 4l3 3-3 3M18 14l3 3-3 3"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5.5l11-2.2V16"/><circle cx="6.5" cy="18" r="2.8"/><circle cx="17.5" cy="16" r="2.8"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l9 7-9 7z" fill="currentColor"/><path d="M18 5v14"/></symbol>
+    <symbol id="gemPile" viewBox="0 0 120 120">
+      <use href="#gem" x="14" y="46" width="40" height="54"/><use href="#gem" x="66" y="46" width="40" height="54"/><use href="#gem" x="36" y="20" width="48" height="66"/>
+      <path d="M100 20 l3 -9 3 9 9 3 -9 3 -3 9 -3 -9 -9 -3z" fill="#FFE07A"/><path d="M14 30 l2 -6 2 6 6 2 -6 2 -2 6 -2 -6 -6 -2z" fill="#FFE07A"/>
+    </symbol>
     <symbol id="drop" viewBox="0 0 64 84">
       <g transform="translate(32 44)">
         <path d="M0 -38 C10 -22 28 -6 28 12 C28 28 15 38 0 38 C-15 38 -28 28 -28 12 C-28 -6 -10 -22 0 -38Z" fill="url(#gDrop)" stroke="#2B8ED3" stroke-width="3.5" stroke-linejoin="round"/>
@@ -348,8 +457,8 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
     <symbol id="medal" viewBox="0 0 120 120">
       <path d="M38 6 L56 50 L44 56 L26 12Z" fill="#8E7CF5"/><path d="M82 6 L64 50 L76 56 L94 12Z" fill="#F7943A"/>
       <path d="M38 6 L47 28 L35 34 L26 12Z" fill="#fff" opacity=".25"/>
-      <circle cx="60" cy="78" r="37" fill="#F7B52A"/><circle cx="60" cy="78" r="37" fill="none" stroke="#E09A12" stroke-width="4"/>
-      <circle cx="60" cy="78" r="27" fill="#FFD866"/>
+      <circle cx="60" cy="78" r="37" style="fill:var(--m1,#F7B52A)"/><circle cx="60" cy="78" r="37" fill="none" style="stroke:var(--m2,#E09A12)" stroke-width="4"/>
+      <circle cx="60" cy="78" r="27" style="fill:var(--m3,#FFD866)"/>
       <use href="#drop" x="44" y="58" width="32" height="42"/>
       <path d="M33 62 a32 32 0 0 1 22 -14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".6"/>
     </symbol>
@@ -372,8 +481,8 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
       </div>
     </div>
     <div class="tools">
-      <div class="gems" id="gems" title="Tetes air yang kamu kumpulkan" aria-live="polite"><svg aria-hidden="true"><use href="#gem"/></svg><span class="sr">Tetes air: </span><b id="gemCount">0</b></div>
-      <button class="b3 icon" id="btnSound" aria-pressed="true" title="Suara" aria-label="Suara"><svg><use href="#i-sound"/></svg></button>
+      <button class="gems" id="gems" type="button" title="Tetes air dan level lencana"><svg class="gem-ic" viewBox="0 0 24 32" aria-hidden="true"><use href="#gem"/></svg><b id="gemCount">0</b><span class="pill-sep" aria-hidden="true"></span><svg class="tier-ic" id="hdrMedal" viewBox="0 0 120 120" aria-hidden="true"><use href="#medal"/></svg><span class="tier-name" id="hdrTier">Bronze</span></button>
+      <button class="b3 icon" id="btnSound" title="Pengaturan suara" aria-label="Pengaturan suara"><svg><use href="#i-sound"/></svg></button>
       <button class="b3 icon hide-sm" id="btnFull" title="Layar penuh" aria-label="Layar penuh"><svg><use href="#i-full"/></svg></button>
       <button class="b3 icon" id="btnHelp" title="Cara bermain" aria-label="Cara bermain"><svg><use href="#i-help"/></svg></button>
       <button class="b3 yellow star-btn" id="btnQuiz" title="Ujian Cipi"><svg><use href="#i-star"/></svg><span class="lbl">Ujian</span></button>
@@ -381,6 +490,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
   </header>
 
   <main>
+    <div class="stage-col">
     <div class="scene-card" id="sceneCard">
       <button class="b3 scene-chip" id="btnLabels" aria-pressed="true" title="Tampilkan label sains"><svg><use href="#i-tag"/></svg>Label</button>
       <svg id="scene" viewBox="0 0 1000 620" role="img" aria-label="Pemandangan siklus air: laut, matahari, awan, gunung, sungai, pohon, sumur, dan lapisan tanah dengan air tanah">
@@ -416,10 +526,36 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         <g class="drift d3"><use href="#cloudShape" transform="translate(720 30) scale(.35)" fill="#fff" opacity=".6"/></g>
 
         <!-- birds -->
-        <g id="birds" transform="translate(1100 70)">
-          <g fill="none" stroke="#5B5470" stroke-width="3" stroke-linecap="round">
-            <g class="flap"><path d="M-10 0 Q-5 -7 0 0 Q5 -7 10 0"/></g>
-            <g class="flap" style="animation-delay:-.2s" transform="translate(26 14) scale(.8)"><path d="M-10 0 Q-5 -7 0 0 Q5 -7 10 0"/></g>
+        <g id="birds" pointer-events="none">
+          <g id="bird1" class="bird">
+            <path d="M8 -2 Q16 -9 23 -9 Q19 -3 22 2 Q15 4 8 3Z" fill="#F58EA6"/>
+            <ellipse cx="1" cy="1" rx="12.5" ry="9.5" fill="#FFB3C1"/>
+            <circle cx="-8.5" cy="-5" r="7.5" fill="#FFB3C1"/>
+            <ellipse cx="-3" cy="4.5" rx="8" ry="5" fill="#FFE3E9"/>
+            <path d="M-15.5 -6.5 L-21 -4 L-15.5 -2Z" fill="#FFB347"/>
+            <circle cx="-10.5" cy="-6.5" r="1.9" fill="#3A3350"/><circle cx="-11.1" cy="-7.2" r=".7" fill="#fff"/>
+            <ellipse cx="-9" cy="-1.5" rx="2.4" ry="1.4" fill="#FF8FA8" opacity=".85"/>
+            <g class="wing"><path d="M-1 -2 Q2 -19 15 -17 Q11 -9 8 -1Z" fill="#F58EA6"/></g>
+          </g>
+          <g id="bird2" class="bird">
+            <path d="M8 -2 Q16 -9 23 -9 Q19 -3 22 2 Q15 4 8 3Z" fill="#5FB8EE"/>
+            <ellipse cx="1" cy="1" rx="12.5" ry="9.5" fill="#8FD3FF"/>
+            <circle cx="-8.5" cy="-5" r="7.5" fill="#8FD3FF"/>
+            <ellipse cx="-3" cy="4.5" rx="8" ry="5" fill="#E0F4FF"/>
+            <path d="M-15.5 -6.5 L-21 -4 L-15.5 -2Z" fill="#FFB347"/>
+            <circle cx="-10.5" cy="-6.5" r="1.9" fill="#3A3350"/><circle cx="-11.1" cy="-7.2" r=".7" fill="#fff"/>
+            <ellipse cx="-9" cy="-1.5" rx="2.4" ry="1.4" fill="#FF8FA8" opacity=".85"/>
+            <g class="wing"><path d="M-1 -2 Q2 -19 15 -17 Q11 -9 8 -1Z" fill="#5FB8EE"/></g>
+          </g>
+          <g id="bird3" class="bird">
+            <path d="M8 -2 Q16 -9 23 -9 Q19 -3 22 2 Q15 4 8 3Z" fill="#F5C842"/>
+            <ellipse cx="1" cy="1" rx="12.5" ry="9.5" fill="#FFE07A"/>
+            <circle cx="-8.5" cy="-5" r="7.5" fill="#FFE07A"/>
+            <ellipse cx="-3" cy="4.5" rx="8" ry="5" fill="#FFF6D3"/>
+            <path d="M-15.5 -6.5 L-21 -4 L-15.5 -2Z" fill="#FFB347"/>
+            <circle cx="-10.5" cy="-6.5" r="1.9" fill="#3A3350"/><circle cx="-11.1" cy="-7.2" r=".7" fill="#fff"/>
+            <ellipse cx="-9" cy="-1.5" rx="2.4" ry="1.4" fill="#FF8FA8" opacity=".85"/>
+            <g class="wing"><path d="M-1 -2 Q2 -19 15 -17 Q11 -9 8 -1Z" fill="#F5C842"/></g>
           </g>
         </g>
 
@@ -622,6 +758,20 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
       </svg>
     </div>
 
+    <section class="card strip" aria-label="Misi siklus">
+      <div class="strip-head">
+        <h2>Misi Siklus</h2>
+        <span class="strip-prog" id="progText">0 dari 5 selesai</span>
+        <span class="strip-now" id="stripNow"></span>
+        <div class="strip-tools">
+          <button class="chip" id="btnBonus" type="button"></button>
+          <button class="b3 small" id="btnReset" type="button"><svg><use href="#i-reset"/></svg>Mulai ulang</button>
+        </div>
+      </div>
+      <ol class="nodes" id="quests"></ol>
+    </section>
+    </div>
+
     <aside class="panel">
       <section class="card speech" aria-live="polite">
         <div class="speech-head">
@@ -639,22 +789,14 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
 
       <button class="cta" id="cta" type="button"><svg><use href="#i-sun"/></svg><span id="ctaText">Panaskan Laut</span></button>
 
-      <section class="card reward" id="reward">
-        <div class="thumb" id="rwThumb"><svg viewBox="0 0 160 140" aria-hidden="true"><use href="#chestS"/></svg></div>
-        <div class="rw">
-          <b id="rwTitle">Peti hadiah Cipi</b>
-          <small id="rwSub">Selesaikan 5 tahap untuk membukanya</small>
-          <div class="rbar"><i id="rwBar"></i><span><b id="rwCount" style="font:inherit">0 / 5</b><svg><use href="#gem"/></svg></span></div>
+      <section class="card level" id="levelCard" aria-live="polite">
+        <div class="lv-top">
+          <svg id="lvMedal" viewBox="0 0 120 120" aria-hidden="true"><use href="#medal"/></svg>
+          <div><span class="eyebrow">Lencana kamu</span><b id="lvName">Bronze</b><small id="lvNext">100 tetes lagi ke Silver</small></div>
         </div>
-        <button class="b3 green claim" id="btnClaim" disabled>Buka</button>
-      </section>
-
-      <section class="card">
-        <div class="q-head"><h2>Misi Siklus</h2><span id="progText">0 dari 5 selesai</span></div>
-        <ol class="quests" id="quests"></ol>
-        <div class="qsep">Misi bonus</div>
-        <ol class="quests" id="bonus"></ol>
-        <div class="reset"><button class="linkbtn" id="btnReset" type="button"><svg><use href="#i-reset"/></svg>Mulai lagi dari laut</button></div>
+        <div class="rbar"><i id="lvBar"></i><span><b id="lvCount" style="font:inherit">0 / 100</b><svg viewBox="0 0 24 32"><use href="#gem"/></svg></span></div>
+        <ol class="tiers" id="tiers"></ol>
+        <p class="earn">Dapatkan tetes air: +10 tiap tahap, +5 transpirasi, +50 peti hadiah, +5 tiap jawaban benar.</p>
       </section>
     </aside>
   </main>
@@ -667,9 +809,10 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
     <div class="sheet-body">
       <ul class="tips">
         <li><span class="tile" style="--c:var(--c1)"><svg><use href="#i-sun"/></svg></span><div><b>Ikuti yang berkedip</b><p>Lingkaran kuning menunjukkan benda yang harus kamu ketuk berikutnya. Kamu juga bisa menekan tombol besar di panel.</p></div></li>
-        <li><span class="tile" style="--c:var(--c2)"><svg><use href="#i-cloud"/></svg></span><div><b>Selesaikan 5 misi</b><p>Setiap tahap siklus air memberi 10 tetes air. Lima tahap selesai membuka peti hadiah Cipi.</p></div></li>
+        <li><span class="tile" style="--c:var(--c2)"><svg><use href="#i-cloud"/></svg></span><div><b>Selesaikan 5 misi</b><p>Misi Siklus ada di bawah layar utama. Setiap tahap memberi 10 tetes air, dan lima tahap membuka peti hadiah berisi 50 tetes air.</p></div></li>
         <li><span class="tile" style="--c:var(--cT)"><svg><use href="#i-leaf"/></svg></span><div><b>Cari misi bonus</b><p>Ketuk pohon kapan saja untuk melihat transpirasi, yaitu uap air yang keluar dari daun.</p></div></li>
-        <li><span class="tile" style="--c:var(--yellow-d)"><svg><use href="#i-star"/></svg></span><div><b>Ikut Ujian Cipi</b><p>Setiap ujian berisi 10 soal yang diambil acak dari 60 soal, jadi paket soalnya berganti setiap kali dimulai.</p></div></li>
+        <li><span class="tile" style="--c:#C2743F"><svg viewBox="0 0 120 120"><use href="#medal"/></svg></span><div><b>Naikkan lencanamu</b><p>Tetes air menaikkan lencanamu: Bronze, Silver, Gold, Platinum, lalu Diamond.</p></div></li>
+        <li><span class="tile" style="--c:var(--yellow-d)"><svg><use href="#i-star"/></svg></span><div><b>Ikut Ujian Cipi</b><p>Setiap ujian berisi 10 soal yang diambil acak dari 60 soal, jadi paket soalnya berganti. Selama ujian, layar di belakang diburamkan.</p></div></li>
       </ul>
       <div class="foot"><button class="b3 green big" data-close>Aku siap bermain</button></div>
     </div>
@@ -681,6 +824,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
   <div class="sheet">
     <div class="sheet-head"><h2 id="quizTitle"><svg style="color:var(--yellow-d)"><use href="#i-star"/></svg>Ujian Cipi</h2><span class="pill" id="qCount">Soal 1/10</span><button class="x" data-close aria-label="Tutup ujian"><svg><use href="#i-close"/></svg></button></div>
     <div class="qtrack" aria-hidden="true"><i id="qFill"></i><svg id="qCipi" viewBox="0 0 64 84"><use href="#drop"/></svg></div>
+    <div class="leave" id="qLeave" hidden role="alert"><b>Keluar dari ujian?</b><span>Jawaban di paket ini tidak disimpan.</span><div class="leave-btns"><button class="b3" id="qStay" type="button">Lanjut ujian</button><button class="b3 red" id="qExit" type="button">Keluar</button></div></div>
     <div class="sheet-body" id="qBody"></div>
   </div>
 </div>
@@ -691,7 +835,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
   <div class="stage">
     <h2 id="chestTitle">Hore, kamu dapat hadiah!</h2>
     <p class="sub" id="chestSub">Kamu sudah menyelesaikan 5 misi siklus air.</p>
-    <div class="prize" id="prize" hidden><svg aria-hidden="true"><use href="#medal"/></svg><b>Lencana Ahli Siklus Air</b></div>
+    <div class="prize" id="prize" hidden><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gemPile"/></svg><b>+50 tetes air</b></div>
     <svg class="chest" id="chest" viewBox="0 0 160 140" aria-hidden="true">
       <circle class="cglow" cx="80" cy="66" r="78" fill="url(#gGlow)"/>
       <g class="beams" fill="#FFF3B0" opacity=".9"><path d="M80 64 L40 -20 L62 -20Z"/><path d="M80 64 L72 -24 L90 -24Z"/><path d="M80 64 L102 -20 L122 -16Z"/></g>
@@ -707,6 +851,37 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
     </svg>
     <button class="b3 green big" id="btnOpenChest" type="button">Buka peti</button>
     <button class="b3 green big" id="btnTakePrize" type="button" hidden>Ambil hadiah</button>
+  </div>
+</div>
+
+<!-- sound settings -->
+<div class="modal" id="audioModal" hidden role="dialog" aria-modal="true" aria-labelledby="audTitle">
+  <div class="sheet" style="width:min(440px,100%)">
+    <div class="sheet-head"><h2 id="audTitle"><svg style="color:var(--blue-d)"><use href="#i-sound"/></svg>Pengaturan suara</h2><button class="x" data-close aria-label="Tutup"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sheet-body aud">
+      <div class="aud-row">
+        <div class="aud-line"><svg aria-hidden="true"><use href="#i-music"/></svg><label for="volMusic">Musik latar</label><output id="volMusicVal" for="volMusic">45%</output><input class="switch" type="checkbox" id="musicOn" aria-label="Musik latar nyala"></div>
+        <input type="range" id="volMusic" min="0" max="100" step="5" value="45">
+        <div class="track"><span>Lagu:</span><b id="trackName">Pagi Ceria</b><button class="b3 small" id="btnNextTrack" type="button"><svg><use href="#i-next"/></svg>Ganti lagu</button></div>
+      </div>
+      <div class="aud-row">
+        <div class="aud-line"><svg aria-hidden="true"><use href="#i-bell"/></svg><label for="volSfx">Efek suara</label><output id="volSfxVal" for="volSfx">80%</output><input class="switch" type="checkbox" id="sfxOn" aria-label="Efek suara nyala"></div>
+        <input type="range" id="volSfx" min="0" max="100" step="5" value="80">
+      </div>
+      <div class="foot" style="margin-top:4px"><button class="b3 green big" data-close>Selesai</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- level up -->
+<div class="modal reveal" id="lvModal" hidden role="dialog" aria-modal="true" aria-labelledby="luTitle">
+  <div class="burst" aria-hidden="true"></div>
+  <div class="stage">
+    <h2 id="luTitle">Naik level!</h2>
+    <svg class="lu-medal" id="luMedal" viewBox="0 0 120 120" aria-hidden="true"><use href="#medal"/></svg>
+    <h2 id="luName" style="font-size:2rem">Silver</h2>
+    <p class="sub" id="luSub"></p>
+    <button class="b3 green big" data-close type="button">Mantap!</button>
   </div>
 </div>
 
@@ -813,24 +988,54 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-/* ---------- state + sound ---------- */
-const S = { stage: 0, busy: false, sound: true, labels: true, trans: false, gems: store.get('cipi-gems', 0), badge: store.get('cipi-badge', false), lastAct: performance.now() };
-let actx = null;
-function ac() { if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (actx && actx.state === 'suspended') actx.resume(); return actx; }
+/* ---------- state ---------- */
+const S = { stage: 0, busy: false, labels: true, trans: false, chestDone: false, gems: store.get('cipi-gems', 0) };
+
+/* ---------- audio: one context, separate music + effects buses ---------- */
+const AUD = {
+  ctx: null, music: null, sfx: null, delay: null, noise: null,
+  musicOn: store.get('cipi-music-on', true), sfxOn: store.get('cipi-sfx-on', true),
+  musicVol: store.get('cipi-music-vol', 45), sfxVol: store.get('cipi-sfx-vol', 80)
+};
+function ac() {
+  if (!AUD.ctx) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3; comp.connect(ctx.destination);
+      AUD.music = ctx.createGain(); AUD.music.gain.value = 0; AUD.music.connect(comp);
+      AUD.sfx = ctx.createGain(); AUD.sfx.connect(comp);
+      const d = ctx.createDelay(1), fb = ctx.createGain(), wet = ctx.createGain();
+      d.delayTime.value = .36; fb.gain.value = .28; wet.gain.value = .32;
+      d.connect(fb).connect(d); d.connect(wet).connect(AUD.music); AUD.delay = d;
+      const buf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate), ch = buf.getChannelData(0);
+      for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1;
+      AUD.noise = buf; AUD.ctx = ctx;
+      applyVolumes();
+    } catch (e) {}
+  }
+  if (AUD.ctx && AUD.ctx.state === 'suspended' && !document.hidden) AUD.ctx.resume();
+  return AUD.ctx;
+}
+function applyVolumes() {
+  if (!AUD.ctx) return;
+  const t = AUD.ctx.currentTime;
+  AUD.music.gain.setTargetAtTime(AUD.musicOn ? (AUD.musicVol / 100) * .6 : 0, t, .12);
+  AUD.sfx.gain.setTargetAtTime(AUD.sfxOn ? AUD.sfxVol / 100 : 0, t, .05);
+}
 function tone(f, dur = .15, type = 'sine', vol = .15, to = null, delay = 0) {
-  if (!S.sound) return; const a = ac(); if (!a) return;
+  if (!AUD.sfxOn || !AUD.sfxVol) return; const a = ac(); if (!a) return;
   const t = a.currentTime + delay, o = a.createOscillator(), g = a.createGain();
   o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + dur);
   g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-  o.connect(g).connect(a.destination); o.start(t); o.stop(t + dur + .05);
+  o.connect(g).connect(AUD.sfx); o.start(t); o.stop(t + dur + .05);
 }
 function noise(dur = .6, vol = .06, freq = 1200) {
-  if (!S.sound) return; const a = ac(); if (!a) return;
+  if (!AUD.sfxOn || !AUD.sfxVol) return; const a = ac(); if (!a) return;
   const len = Math.floor(a.sampleRate * dur), buf = a.createBuffer(1, len, a.sampleRate), d = buf.getChannelData(0);
   for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * i / len);
   const src = a.createBufferSource(), flt = a.createBiquadFilter(), g = a.createGain();
   flt.type = 'bandpass'; flt.frequency.value = freq; g.gain.value = vol; src.buffer = buf;
-  src.connect(flt).connect(g).connect(a.destination); src.start();
+  src.connect(flt).connect(g).connect(AUD.sfx); src.start();
 }
 const sfx = {
   pop: () => tone(500, .14, 'sine', .18, 900),
@@ -842,8 +1047,105 @@ const sfx = {
   slide: () => tone(760, 1.2, 'sine', .1, 260),
   bubble: () => [0, .15, .3].forEach(d => tone(rand(300, 500), .12, 'sine', .12, 700, d)),
   splash: () => noise(.25, .06, 1800),
+  chirp: () => { tone(2400, .07, 'sine', .035, 3200); tone(2600, .08, 'sine', .03, 3400, .11); },
   win: () => [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, .3, 'triangle', .13, null, i * .11))
 };
+
+/* ---------- background music: generated live, loops and rotates tracks ---------- */
+const TRACKS = [
+  { name: 'Pagi Ceria', bpm: 104, root: 60, scale: [0, 2, 4, 7, 9], prog: [[0, 4, 7], [7, 11, 14], [9, 12, 16], [5, 9, 12]], lead: 'triangle', density: .6, kick: true, hat: true, seed: 11 },
+  { name: 'Awan Melayang', bpm: 80, root: 57, scale: [0, 2, 4, 7, 9], prog: [[0, 4, 7, 11], [5, 9, 12, 16], [2, 5, 9, 12], [7, 11, 14, 17]], lead: 'sine', density: .45, kick: false, hat: true, seed: 23 },
+  { name: 'Seluncur Sungai', bpm: 118, root: 62, scale: [0, 2, 4, 7, 9], prog: [[0, 4, 7], [5, 9, 12], [9, 12, 16], [7, 11, 14]], lead: 'square', density: .62, kick: true, hat: true, seed: 37 },
+  { name: 'Hujan Rintik', bpm: 90, root: 64, scale: [0, 3, 5, 7, 10], prog: [[0, 3, 7], [8, 12, 15], [3, 7, 10], [10, 14, 17]], lead: 'triangle', density: .5, kick: false, hat: true, seed: 41 }
+];
+const FOCUS = { name: 'Fokus Ujian', bpm: 72, root: 65, scale: [0, 2, 4, 7, 9], prog: [[0, 4, 7, 11], [9, 12, 16, 19], [5, 9, 12, 16], [7, 11, 14, 17]], lead: 'sine', density: 0, kick: false, hat: false, seed: 53, arp: true };
+const M = { on: false, timer: null, next: 0, step: 0, bar: 0, idx: store.get('cipi-track', 0) % TRACKS.length, focus: false, mel: null, melKey: '' };
+const midiF = m => 440 * Math.pow(2, (m - 69) / 12);
+const curTrack = () => M.focus ? FOCUS : TRACKS[M.idx];
+function rng(seed) { return () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function melody(tr, variant) {
+  const r = rng(tr.seed * 7 + variant * 101), ext = [];
+  for (let o = 0; o < 3; o++) tr.scale.forEach(n => ext.push(n + 12 * o));
+  let deg = 6 + Math.floor(r() * 3);
+  const out = [];
+  for (let bar = 0; bar < 4; bar++) {
+    const ch = tr.prog[bar % tr.prog.length];
+    for (let s = 0; s < 8; s++) {
+      if (s > 0 && r() > tr.density * (s % 2 ? .7 : 1)) { out.push(null); continue; }
+      if (s === 0 || s === 4) {
+        const pc = ((ch[Math.floor(r() * ch.length)] % 12) + 12) % 12;
+        let best = deg, bd = 99;
+        ext.forEach((n, i) => { if (n % 12 === pc && i >= 4 && i <= 12 && Math.abs(i - deg) < bd) { bd = Math.abs(i - deg); best = i; } });
+        deg = best;
+      } else deg = Math.max(4, Math.min(12, deg + [-2, -1, -1, 1, 1, 2][Math.floor(r() * 6)]));
+      out.push(ext[deg]);
+    }
+  }
+  return out;
+}
+function env(g, t, a, peak, dur, rel) {
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a);
+  g.gain.setValueAtTime(peak, t + Math.max(a, dur - rel)); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+}
+function voice(type, f, t, dur, peak, a, rel, dest, send) {
+  const ctx = AUD.ctx, o = ctx.createOscillator(), g = ctx.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t); env(g, t, a, peak, dur, rel);
+  o.connect(g).connect(dest || AUD.music);
+  if (send) { const sg = ctx.createGain(); sg.gain.value = send; g.connect(sg).connect(AUD.delay); }
+  o.start(t); o.stop(t + dur + .05);
+}
+function pad(tr, ch, t, dur) {
+  const f = AUD.ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 1300; f.connect(AUD.music);
+  ch.forEach((n, i) => voice(i % 2 ? 'triangle' : 'sine', midiF(tr.root + n), t, dur + .3, .026, .35, .5, f));
+}
+function kick(t) {
+  const ctx = AUD.ctx, o = ctx.createOscillator(), g = ctx.createGain();
+  o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(45, t + .12);
+  g.gain.setValueAtTime(.16, t); g.gain.exponentialRampToValueAtTime(.0001, t + .18);
+  o.connect(g).connect(AUD.music); o.start(t); o.stop(t + .2);
+}
+function hat(t, v) {
+  const ctx = AUD.ctx, src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  src.buffer = AUD.noise; f.type = 'highpass'; f.frequency.value = 7500;
+  g.gain.setValueAtTime(.05 * v, t); g.gain.exponentialRampToValueAtTime(.0001, t + .05);
+  src.connect(f).connect(g).connect(AUD.music); src.start(t, Math.random() * .5); src.stop(t + .06);
+}
+function playStep(t) {
+  const tr = curTrack(), s = M.step, bar = M.bar, ch = tr.prog[bar % tr.prog.length], e8 = 60 / tr.bpm / 2;
+  if (s === 0) pad(tr, ch, t, e8 * 8);
+  if (s === 0) voice('triangle', midiF(tr.root - 24 + ch[0]), t, e8 * 3, .11, .01, e8 * 2);
+  if (s === 4) voice('triangle', midiF(tr.root - 24 + ch[tr.bpm > 95 ? 0 : 2 % ch.length]), t, e8 * 2.5, .09, .01, e8 * 2);
+  if (tr.kick && (s === 0 || s === 4)) kick(t);
+  if (tr.hat && s % 2 === 1) hat(t, s === 3 || s === 7 ? .9 : .55);
+  if (tr.arp) { voice('sine', midiF(tr.root + ch[s % ch.length] + (s >= 4 ? 12 : 0)), t, e8 * 1.8, .05, .01, e8 * 1.6, null, .5); }
+  else {
+    const v = Math.floor(bar / 4) % 3, key = tr.name + v;
+    if (M.melKey !== key) { M.mel = melody(tr, v); M.melKey = key; }
+    const n = M.mel[(bar % 4) * 8 + s];
+    if (n != null) voice(tr.lead, midiF(tr.root + n), t, e8 * 1.4, tr.lead === 'square' ? .032 : .07, .008, e8 * 1.2, null, .45);
+  }
+  if (s === 4 && bar % 4 === 3) { voice('sine', midiF(tr.root + 24 + ch[1]), t, 1.6, .04, .005, 1.5, null, .6); }
+}
+function musicTick() {
+  const ctx = AUD.ctx; if (!ctx || ctx.state !== 'running') return;
+  if (M.next < ctx.currentTime) M.next = ctx.currentTime + .05;
+  while (M.next < ctx.currentTime + .3) {
+    playStep(M.next);
+    M.next += 60 / curTrack().bpm / 2;
+    if (++M.step === 8) { M.step = 0; M.bar++; if (!M.focus && M.bar % 16 === 0) setTrack(M.idx + 1); }
+  }
+}
+function musicStart() {
+  if (!AUD.musicOn || M.on) return; const ctx = ac(); if (!ctx) return;
+  M.on = true; M.next = ctx.currentTime + .15; M.step = 0; M.timer = setInterval(musicTick, 60);
+}
+function musicStop() { M.on = false; clearInterval(M.timer); }
+function setTrack(i) { M.idx = (i + TRACKS.length) % TRACKS.length; M.bar = 0; M.step = 0; store.set('cipi-track', M.idx); syncAudioUI(); }
+function setFocus(on) { if (M.focus === on) return; M.focus = on; M.bar = 0; M.step = 0; syncAudioUI(); }
+document.addEventListener('visibilitychange', () => { if (!AUD.ctx) return; document.hidden ? AUD.ctx.suspend() : AUD.ctx.resume(); });
+const firstGesture = () => { ac(); musicStart(); };
+document.addEventListener('pointerdown', firstGesture, { once: true });
+document.addEventListener('keydown', firstGesture, { once: true });
 
 /* ---------- scene refs ---------- */
 const scene = $('#scene'), card = $('#sceneCard'), fx = $('#fx');
@@ -936,16 +1238,28 @@ function buildLabels() {
 
 /* ---------- idle life (subtle, never during a stage) ---------- */
 const bf = [{ el: $('#bf1'), cx: 440, cy: 330, ax: 70, ay: 26, sp: .55, ph: 0 }, { el: $('#bf2'), cx: 720, cy: 440, ax: 60, ay: 18, sp: .7, ph: 2 }];
-const birds = $('#birds');
-let birdX = 1100, nextFish = performance.now() + 4000, nextLeaf = performance.now() + 7000, nextIdle = performance.now() + 5000;
+const flock = [
+  { el: $('#bird1'), dx: 0, dy: 0, s: 1.05, ph: 0 },
+  { el: $('#bird2'), dx: 40, dy: 20, s: .88, ph: 1.4 },
+  { el: $('#bird3'), dx: 74, dy: -6, s: .76, ph: 2.6 }
+];
+let flockX = 1150, flockWait = 0, chirped = false;
+let nextFish = performance.now() + 4000, nextLeaf = performance.now() + 7000, nextIdle = performance.now() + 5000;
 function idleLoop(now) {
   const t = now / 1000;
   bf.forEach(b => {
     const x = b.cx + Math.sin(t * b.sp + b.ph) * b.ax, y = b.cy + Math.sin(t * b.sp * 2.1 + b.ph) * b.ay - Math.abs(Math.sin(t * 3 + b.ph)) * 6;
     b.el.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(Math.cos(t * b.sp + b.ph) * 18).toFixed(1)})`);
   });
-  birdX -= .55; if (birdX < -120) birdX = 1150;
-  birds.setAttribute('transform', `translate(${birdX.toFixed(1)} ${(64 + Math.sin(t * .8) * 8).toFixed(1)})`);
+  if (now >= flockWait) {
+    flockX -= .75;
+    if (!chirped && flockX < 640) { chirped = true; if (!S.busy) sfx.chirp(); }
+    if (flockX < -180) { flockX = 1150; chirped = false; flockWait = now + rand(6000, 14000); }
+  }
+  flock.forEach(b => {
+    const y = 66 + b.dy + Math.sin(t * 1.7 + b.ph) * 7;
+    b.el.setAttribute('transform', `translate(${(flockX + b.dx).toFixed(1)} ${y.toFixed(1)}) rotate(${(Math.cos(t * 1.7 + b.ph) * 6).toFixed(1)}) scale(${b.s})`);
+  });
   if (now > nextFish) { nextFish = now + rand(6500, 10000); if (!S.busy) jumpFish(); }
   if (now > nextLeaf) { nextLeaf = now + rand(8000, 12000); fallingLeaf(); }
   if (now > nextIdle) { nextIdle = now + rand(4500, 7000); cipiIdle(); }
@@ -1084,14 +1398,51 @@ const FX = {
   }
 };
 
-/* ---------- drops economy ---------- */
+/* ---------- water points + badge levels ---------- */
+const TIERS = [
+  { name: 'Bronze', min: 0, c: ['#E39A62', '#C2743F', '#F6C49B'] },
+  { name: 'Silver', min: 100, c: ['#C5CFDC', '#97A5B8', '#EEF2F7'] },
+  { name: 'Gold', min: 250, c: ['#F7B52A', '#E09A12', '#FFD866'] },
+  { name: 'Platinum', min: 450, c: ['#8FDCD6', '#4FB8B1', '#D6F6F3'] },
+  { name: 'Diamond', min: 700, c: ['#9CC2FF', '#6A95F2', '#E1ECFF'] }
+];
+const tierOf = g => TIERS.reduce((acc, t, i) => g >= t.min ? i : acc, 0);
+const medalStyle = i => `--m1:${TIERS[i].c[0]};--m2:${TIERS[i].c[1]};--m3:${TIERS[i].c[2]}`;
+let levelQueue = null;
+function renderLevel() {
+  const g = S.gems, i = tierOf(g), t = TIERS[i], nx = TIERS[i + 1];
+  $('#gemCount').textContent = g.toLocaleString('id-ID');
+  $('#hdrMedal').setAttribute('style', medalStyle(i)); $('#hdrTier').textContent = t.name;
+  $('#gems').setAttribute('aria-label', `${g} tetes air, lencana ${t.name}`);
+  $('#lvMedal').setAttribute('style', medalStyle(i)); $('#lvName').textContent = t.name;
+  if (nx) {
+    $('#lvBar').style.width = ((g - t.min) / (nx.min - t.min) * 100) + '%';
+    $('#lvCount').textContent = `${g} / ${nx.min}`;
+    $('#lvNext').textContent = `${nx.min - g} tetes air lagi ke ${nx.name}`;
+  } else {
+    $('#lvBar').style.width = '100%'; $('#lvCount').textContent = `${g} tetes air`;
+    $('#lvNext').textContent = 'Level tertinggi. Kamu juara air!';
+  }
+  $('#tiers').innerHTML = TIERS.map((tt, k) => `<li class="${k <= i ? 'got' : 'lock'}${k === i ? ' cur' : ''}"><svg viewBox="0 0 120 120" style="${medalStyle(k)}" aria-hidden="true"><use href="#medal"/></svg><span>${tt.name}</span><small>${tt.min}</small></li>`).join('');
+}
 function setGems(v, bumpIt) {
-  S.gems = v; $('#gemCount').textContent = v.toLocaleString('id-ID'); store.set('cipi-gems', v);
+  const before = tierOf(S.gems);
+  S.gems = v; store.set('cipi-gems', v); renderLevel();
   if (bumpIt) { const g = $('#gems'); g.classList.remove('bump'); void g.offsetWidth; g.classList.add('bump'); }
+  const after = tierOf(v);
+  if (after > before) { levelQueue = after; setTimeout(showLevelUp, 600); }
+}
+function showLevelUp() {
+  if (levelQueue == null || document.querySelector('.modal:not([hidden])')) return;
+  const i = levelQueue; levelQueue = null;
+  $('#luMedal').setAttribute('style', medalStyle(i)); $('#luName').textContent = TIERS[i].name;
+  const nx = TIERS[i + 1];
+  $('#luSub').textContent = nx ? `Lencanamu naik jadi ${TIERS[i].name}. Kumpulkan ${nx.min} tetes air untuk ${nx.name}.` : 'Ini lencana tertinggi. Kamu juara air!';
+  openModal('lvModal'); sfx.win(); confetti();
 }
 function flyGems(sx, sy, amount, n = 6) {
-  const target = $('#gems svg').getBoundingClientRect(), tx = target.left + target.width / 2, ty = target.top + target.height / 2;
-  const per = Math.floor(amount / n); let rest = amount - per * n;
+  const target = $('#gems .gem-ic').getBoundingClientRect(), tx = target.left + target.width / 2, ty = target.top + target.height / 2;
+  const per = Math.floor(amount / n), rest = amount - per * n;
   for (let i = 0; i < n; i++) {
     const el = document.createElementNS(NS, 'svg'); el.setAttribute('class', 'fly'); el.setAttribute('viewBox', '0 0 24 32');
     const u = document.createElementNS(NS, 'use'); u.setAttribute('href', '#gem'); el.appendChild(u); document.body.appendChild(el);
@@ -1105,9 +1456,9 @@ function flyGems(sx, sy, amount, n = 6) {
     }, i * 90);
   }
 }
-function rewardFromScene(x, y, amount) { const p = toScreen(x, y); flyGems(p.x, p.y, amount); }
+const rewardFromScene = (x, y, amount) => { const p = toScreen(x, y); flyGems(p.x, p.y, amount); };
 
-/* ---------- speech + panel ---------- */
+/* ---------- speech + strip + panel ---------- */
 function say(text, termObj, next) {
   $('#speechText').textContent = text;
   const term = $('#term');
@@ -1117,29 +1468,21 @@ function say(text, termObj, next) {
   if (next) { nx.hidden = false; $('#nextText').textContent = next; } else nx.hidden = true;
 }
 const use = id => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
-function questRow(state, color, icon, name, key) {
-  const go = state === 'done' ? use('i-check') : state === 'next' ? use('i-lock') : use('i-arrow');
-  return `<li class="qrow ${state}" style="--c:${color}"><span class="qdot">${state === 'done' ? use('i-check') : ''}</span>
-    <button class="quest" type="button" data-step="${key}"><span class="tile">${state === 'done' ? `<svg aria-hidden="true" viewBox="0 0 48 48"><use href="#i-badge"/></svg>` : use(icon)}</span>
-    <span class="qt"><b>${name}</b><span class="mini"><i style="--p:${state === 'done' ? 100 : 0}%"></i><em>${state === 'done' ? 1 : 0} / 1</em></span></span>
-    <span class="go">${go}</span></button></li>`;
+function nodeHTML(state, color, icon, name, key, extra = '') {
+  const tile = state === 'done' ? `<svg viewBox="0 0 48 48" aria-hidden="true"><use href="#i-badge"/></svg>` : icon === 'chest' ? `<svg viewBox="0 0 160 140" aria-hidden="true"><use href="#chestS"/></svg>` : use(icon);
+  const sr = state === 'done' ? ' (selesai)' : state === 'next' ? ' (terkunci)' : ' (sekarang)';
+  return `<li class="node ${state} ${extra}" style="--c:${color}"><button type="button" data-step="${key}" aria-label="${name}${sr}"><span class="ntile">${tile}</span><span class="nlabel">${name}</span></button></li>`;
 }
 function update() {
   const st = S.stage;
   $('#progText').textContent = `${st} dari 5 selesai`;
-  $('#quests').innerHTML = STAGES.map((s, i) => questRow(i < st ? 'done' : i === st ? 'now' : 'next', s.color, s.icon, s.name, i)).join('');
-  $('#bonus').innerHTML = questRow(S.trans ? 'done' : 'free', TRANS.color, TRANS.icon, 'Transpirasi: ketuk pohon', 'T');
-  // reward card
-  $('#rwBar').style.width = (st / 5 * 100) + '%';
-  $('#rwCount').textContent = `${st} / 5`;
-  const rw = $('#reward'), claim = $('#btnClaim');
-  if (S.badge) {
-    rw.classList.add('owned'); $('#rwThumb').innerHTML = `<svg viewBox="0 0 120 120" aria-hidden="true"><use href="#medal"/></svg>`;
-    $('#rwTitle').textContent = 'Lencana Ahli Siklus Air'; $('#rwSub').textContent = 'Sudah kamu dapatkan. Main lagi untuk tetes air tambahan.';
-    claim.hidden = true;
-  } else {
-    claim.hidden = false; claim.disabled = st < 5 || S.busy; claim.classList.toggle('ready', st >= 5 && !S.busy);
-  }
+  $('#stripNow').textContent = st < 5 ? `Sekarang: ${STAGES[st].name}` : S.chestDone ? 'Siklus lengkap!' : 'Buka peti hadiahmu!';
+  $('#quests').innerHTML = STAGES.map((s, i) => nodeHTML(i < st ? 'done' : i === st ? 'now' : 'next', s.color, s.icon, s.name, i)).join('')
+    + nodeHTML(S.chestDone ? 'done' : st >= 5 ? 'now' : 'next', '#4E4366', 'chest', 'Peti hadiah', 'C', 'node-chest');
+  const b = $('#btnBonus');
+  b.classList.toggle('done', S.trans);
+  b.innerHTML = `${use(S.trans ? 'i-check' : 'i-leaf')}Bonus: Transpirasi`;
+  b.setAttribute('aria-label', S.trans ? 'Bonus transpirasi sudah ditemukan' : 'Bonus transpirasi: ketuk pohon');
   const cta = $('#cta'); cta.disabled = S.busy;
   if (st < 5) {
     const s = STAGES[st];
@@ -1177,7 +1520,7 @@ async function runStage(i) {
 async function runTrans() {
   S.busy = true; update();
   tree.classList.add('wiggle'); sfx.whoosh();
-  say(TRANS.say, TRANS, S.stage < 5 ? STAGES[S.stage].ask : 'Siklus lengkap! Coba Ujian Cipi atau mulai lagi dari laut.');
+  say(TRANS.say, TRANS, S.stage < 5 ? STAGES[S.stage].ask : 'Siklus lengkap! Coba Ujian Cipi atau mulai ulang dari laut.');
   for (let i = 0; i < 12; i++) vapor(rand(440, 520), rand(335, 360), rand(470, 560), rand(170, 220), i * 140, rand(1600, 2100), '#EFFFF2');
   await wait(2300);
   tree.classList.remove('wiggle');
@@ -1186,19 +1529,15 @@ async function runTrans() {
 }
 function complete() {
   update(); sfx.win(); confetti();
-  if (S.badge) {
-    say('Hore! Aku sudah keliling satu siklus penuh dan kembali ke laut. Siklus ini terus berulang tanpa henti.', INTRO, 'Siap? Uji pemahamanmu di Ujian Cipi.');
-  } else {
-    say('Hore! Aku sudah keliling satu siklus penuh. Peti hadiahku sudah bisa dibuka!', INTRO, 'Buka peti hadiah, lalu ikut Ujian Cipi.');
-    setTimeout(openChest, reduced ? 200 : 1300);
-  }
+  say('Hore! Aku sudah keliling satu siklus penuh. Peti hadiahku sudah bisa dibuka!', INTRO, 'Buka peti hadiah, lalu ikut Ujian Cipi.');
+  setTimeout(openChest, reduced ? 200 : 1300);
   cipiBob.classList.remove('hop'); void cipiBob.getBBox(); cipiBob.classList.add('hop');
 }
 function act(a) {
-  ac(); S.lastAct = performance.now();
+  ac();
   if (S.busy) return;
   if (a === 'trans') return runTrans();
-  if (S.stage >= 5) { say('Siklusnya sudah lengkap! Kamu bisa ikut Ujian Cipi, atau mulai lagi dari laut.', INTRO, null); return; }
+  if (S.stage >= 5) { say('Siklusnya sudah lengkap! Kamu bisa ikut Ujian Cipi, atau tekan Mulai ulang di bawah layar.', INTRO, null); return; }
   const idx = STAGES.findIndex(s => s.id === a);
   if (idx === S.stage) return runStage(idx);
   sfx.wrong();
@@ -1211,20 +1550,19 @@ function resetSmallClouds(hiddenStart) {
 }
 function resetAll() {
   if (S.busy) return;
-  S.stage = 0; S.trans = false;
+  S.stage = 0; S.trans = false; S.chestDone = false;
   Object.assign(cipi, { x: HOME.x, y: HOME.y, s: 1, o: 1 }); drawCipi(); mood('happy');
   sun.x = 120; sun.y = 105; place(sunEl, sun);
   resetSmallClouds(false);
   Object.assign(cl.C, { x: 515, y: 110, s: 1.35 }); place(cl.C.el, cl.C); cl.C.el.style.display = 'none'; cl.C.el.style.opacity = 0; cl.C.el.classList.remove('storm');
-  say('Aku kembali ke laut. Ayo berpetualang lagi!', INTRO, STAGES[0].ask);
+  say('Aku kembali ke laut. Ayo berpetualang lagi! Tetes airmu tetap tersimpan.', INTRO, STAGES[0].ask);
   update();
 }
 
-/* ---------- chest reveal ---------- */
+/* ---------- chest reveal (once per full cycle) ---------- */
 function openChest() {
-  if (S.badge) return;
-  const chest = $('#chest');
-  chest.classList.remove('open', 'shake'); $('#prize').hidden = true;
+  if (S.chestDone || S.stage < 5) return;
+  $('#chest').classList.remove('open', 'shake'); $('#prize').hidden = true;
   $('#btnOpenChest').hidden = false; $('#btnTakePrize').hidden = true;
   $('#chestTitle').textContent = 'Hore, kamu dapat hadiah!';
   $('#chestSub').textContent = 'Kamu sudah menyelesaikan 5 misi siklus air.';
@@ -1235,16 +1573,16 @@ $('#btnOpenChest').addEventListener('click', async () => {
   chest.classList.add('shake'); sfx.pop(); await wait(750);
   chest.classList.add('open'); sfx.win(); await wait(500);
   $('#prize').hidden = false;
-  $('#chestTitle').textContent = 'Lencana Ahli Siklus Air'; $('#chestSub').textContent = 'Bonus 50 tetes air untukmu!';
+  $('#chestTitle').textContent = 'Isi peti Cipi'; $('#chestSub').textContent = 'Tetes air menaikkan level lencanamu.';
   const b = $('#btnTakePrize'); b.hidden = false; b.focus();
 });
 $('#btnTakePrize').addEventListener('click', () => {
   const r = $('#prize').getBoundingClientRect();
-  S.badge = true; store.set('cipi-badge', true);
+  S.chestDone = true;
   closeModal($('#chestModal'));
   flyGems(r.left + r.width / 2, r.top + r.height / 2, 50, 10);
   confetti(); update();
-  say('Lencanaku sekarang jadi milikmu! Ayo buktikan kamu ahli siklus air.', INTRO, 'Tekan Ikut Ujian Cipi untuk mulai.');
+  say('Tetes airnya sudah masuk! Sekarang ayo buktikan kamu ahli siklus air.', INTRO, 'Tekan Ikut Ujian Cipi untuk mulai.');
 });
 
 /* ---------- confetti ---------- */
@@ -1271,13 +1609,48 @@ function confetti() {
 /* ---------- modals ---------- */
 let lastFocus = null;
 function openModal(id) { lastFocus = document.activeElement; const m = $('#' + id); m.hidden = false; setTimeout(() => (m.querySelector('.opt, .b3.green, .b3.blue, [data-close]'))?.focus(), 60); }
-function closeModal(m) { m.hidden = true; lastFocus?.focus?.(); }
+function closeModal(m) {
+  m.hidden = true;
+  if (m.id === 'quiz') { document.body.classList.remove('exam'); setFocus(false); $('#qLeave').hidden = true; Q.active = false; }
+  lastFocus?.focus?.();
+  setTimeout(showLevelUp, 350);
+}
+function requestClose(m) {
+  if (m.id === 'chestModal') return;
+  if (m.id === 'quiz' && Q.active) { const lv = $('#qLeave'); lv.hidden = false; $('#qStay').focus(); return; }
+  closeModal(m);
+}
 document.querySelectorAll('.modal').forEach(m => {
-  m.addEventListener('click', e => { if (e.target.closest('[data-close]') || (e.target === m && m.id !== 'chestModal')) closeModal(m); });
+  m.addEventListener('click', e => { if (e.target.closest('[data-close]') || e.target === m) requestClose(m); });
 });
-addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal:not([hidden])').forEach(m => { if (m.id !== 'chestModal') closeModal(m); }); });
+addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal:not([hidden])').forEach(requestClose); });
 
-/* ---------- quiz: 10 random questions per round ---------- */
+/* ---------- sound settings ---------- */
+const elMusicOn = $('#musicOn'), elVolMusic = $('#volMusic'), elSfxOn = $('#sfxOn'), elVolSfx = $('#volSfx');
+function syncAudioUI() {
+  elMusicOn.checked = AUD.musicOn; elVolMusic.value = AUD.musicVol; $('#volMusicVal').textContent = AUD.musicVol + '%';
+  elSfxOn.checked = AUD.sfxOn; elVolSfx.value = AUD.sfxVol; $('#volSfxVal').textContent = AUD.sfxVol + '%';
+  $('#trackName').textContent = curTrack().name;
+  const muted = (!AUD.musicOn || !AUD.musicVol) && (!AUD.sfxOn || !AUD.sfxVol);
+  $('#btnSound use').setAttribute('href', muted ? '#i-mute' : '#i-sound');
+}
+function saveAudio() {
+  store.set('cipi-music-on', AUD.musicOn); store.set('cipi-music-vol', AUD.musicVol);
+  store.set('cipi-sfx-on', AUD.sfxOn); store.set('cipi-sfx-vol', AUD.sfxVol);
+  ac(); applyVolumes(); AUD.musicOn ? musicStart() : musicStop(); syncAudioUI();
+}
+elMusicOn.addEventListener('change', () => { AUD.musicOn = elMusicOn.checked; if (AUD.musicOn && !AUD.musicVol) AUD.musicVol = 45; saveAudio(); });
+elVolMusic.addEventListener('input', () => { AUD.musicVol = +elVolMusic.value; AUD.musicOn = AUD.musicVol > 0; saveAudio(); });
+elSfxOn.addEventListener('change', () => { AUD.sfxOn = elSfxOn.checked; if (AUD.sfxOn && !AUD.sfxVol) AUD.sfxVol = 80; saveAudio(); sfx.ding(); });
+elVolSfx.addEventListener('input', () => { AUD.sfxVol = +elVolSfx.value; AUD.sfxOn = AUD.sfxVol > 0; saveAudio(); });
+elVolSfx.addEventListener('change', () => sfx.coin());
+$('#btnNextTrack').addEventListener('click', () => {
+  if (!AUD.musicOn) { AUD.musicOn = true; if (!AUD.musicVol) AUD.musicVol = 45; }
+  if (M.focus) setFocus(false);
+  setTrack(M.idx + 1); saveAudio();
+});
+
+/* ---------- quiz: 10 random questions per round, screen blurred ---------- */
 const TOPICS = {
   EVAP: { name: 'Evaporasi', c: 'var(--c1)' }, KOND: { name: 'Kondensasi', c: 'var(--c2)' }, PRES: { name: 'Presipitasi', c: 'var(--c3)' },
   TRAN: { name: 'Transpirasi', c: 'var(--cT)' }, LIMP: { name: 'Sungai & limpasan', c: 'var(--c4)' }, INFI: { name: 'Infiltrasi & air tanah', c: 'var(--c5)' },
@@ -1300,7 +1673,7 @@ function drawRound() {
   store.set('cipi-seen', [...seen, ...chosen.map(q => q.id)]);
   return shuffle(chosen).map(q => { const order = shuffle([0, 1, 2, 3]); return { ...q, opts: order.map(i => q.o[i]), ans: order.indexOf(0) }; });
 }
-const Q = { set: [], i: 0, score: 0, round: store.get('cipi-round', 0) };
+const Q = { set: [], i: 0, score: 0, active: false, round: store.get('cipi-round', 0) };
 const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function qProgress(n) { const pct = n / QUIZ_SIZE * 100; $('#qFill').style.width = pct + '%'; $('#qCipi').style.left = pct + '%'; }
 function renderQ() {
@@ -1308,11 +1681,10 @@ function renderQ() {
   $('#qCount').textContent = `Soal ${Q.i + 1}/${QUIZ_SIZE}`;
   qProgress(Q.i);
   $('#qBody').innerHTML = `
-    <div class="qmeta"><span class="topic" style="--tc:${tp.c}">${esc(tp.name)}</span><span class="score">${use('gem')}<span>Skor ${Q.score}</span></span></div>
+    <div class="qmeta"><span class="topic" style="--tc:${tp.c}">${esc(tp.name)}</span><span class="score"><svg viewBox="0 0 24 32" aria-hidden="true"><use href="#gem"/></svg><span>Skor ${Q.score}</span></span></div>
     <div class="qcard"><p class="q">${esc(it.q)}</p>
     <div class="opts">${it.opts.map((o, k) => `<button class="opt" type="button" data-k="${k}"><span class="letter">${'ABCD'[k]}</span>${esc(o)}</button>`).join('')}</div></div>
     <div id="fb"></div>`;
-  $('#qBody').querySelector('.score svg').setAttribute('viewBox', '0 0 24 32');
   $('#qBody').querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => answer(+b.dataset.k, b)));
 }
 function answer(k, btn) {
@@ -1332,6 +1704,7 @@ function answer(k, btn) {
   nb.addEventListener('click', () => { if (last) result(); else { Q.i++; renderQ(); $('#qBody').querySelector('.opt').focus(); } });
 }
 function result() {
+  Q.active = false; $('#qLeave').hidden = true;
   const n = QUIZ_SIZE, s = Q.score, stars = s >= 9 ? 3 : s >= 6 ? 2 : 1;
   const msg = s === n ? 'Sempurna! Kamu benar-benar ahli siklus air.' : s >= 6 ? 'Keren! Sedikit lagi kamu jadi ahli siklus air.' : 'Tidak apa-apa. Ayo main lagi bersama Cipi, lalu coba paket soal yang baru.';
   $('#qCount').textContent = `Paket #${Q.round} selesai`;
@@ -1339,39 +1712,48 @@ function result() {
   $('#qBody').innerHTML = `<div class="result">
     <div class="stars">${[0, 1, 2].map(i => `<svg class="${i < stars ? 'on' : ''}" style="color:${i < stars ? '#FFC93C' : '#E8D9C4'};animation-delay:${i * .15}s"><use href="#i-star"/></svg>`).join('')}</div>
     <div class="big">${s}/${n}</div><div style="font-weight:900;color:var(--ink-soft)">jawaban benar</div>
-    <div class="earned">${use('gem')}+${s * 5} tetes air</div>
+    <div class="earned"><svg viewBox="0 0 24 32" aria-hidden="true"><use href="#gem"/></svg>+${s * 5} tetes air</div>
     <p>${msg}</p>
     <div class="foot"><button class="b3 green big" id="qAgain" type="button"><svg><use href="#i-shuffle"/></svg>Paket soal baru</button><button class="b3 big" data-close type="button">Kembali bermain</button></div></div>`;
-  $('#qBody').querySelector('.earned svg').setAttribute('viewBox', '0 0 24 32');
   if (s >= 6) { sfx.win(); confetti(); }
   $('#qAgain').addEventListener('click', startQuiz);
 }
 function startQuiz() {
-  ac(); Q.set = drawRound(); Q.i = 0; Q.score = 0; Q.round += 1; store.set('cipi-round', Q.round);
+  ac(); musicStart();
+  Q.set = drawRound(); Q.i = 0; Q.score = 0; Q.active = true; Q.round += 1; store.set('cipi-round', Q.round);
+  $('#qLeave').hidden = true;
+  document.body.classList.add('exam'); setFocus(true);
   renderQ();
   if ($('#quiz').hidden) openModal('quiz'); else $('#qBody').querySelector('.opt').focus();
 }
+$('#qStay').addEventListener('click', () => { $('#qLeave').hidden = true; $('#qBody').querySelector('.opt:not(:disabled), #qNext')?.focus(); });
+$('#qExit').addEventListener('click', () => { Q.active = false; closeModal($('#quiz')); });
 
 /* ---------- wiring ---------- */
 scene.addEventListener('click', e => { const t = e.target.closest('[data-act]'); if (t) act(t.dataset.act); });
 scene.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset?.act) { e.preventDefault(); act(e.target.dataset.act); } });
-$('#cta').addEventListener('click', () => { ac(); if (S.busy) return; S.stage < 5 ? runStage(S.stage) : startQuiz(); });
+$('#cta').addEventListener('click', () => { ac(); if (S.busy) return; S.stage < 5 ? runStage(S.stage) : S.chestDone ? startQuiz() : openChest(); });
 $('#quests').addEventListener('click', e => {
   const b = e.target.closest('[data-step]'); if (!b || S.busy) return;
+  if (b.dataset.step === 'C') {
+    if (S.chestDone) { sfx.pop(); say('Peti di siklus ini sudah dibuka. Tekan Mulai ulang untuk siklus baru dan peti baru.', INTRO, null); }
+    else if (S.stage >= 5) openChest();
+    else { sfx.wrong(); say(`Peti hadiah terbuka setelah 5 misi selesai. Sekarang giliran ${STAGES[S.stage].name}.`, STAGES[S.stage], STAGES[S.stage].ask); }
+    return;
+  }
   const i = +b.dataset.step, s = STAGES[i];
   if (i === S.stage) return runStage(i);
   if (i < S.stage) { sfx.pop(); say(s.say, s, S.stage < 5 ? 'Selanjutnya: ' + STAGES[S.stage].ask : 'Siklus lengkap! Coba Ujian Cipi.'); }
   else { sfx.wrong(); const now = STAGES[S.stage]; say(`Misi ${s.name} masih terkunci. Selesaikan ${now.name} dulu, ya.`, now, now.ask); }
 });
-$('#bonus').addEventListener('click', e => { if (e.target.closest('[data-step]')) act('trans'); });
-$('#btnClaim').addEventListener('click', () => { ac(); openChest(); });
+$('#btnBonus').addEventListener('click', () => act('trans'));
 $('#btnReset').addEventListener('click', () => { ac(); sfx.pop(); resetAll(); });
 $('#btnHelp').addEventListener('click', () => openModal('help'));
 $('#btnQuiz').addEventListener('click', startQuiz);
-$('#btnSound').addEventListener('click', e => {
-  S.sound = !S.sound; const b = e.currentTarget;
-  b.setAttribute('aria-pressed', S.sound); b.querySelector('use').setAttribute('href', S.sound ? '#i-sound' : '#i-mute');
-  if (S.sound) { ac(); sfx.pop(); }
+$('#btnSound').addEventListener('click', () => { ac(); musicStart(); syncAudioUI(); openModal('audioModal'); });
+$('#gems').addEventListener('click', () => {
+  const lc = $('#levelCard'); lc.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+  lc.classList.remove('flash'); void lc.offsetWidth; lc.classList.add('flash');
 });
 $('#btnLabels').addEventListener('click', e => {
   S.labels = !S.labels; e.currentTarget.setAttribute('aria-pressed', S.labels); card.classList.toggle('nolabels', !S.labels);
@@ -1386,7 +1768,8 @@ fullBtn.addEventListener('click', () => {
 });
 new ResizeObserver(([en]) => { card.classList.toggle('compact', en.contentRect.width < 620); showHint(); }).observe(card);
 
-setGems(S.gems, false);
+renderLevel();
+syncAudioUI();
 buildLabels();
 if (document.fonts?.ready) document.fonts.ready.then(buildLabels);
 update();
