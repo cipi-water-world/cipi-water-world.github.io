@@ -1,0 +1,1411 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cipi's Water World</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap">
+<style>
+/* Layout: storybook scene card beside a quest panel (stacked on phones). Warm pastel "pet app" look, single light theme by choice. */
+:root{
+  --page:#F7EBDA; --page-2:#F1DEC4; --card:#FFFFFF; --cream:#FFF8EE; --line:#EADBC6; --shadow:#E2CFB5;
+  --ink:#3A3350; --ink-soft:#7B7191; --ink-faint:#B3A99F;
+  --c1:#F7943A; --c2:#8E7CF5; --c3:#3FA6EE; --c4:#26B3A1; --c5:#C98A5B; --cT:#56BB64;
+  --green:#5CC46E; --green-d:#3E9F50; --green-bg:#EDF7DA; --green-line:#D3EBB0;
+  --yellow:#FFC93C; --yellow-d:#DFA417; --blue:#4DB3F5; --blue-d:#2B8ED3; --red:#F06A6A; --red-bg:#FDEBEA;
+  --font-display:'Fredoka','Baloo 2',ui-rounded,'Segoe UI',system-ui,sans-serif;
+  --font-body:'Nunito',ui-rounded,'Segoe UI',system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.5;
+  background-image:radial-gradient(circle at 1px 1px, rgba(150,110,70,.10) 1.3px, transparent 0);background-size:24px 24px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--c2);outline-offset:3px;border-radius:12px}
+.app{min-height:100%;display:flex;flex-direction:column}
+
+/* ---------- 3D buttons ---------- */
+.b3{--b:#fff;--bd:var(--shadow);display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;min-width:46px;padding:0 14px;border-radius:16px;
+  background:var(--b);box-shadow:0 4px 0 var(--bd);font-family:var(--font-display);font-weight:600;font-size:1rem;transition:transform .12s, box-shadow .12s, filter .2s}
+.b3:hover{transform:translateY(-1px);box-shadow:0 5px 0 var(--bd)}
+.b3:active{transform:translateY(3px);box-shadow:0 1px 0 var(--bd)}
+.b3 svg{width:22px;height:22px;flex:none}
+.b3.icon{padding:0}
+.b3.green{--b:var(--green);--bd:var(--green-d);color:#fff}
+.b3.yellow{--b:var(--yellow);--bd:var(--yellow-d)}
+.b3.blue{--b:var(--blue);--bd:var(--blue-d);color:#fff}
+.b3.big{min-height:54px;padding:0 22px;font-size:1.12rem;border-radius:18px}
+.b3:disabled{filter:grayscale(.6) brightness(1.05);opacity:.7;cursor:default;transform:none}
+.b3[aria-pressed="false"]{color:var(--ink-faint)}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;display:flex;align-items:center;gap:12px;
+  padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:rgba(255,248,238,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 2px 0 var(--line)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.brand .logo{width:40px;height:52px;flex:none;animation:bob 2.6s ease-in-out infinite}
+.brand h1{font-family:var(--font-display);font-weight:700;font-size:1.4rem;line-height:1.05;margin:0;letter-spacing:.01em}
+.brand p{margin:2px 0 0;font-size:.8rem;font-weight:800;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tools{display:flex;gap:8px;align-items:center;flex:none}
+.gems{display:inline-flex;align-items:center;gap:6px;height:46px;padding:0 14px 0 8px;border-radius:99px;background:#fff;box-shadow:0 4px 0 var(--shadow);font-family:var(--font-display);font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums}
+.gems svg{width:26px;height:34px}
+.gems.bump{animation:bump .3s ease}
+@media (max-width:760px){ .brand p, .hide-sm{display:none!important} .tools{gap:6px} .b3{min-width:42px;min-height:42px} .gems{height:42px;padding:0 10px 0 6px;font-size:1rem} .gems svg{width:22px;height:28px} }
+@media (max-width:480px){ .b3 .lbl{display:none} .b3.star-btn{padding:0} .brand h1{font-size:1.02rem} .brand .logo{width:30px;height:40px} }
+
+/* ---------- layout ---------- */
+main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:22px;align-items:start;
+  padding-block:20px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (max-width:920px){ main{grid-template-columns:minmax(0,1fr);gap:16px;padding-block:14px 28px} .panel .cta{order:-2} }
+
+.scene-card{position:relative;width:100%;max-width:calc((100vh - 130px) * 1.6129);max-width:calc((100dvh - 130px) * 1.6129);margin-inline:auto;
+  border-radius:30px;overflow:hidden;background:#BFE6FF;box-shadow:0 6px 0 var(--shadow), 0 18px 40px -18px rgba(120,80,40,.35);border:6px solid #fff}
+@media (max-width:920px){ .scene-card{max-width:100%;border-radius:22px;border-width:4px} }
+@media (max-width:560px){ .scene-chip{top:6px;right:6px;min-height:32px;min-width:0;padding:0 10px;font-size:.8rem;gap:5px} .scene-chip svg{width:15px;height:15px} }
+#scene{display:block;width:100%;height:auto;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+#scene [data-act]{cursor:pointer}
+#scene [data-act]:focus{outline:none}
+#scene [data-act]:focus-visible .focus-ring{opacity:1}
+.focus-ring{opacity:0;fill:none;stroke:var(--c2);stroke-width:5;stroke-dasharray:10 8}
+.scene-chip{position:absolute;top:10px;right:10px;z-index:2;min-height:38px;padding:0 12px;font-size:.9rem;border-radius:99px}
+.scene-chip svg{width:18px;height:18px}
+
+/* scene motion */
+.rays{transform-box:fill-box;transform-origin:center;animation:spin 30s linear infinite}
+#sun.hot .rays{animation-duration:4s}
+.sun-glow{opacity:.6;transition:opacity .6s}
+#sun.hot .sun-glow{opacity:1}
+.shades{opacity:0;transition:opacity .3s}
+#sun.hot .shades{opacity:1}
+.drift{animation:drift 28s ease-in-out infinite alternate}
+.drift.d2{animation-duration:36s;animation-delay:-9s}
+.drift.d3{animation-duration:31s;animation-delay:-16s}
+.waves{animation:waves 5s ease-in-out infinite alternate}
+.waves.w2{animation-duration:6.5s;animation-direction:alternate-reverse}
+.sea-body{transition:filter .6s}
+#sea.shimmer .sea-body{filter:brightness(1.12) saturate(1.1)}
+.flow{stroke-dasharray:8 28;animation:flow 1.8s linear infinite}
+#riverG.fast .flow{animation-duration:.45s}
+.river-body{transition:filter .4s}
+#riverG.fast .river-body{filter:brightness(1.12)}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 4.2s ease-in-out infinite}
+.wiggle .sway{animation:wiggle .35s ease-in-out 6}
+.flower{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3.4s ease-in-out infinite}
+.flower.f2{animation-delay:-1.2s}.flower.f3{animation-delay:-2.1s}.flower.f4{animation-delay:-.6s}
+.cl{transform-box:fill-box;transform-origin:center;animation:float 5s ease-in-out infinite}
+#cloudB .cl{animation-delay:-2s}
+.cloud-top{transition:fill .7s}.cloud-shade{transition:fill .7s}
+#cloudC.storm .cloud-top{fill:#B6BFD8}
+#cloudC.storm .cloud-shade{fill:#97A2C0}
+.cipi-bob{animation:bob 2.4s ease-in-out infinite}
+.cipi-bob.shiver{animation:shiver .12s linear 10}
+.cipi-bob.hop{animation:hop2 .7s cubic-bezier(.3,1.6,.5,1)}
+.arm-r{transform-origin:24px 14px}
+.arm-r.wave{animation:wave .9s ease-in-out 2}
+.blink{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
+.blink.b2{animation-delay:-1.7s}.blink.b3{animation-delay:-3.1s}
+.aquifer{transition:fill .5s}
+#ground.active .aquifer{fill:#C9EEFF}
+.pipe{stroke-dasharray:6 8}
+#ground.active .pipe{animation:flow .5s linear infinite}
+.bucket{transform-box:fill-box;transform-origin:50% 0}
+#well.pump .bucket{animation:bucket .6s ease-in-out 4}
+.boat{transform-box:fill-box;transform-origin:50% 100%;animation:boat 3.6s ease-in-out infinite}
+.twinkle{transform-box:fill-box;transform-origin:center;animation:twinkle 2.8s ease-in-out infinite}
+.twinkle.t2{animation-delay:-.9s}.twinkle.t3{animation-delay:-1.8s}.twinkle.t4{animation-delay:-2.3s}
+.flap{transform-box:fill-box;transform-origin:center;animation:flap .45s ease-in-out infinite alternate}
+.bfly-w{transform-box:fill-box;transform-origin:50% 50%;animation:bflap .22s ease-in-out infinite alternate}
+.hint-in .ring{animation:pulse 1.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.hint-in .ring2{animation:pulse 1.4s ease-out .7s infinite;transform-box:fill-box;transform-origin:center}
+.tap-pill{animation:hopy 1s ease-in-out infinite}
+#hint{transition:opacity .25s}
+.lbl-badge{display:none}
+.scene-card.compact .lbl-full{display:none}
+.scene-card.compact .lbl-badge{display:inline}
+.scene-card.nolabels #labels{display:none}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes drift{from{transform:translateX(-30px)}to{transform:translateX(40px)}}
+@keyframes waves{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
+@keyframes flow{to{stroke-dashoffset:-72}}
+@keyframes sway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes hop2{0%{transform:translateY(0) scale(1,1)}20%{transform:translateY(2px) scale(1.12,.86)}55%{transform:translateY(-22px) scale(.92,1.1)}85%{transform:translateY(0) scale(1.08,.92)}100%{transform:translateY(0) scale(1,1)}}
+@keyframes shiver{0%,100%{transform:translateX(0)}50%{transform:translateX(2px)}}
+@keyframes wave{0%,100%{transform:rotate(0)}30%{transform:rotate(-40deg)}65%{transform:rotate(-10deg)}}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+@keyframes bucket{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+@keyframes boat{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(-3px)}}
+@keyframes twinkle{0%,100%{transform:scale(.2);opacity:0}50%{transform:scale(1);opacity:1}}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
+@keyframes bflap{from{transform:scaleX(1)}to{transform:scaleX(.25)}}
+@keyframes pulse{from{transform:scale(.85);opacity:.95}to{transform:scale(1.25);opacity:0}}
+@keyframes hopy{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes bump{50%{transform:scale(1.15)}}
+
+/* ---------- panel ---------- */
+.panel{display:flex;flex-direction:column;gap:16px;min-width:0}
+.card{background:var(--card);border-radius:24px;box-shadow:0 4px 0 var(--shadow);padding:16px}
+.speech-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.speech-head svg{width:38px;height:50px;flex:none}
+.speech-head b{font-family:var(--font-display);font-size:1.12rem;font-weight:700;display:block;line-height:1.1}
+.speech-head span{font-size:.8rem;font-weight:800;color:var(--ink-soft)}
+#speechText{margin:0;font-size:1.06rem;font-weight:800;line-height:1.45;text-wrap:pretty}
+.term{margin-top:12px;border-radius:18px;padding:12px 14px;background:color-mix(in srgb, var(--tc, var(--c3)) 12%, white)}
+.term-label{display:block;font-size:.72rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb, var(--tc, var(--c3)) 70%, var(--ink))}
+.term b{font-family:var(--font-display);font-size:1.3rem;font-weight:700}
+.term p{margin:2px 0 0;font-size:.95rem;font-weight:700;color:#4E4766}
+#speechNext{margin:12px 0 0;font-weight:900;font-size:.95rem;color:var(--blue-d);display:flex;gap:6px;align-items:flex-start}
+#speechNext svg{width:18px;height:18px;flex:none;margin-top:3px}
+
+.cta{--cc:var(--c1);display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:64px;padding:10px 18px;border-radius:22px;
+  background:var(--cc);color:#fff;box-shadow:0 6px 0 color-mix(in srgb, var(--cc) 72%, #3A2A20);font-family:var(--font-display);font-weight:700;font-size:1.35rem;
+  text-shadow:0 2px 0 rgba(60,40,30,.25);transition:transform .12s, box-shadow .12s, filter .2s}
+.cta svg{width:28px;height:28px;flex:none}
+.cta:hover{transform:translateY(-2px);box-shadow:0 8px 0 color-mix(in srgb, var(--cc) 72%, #3A2A20)}
+.cta:active{transform:translateY(4px);box-shadow:0 2px 0 color-mix(in srgb, var(--cc) 72%, #3A2A20)}
+.cta:disabled{filter:saturate(.4) brightness(1.06);cursor:wait;transform:none}
+.cta.quiz{--cc:var(--yellow);color:var(--ink);text-shadow:none}
+
+/* reward */
+.reward{display:flex;align-items:center;gap:12px}
+.reward .thumb{width:62px;height:62px;flex:none;border-radius:16px;background:#4E4366;display:grid;place-items:center;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.reward .thumb svg{width:50px;height:50px}
+.reward.owned .thumb{background:#FFF1C9}
+.rw{flex:1;min-width:0}
+.rw b{font-family:var(--font-display);font-weight:600;font-size:1rem;display:block;line-height:1.2}
+.rw small{display:block;font-size:.8rem;font-weight:800;color:var(--ink-soft);line-height:1.3}
+.rbar{position:relative;height:22px;margin-top:6px;border-radius:99px;background:#F1E6D6;overflow:hidden}
+.rbar i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(#FFD45C,#F7B52A);border-radius:99px;transition:width .7s cubic-bezier(.3,1.4,.5,1)}
+.rbar span{position:relative;display:flex;align-items:center;justify-content:center;gap:4px;height:100%;font-size:.78rem;font-weight:900;font-variant-numeric:tabular-nums}
+.rbar span svg{width:12px;height:16px}
+.claim{min-height:46px;padding:0 14px}
+.claim.ready{animation:bump 1s ease-in-out infinite}
+
+/* quests */
+.q-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.q-head h2{margin:0;font-family:var(--font-display);font-size:1.2rem;font-weight:700}
+.q-head span{display:inline-flex;align-items:center;gap:6px;font-weight:900;font-size:.88rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.q-head span svg{width:16px;height:16px}
+.quests{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;position:relative}
+.quests::before{content:"";position:absolute;left:11px;top:16px;bottom:16px;border-left:2.5px dashed var(--line)}
+.qrow{display:flex;align-items:center;gap:10px;position:relative}
+.qdot{width:24px;height:24px;flex:none;border-radius:50%;background:#fff;border:2.5px solid var(--line);display:grid;place-items:center;z-index:1}
+.qdot svg{width:14px;height:14px;color:#fff}
+.qrow.done .qdot{background:var(--green);border-color:var(--green)}
+.qrow.now .qdot{border-color:var(--c);box-shadow:0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent)}
+.quest{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:10px;border-radius:18px;background:var(--cream);border:2px solid var(--line);text-align:left;transition:transform .15s, background .2s}
+.quest:hover{transform:translateY(-1px)}
+.tile{width:46px;height:46px;flex:none;border-radius:14px;display:grid;place-items:center;background:var(--c);color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.14)}
+.tile svg{width:26px;height:26px}
+.qt{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.qt b{font-family:var(--font-display);font-weight:600;font-size:1.05rem;line-height:1.15}
+.mini{display:flex;align-items:center;gap:8px}
+.mini i{flex:1;height:12px;border-radius:99px;background:#EFE4D3;position:relative;overflow:hidden}
+.mini i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--p,0%);background:var(--yellow);border-radius:99px}
+.mini em{font-style:normal;font-size:.78rem;font-weight:900;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.go{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:12px;background:#fff;box-shadow:0 3px 0 var(--shadow);color:var(--ink)}
+.go svg{width:20px;height:20px}
+.qrow.now .quest{background:color-mix(in srgb, var(--c) 10%, white);border-color:color-mix(in srgb, var(--c) 55%, white)}
+.qrow.now .go{background:var(--c);color:#fff;box-shadow:0 3px 0 color-mix(in srgb, var(--c) 70%, #3A2A20)}
+.qrow.next .quest{opacity:.62}
+.qrow.next .go{color:var(--ink-faint);box-shadow:none;background:transparent}
+.qrow.done .quest{background:var(--green-bg);border-color:var(--green-line)}
+.qrow.done .tile{background:none;box-shadow:none;color:var(--green)}
+.qrow.done .tile svg{width:42px;height:42px}
+.qrow.done .qt b{text-decoration:line-through;text-decoration-thickness:2.5px;color:#6B8F4E}
+.qrow.done .mini{display:none}
+.qrow.done .go{background:transparent;box-shadow:none;color:var(--green)}
+.qsep{margin:14px 0 10px 34px;font-size:.75rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.reset{margin-top:12px;display:flex;justify-content:center}
+.linkbtn{display:inline-flex;align-items:center;gap:6px;font-weight:900;color:var(--ink-soft);font-size:.9rem;padding:8px 12px;border-radius:12px}
+.linkbtn:hover{color:var(--ink);background:var(--cream)}
+.linkbtn svg{width:16px;height:16px}
+
+/* ---------- modals ---------- */
+.modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(58,51,80,.45);
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.sheet{width:min(580px,100%);max-height:calc(100dvh - 32px);overflow:auto;background:#F4E1C6;border-radius:30px;box-shadow:0 10px 0 #D9BE98, 0 30px 60px -20px rgba(60,40,20,.5);animation:popin .4s cubic-bezier(.3,1.5,.5,1)}
+@keyframes popin{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.sheet-head{display:flex;align-items:center;gap:10px;padding:16px 16px 8px}
+.sheet-head h2{margin:0;flex:1;font-family:var(--font-display);font-size:1.3rem;font-weight:700;display:flex;align-items:center;gap:8px}
+.sheet-head h2 svg{width:28px;height:28px}
+.x{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.7);display:grid;place-items:center}
+.x svg{width:18px;height:18px}
+.pill{font-weight:900;font-size:.85rem;padding:5px 12px;border-radius:99px;background:#fff;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sheet-body{padding:8px 18px 20px}
+.tips{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.tips li{display:flex;gap:12px;align-items:flex-start;background:#fff;border-radius:18px;padding:12px;box-shadow:0 3px 0 #E5CDAA}
+.tips .tile{width:42px;height:42px}
+.tips .tile svg{width:22px;height:22px}
+.tips b{font-family:var(--font-display);font-weight:600;font-size:1.05rem;display:block}
+.tips p{margin:2px 0 0;font-size:.92rem;font-weight:700;color:#5A5270}
+.foot{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+.qtrack{position:relative;height:16px;margin:26px 24px 6px;border-radius:99px;background:#fff}
+.qtrack i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(#7FD0FA,#3FA6EE);transition:width .5s cubic-bezier(.3,1.3,.5,1)}
+.qtrack svg{position:absolute;top:-26px;width:30px;height:40px;margin-left:-15px;transition:left .5s cubic-bezier(.3,1.3,.5,1)}
+.qmeta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.topic{font-size:.75rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:99px;color:#fff;background:var(--tc)}
+.score{display:inline-flex;align-items:center;gap:5px;font-weight:900;font-size:.9rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.score svg{width:14px;height:18px}
+.qcard{background:#fff;border-radius:22px;padding:16px;box-shadow:0 4px 0 #E5CDAA}
+.q{font-family:var(--font-display);font-weight:600;font-size:1.25rem;line-height:1.35;margin:0 0 14px;text-wrap:pretty}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;min-height:56px;padding:10px 14px;background:var(--cream);border:2.5px solid var(--line);border-radius:18px;font-weight:800;font-size:1.02rem;transition:transform .12s, background .2s, border-color .2s}
+.opt:hover:not(:disabled){transform:translateY(-2px);border-color:var(--blue);background:#F2FAFF}
+.opt .letter{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:10px;background:#fff;box-shadow:0 2px 0 var(--line);font-family:var(--font-display);font-size:.95rem}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--green-bg);border-color:var(--green)}
+.opt.right .letter{background:var(--green);color:#fff;box-shadow:none}
+.opt.wrong{background:var(--red-bg);border-color:var(--red);animation:shake .4s}
+.opt.wrong .letter{background:var(--red);color:#fff;box-shadow:none}
+.opt.dim{opacity:.45}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:18px;display:flex;gap:10px;align-items:flex-start}
+.feedback.good{background:var(--green-bg)}
+.feedback.bad{background:var(--red-bg)}
+.feedback svg{width:38px;height:50px;flex:none}
+.feedback b{font-family:var(--font-display);font-size:1.1rem;display:block}
+.feedback p{margin:2px 0 0;font-weight:700}
+.result{text-align:center;padding:4px}
+.result .big{font-family:var(--font-display);font-size:3.6rem;font-weight:700;line-height:1;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.stars{display:flex;justify-content:center;gap:8px;margin:8px 0 12px}
+.stars svg{width:54px;height:54px}
+.stars svg.on{animation:popin .5s cubic-bezier(.3,1.6,.5,1) both}
+.result p{font-weight:800;font-size:1.05rem;margin:10px auto 0;max-width:40ch}
+.result .foot{justify-content:center}
+.earned{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:6px 14px;border-radius:99px;background:#fff;font-weight:900;font-variant-numeric:tabular-nums}
+.earned svg{width:16px;height:21px}
+
+/* chest reveal */
+.reveal{background:#F3DCBC;overflow:hidden}
+.burst{position:absolute;left:50%;top:44%;width:220vmax;height:220vmax;margin:-110vmax 0 0 -110vmax;
+  background:repeating-conic-gradient(from 0deg, rgba(255,255,255,.42) 0deg 9deg, rgba(255,255,255,0) 9deg 22.5deg);
+  -webkit-mask:radial-gradient(circle, #000 0 18%, transparent 46%);mask:radial-gradient(circle, #000 0 18%, transparent 46%);animation:spin 40s linear infinite}
+.stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;width:min(420px,100%)}
+.stage h2{margin:0;font-family:var(--font-display);font-size:1.6rem;font-weight:700}
+.stage .sub{margin:-8px 0 0;font-weight:800;color:#6E5F55}
+.chest{width:200px;height:176px;overflow:visible}
+.chest.shake{animation:cshake .7s ease-in-out}
+@keyframes cshake{0%,100%{transform:rotate(0)}15%{transform:rotate(-7deg)}30%{transform:rotate(7deg)}45%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}75%{transform:rotate(-3deg)}}
+.lid{transform-box:view-box;transform-origin:150px 70px;transition:transform .55s cubic-bezier(.3,1.6,.5,1)}
+.chest.open .lid{transform:translate(4px,-26px) rotate(14deg)}
+.cglow,.beams{opacity:0;transition:opacity .5s}
+.chest.open .cglow,.chest.open .beams{opacity:1}
+.prize{background:#4E4366;color:#fff;border-radius:26px;padding:16px 22px 18px;width:210px;box-shadow:0 8px 0 #3A3150;animation:rise .6s cubic-bezier(.3,1.5,.5,1) both}
+.prize svg{width:120px;height:120px;display:block;margin:0 auto}
+.prize b{font-family:var(--font-display);font-size:1.15rem;display:block;line-height:1.2}
+@keyframes rise{from{transform:translateY(80px) scale(.4);opacity:0}to{transform:none;opacity:1}}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.fly{position:fixed;left:0;top:0;width:22px;height:29px;z-index:90;pointer-events:none}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:85}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+</style>
+<meta name="description" content="Ikuti Cipi si tetes air keliling siklus air, buka peti hadiah, lalu ikut Ujian Cipi. IPAS Kelas 5 SD.">
+<meta name="theme-color" content="#F7EBDA">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cipi's Water World">
+<meta property="og:description" content="Ikuti Cipi si tetes air keliling siklus air, buka peti hadiah, lalu ikut Ujian Cipi. IPAS Kelas 5 SD.">
+<meta property="og:image" content="https://bayuananda.github.io/cipi-water-world/og.png">
+<meta property="og:url" content="https://bayuananda.github.io/cipi-water-world/">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<!-- sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gDrop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FDBFF"/><stop offset="1" stop-color="#3DA6EE"/></linearGradient>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .4-7.98A6 6 0 0 0 6 9.5 4.25 4.25 0 0 0 7 18z"/></symbol>
+    <symbol id="i-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14h10a3.6 3.6 0 0 0 .4-7.2A5.4 5.4 0 0 0 6.2 6.2 3.9 3.9 0 0 0 7 14z"/><path d="M8 17.5l-1 2.5M12 17.5l-1 2.5M16 17.5l-1 2.5"/></symbol>
+    <symbol id="i-river" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 7c3-3 6 3 9 0s6 3 9 0M3 12.5c3-3 6 3 9 0s6 3 9 0M3 18c3-3 6 3 9 0s6 3 9 0"/></symbol>
+    <symbol id="i-ground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h18M5 17h2M10 19h2M15 17h3"/><path d="M12 2.5c2 3 3.2 4.3 3.2 6a3.2 3.2 0 0 1-6.4 0c0-1.7 1.2-3 3.2-6z"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8.5 6-14 15-14 0 9-6 15-14 15z"/><path d="M5 19l7.5-7.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></symbol>
+    <symbol id="i-badge" viewBox="0 0 48 48"><path d="M24 3l5 4.2 6.5-.6 1.8 6.3 5.8 3-2 6.2 2 6.2-5.8 3-1.8 6.3-6.5-.6L24 45l-5-4.2-6.5.6-1.8-6.3-5.8-3 2-6.2-2-6.2 5.8-3 1.8-6.3 6.5.6z" fill="currentColor"/><path d="M15.5 24.5l5.5 5.5 11.5-12" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4v5h5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.6l2.9 5.9 6.4.9-4.6 4.5 1.1 6.4L12 17.3l-5.8 3 1.1-6.4-4.6-4.5 6.4-.9z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 12.2V4h8.2L21 13.8 12.8 22z"/><circle cx="7.6" cy="8.6" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5v5h3.8L13 19V5L7.8 9.5z"/><path d="M16.5 9a4.2 4.2 0 0 1 0 6M19.2 6.3a8 8 0 0 1 0 11.4"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5v5h3.8L13 19V5L7.8 9.5z"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.4 9.4a2.7 2.7 0 1 1 3.8 2.5c-.8.4-1.2.9-1.2 1.7v.6"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></symbol>
+    <symbol id="i-full" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3.5c4 0 6 10 10 10H21M3 17h3.5c1.6 0 2.8-1.6 3.8-3.6M14 7h7M18 4l3 3-3 3M18 14l3 3-3 3"/></symbol>
+    <symbol id="drop" viewBox="0 0 64 84">
+      <g transform="translate(32 44)">
+        <path d="M0 -38 C10 -22 28 -6 28 12 C28 28 15 38 0 38 C-15 38 -28 28 -28 12 C-28 -6 -10 -22 0 -38Z" fill="url(#gDrop)" stroke="#2B8ED3" stroke-width="3.5" stroke-linejoin="round"/>
+        <ellipse cx="-13" cy="0" rx="4" ry="8" fill="#fff" opacity=".85" transform="rotate(20 -13 0)"/>
+        <ellipse cx="-9" cy="10" rx="4" ry="5.5" fill="#3A3350"/><ellipse cx="9" cy="10" rx="4" ry="5.5" fill="#3A3350"/>
+        <circle cx="-7.5" cy="8" r="1.6" fill="#fff"/><circle cx="10.5" cy="8" r="1.6" fill="#fff"/>
+        <ellipse cx="-17" cy="19" rx="5" ry="3" fill="#FF9DB0" opacity=".9"/><ellipse cx="17" cy="19" rx="5" ry="3" fill="#FF9DB0" opacity=".9"/>
+        <path d="M-6 21 Q0 28 6 21" fill="none" stroke="#3A3350" stroke-width="3" stroke-linecap="round"/>
+      </g>
+    </symbol>
+    <symbol id="gem" viewBox="0 0 24 32"><path d="M12 1.5C15 7 21 12.5 21 19a9 9 0 0 1-18 0C3 12.5 9 7 12 1.5z" fill="url(#gDrop)" stroke="#2B8ED3" stroke-width="2"/><ellipse cx="8.2" cy="17" rx="2" ry="4" fill="#fff" opacity=".85" transform="rotate(18 8.2 17)"/></symbol>
+    <symbol id="medal" viewBox="0 0 120 120">
+      <path d="M38 6 L56 50 L44 56 L26 12Z" fill="#8E7CF5"/><path d="M82 6 L64 50 L76 56 L94 12Z" fill="#F7943A"/>
+      <path d="M38 6 L47 28 L35 34 L26 12Z" fill="#fff" opacity=".25"/>
+      <circle cx="60" cy="78" r="37" fill="#F7B52A"/><circle cx="60" cy="78" r="37" fill="none" stroke="#E09A12" stroke-width="4"/>
+      <circle cx="60" cy="78" r="27" fill="#FFD866"/>
+      <use href="#drop" x="44" y="58" width="32" height="42"/>
+      <path d="M33 62 a32 32 0 0 1 22 -14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+    </symbol>
+    <symbol id="chestS" viewBox="0 0 160 140">
+      <rect x="16" y="64" width="128" height="62" rx="12" fill="#7A5240"/><rect x="16" y="64" width="128" height="10" fill="#F2B544"/>
+      <rect x="16" y="64" width="16" height="62" rx="6" fill="#F2B544"/><rect x="128" y="64" width="16" height="62" rx="6" fill="#F2B544"/>
+      <path d="M16 68 V48 Q16 20 80 20 Q144 20 144 48 V68Z" fill="#8F6450"/><path d="M16 68 V48 Q16 20 80 20 Q144 20 144 48 V68" fill="none" stroke="#F2B544" stroke-width="9"/>
+      <rect x="68" y="58" width="24" height="28" rx="6" fill="#FFD45C"/><circle cx="80" cy="69" r="4" fill="#7A5240"/><rect x="78" y="70" width="4" height="9" rx="2" fill="#7A5240"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 64 84" aria-hidden="true"><use href="#drop"/></svg>
+      <div style="min-width:0">
+        <h1>Cipi's Water World</h1>
+        <p>Petualangan siklus air · IPAS Kelas 5 SD Bab 4</p>
+      </div>
+    </div>
+    <div class="tools">
+      <div class="gems" id="gems" title="Tetes air yang kamu kumpulkan" aria-live="polite"><svg aria-hidden="true"><use href="#gem"/></svg><span class="sr">Tetes air: </span><b id="gemCount">0</b></div>
+      <button class="b3 icon" id="btnSound" aria-pressed="true" title="Suara" aria-label="Suara"><svg><use href="#i-sound"/></svg></button>
+      <button class="b3 icon hide-sm" id="btnFull" title="Layar penuh" aria-label="Layar penuh"><svg><use href="#i-full"/></svg></button>
+      <button class="b3 icon" id="btnHelp" title="Cara bermain" aria-label="Cara bermain"><svg><use href="#i-help"/></svg></button>
+      <button class="b3 yellow star-btn" id="btnQuiz" title="Ujian Cipi"><svg><use href="#i-star"/></svg><span class="lbl">Ujian</span></button>
+    </div>
+  </header>
+
+  <main>
+    <div class="scene-card" id="sceneCard">
+      <button class="b3 scene-chip" id="btnLabels" aria-pressed="true" title="Tampilkan label sains"><svg><use href="#i-tag"/></svg>Label</button>
+      <svg id="scene" viewBox="0 0 1000 620" role="img" aria-label="Pemandangan siklus air: laut, matahari, awan, gunung, sungai, pohon, sumur, dan lapisan tanah dengan air tanah">
+        <defs>
+          <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD3FF"/><stop offset=".5" stop-color="#C7EAFF"/><stop offset=".78" stop-color="#FFE6CF"/></linearGradient>
+          <linearGradient id="gSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7DD0FA"/><stop offset="1" stop-color="#3D97DE"/></linearGradient>
+          <linearGradient id="gSoil" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2B087"/><stop offset="1" stop-color="#C48A60"/></linearGradient>
+          <linearGradient id="gHillB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9E79B"/><stop offset="1" stop-color="#97D47D"/></linearGradient>
+          <linearGradient id="gHillF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9AD67F"/><stop offset="1" stop-color="#78C066"/></linearGradient>
+          <radialGradient id="gGlow"><stop offset="0" stop-color="#FFE68A" stop-opacity=".95"/><stop offset=".6" stop-color="#FFE68A" stop-opacity=".3"/><stop offset="1" stop-color="#FFE68A" stop-opacity="0"/></radialGradient>
+          <radialGradient id="gSunFace" cx=".4" cy=".35"><stop offset="0" stop-color="#FFE27A"/><stop offset="1" stop-color="#FFC23C"/></radialGradient>
+          <linearGradient id="gCipi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FDBFF"/><stop offset="1" stop-color="#3DA6EE"/></linearGradient>
+          <path id="cloudShape" d="M-52 22 C-76 22 -78 -6 -55 -10 C-57 -34 -27 -43 -14 -27 C-6 -51 31 -51 37 -25 C59 -33 76 -10 61 6 C76 14 67 25 52 22Z"/>
+          <path id="river" d="M788 268 C760 320 800 350 740 390 C690 422 600 412 540 445 C480 478 400 470 335 502"/>
+          <g id="flowerP"><circle cx="0" cy="-6" r="4"/><circle cx="6" cy="-1" r="4"/><circle cx="4" cy="6" r="4"/><circle cx="-4" cy="6" r="4"/><circle cx="-6" cy="-1" r="4"/></g>
+        </defs>
+
+        <rect width="1000" height="620" fill="url(#gSky)"/>
+
+        <!-- rainbow -->
+        <g fill="none" stroke-width="10" opacity=".42">
+          <path d="M260 470 A300 300 0 0 1 860 470" stroke="#FF8C8C"/>
+          <path d="M270 470 A290 290 0 0 1 850 470" stroke="#FFB86B"/>
+          <path d="M280 470 A280 280 0 0 1 840 470" stroke="#FFE07A"/>
+          <path d="M290 470 A270 270 0 0 1 830 470" stroke="#93E39A"/>
+          <path d="M300 470 A260 260 0 0 1 820 470" stroke="#7CC8FF"/>
+          <path d="M310 470 A250 250 0 0 1 810 470" stroke="#B9A4FF"/>
+        </g>
+
+        <!-- background clouds -->
+        <g class="drift"><use href="#cloudShape" transform="translate(300 60) scale(.45)" fill="#fff" opacity=".7"/></g>
+        <g class="drift d2"><use href="#cloudShape" transform="translate(880 70) scale(.55)" fill="#fff" opacity=".65"/></g>
+        <g class="drift d3"><use href="#cloudShape" transform="translate(720 30) scale(.35)" fill="#fff" opacity=".6"/></g>
+
+        <!-- birds -->
+        <g id="birds" transform="translate(1100 70)">
+          <g fill="none" stroke="#5B5470" stroke-width="3" stroke-linecap="round">
+            <g class="flap"><path d="M-10 0 Q-5 -7 0 0 Q5 -7 10 0"/></g>
+            <g class="flap" style="animation-delay:-.2s" transform="translate(26 14) scale(.8)"><path d="M-10 0 Q-5 -7 0 0 Q5 -7 10 0"/></g>
+          </g>
+        </g>
+
+        <!-- mountains -->
+        <polygon points="820,470 935,300 1000,360 1000,470" fill="#ABA6D6"/>
+        <polygon points="935,300 1000,360 1000,470 940,470" fill="#9690C6"/>
+        <path d="M915 330 L935 300 L956 320 Q946 327 940 320 Q932 330 924 324Z" fill="#fff"/>
+        <polygon points="600,470 790,225 1000,440 1000,470" fill="#C3BCE6"/>
+        <polygon points="790,225 1000,440 1000,470 808,470" fill="#A79FD6"/>
+        <path d="M761 262 L790 225 L826 262 Q812 271 803 262 Q793 273 782 262 Q771 271 761 262Z" fill="#fff"/>
+        <path d="M790 225 L826 262 Q812 271 803 262 Q800 266 797 266Z" fill="#E4E9FA"/>
+
+        <!-- ground cross-section -->
+        <g id="ground" data-act="infil" tabindex="0" role="button" aria-label="Tanah: menyelam ke dalam tanah (infiltrasi)">
+          <rect x="296" y="526" width="704" height="94" fill="url(#gSoil)"/>
+          <g fill="#B97E55" opacity=".55">
+            <circle cx="420" cy="552" r="4"/><circle cx="520" cy="560" r="3"/><circle cx="660" cy="550" r="5"/><circle cx="760" cy="558" r="3"/><circle cx="860" cy="548" r="4"/><circle cx="960" cy="560" r="3"/><circle cx="600" cy="612" r="4"/><circle cx="820" cy="614" r="3"/>
+          </g>
+          <path class="aquifer" d="M296 574 Q450 564 600 575 T1000 571 L1000 604 Q800 611 600 603 T296 607Z" fill="#A9E2FB"/>
+          <path d="M320 580 q20 -6 40 0 t40 0 M520 584 q20 -6 40 0 t40 0 M700 581 q20 -6 40 0 t40 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+          <text x="790" y="595" font-family="Nunito, sans-serif" font-weight="900" font-size="14" fill="#2A6FA3">air tanah · akuifer</text>
+          <line class="pipe" x1="930" y1="478" x2="930" y2="576" stroke="#4DB3F5" stroke-width="5" stroke-linecap="round"/>
+          <path d="M290 492 Q430 360 610 425 Q700 455 800 440 Q900 425 1000 445 L1000 540 L290 540Z" fill="url(#gHillB)"/>
+          <path d="M318 514 Q440 440 600 462 Q760 486 1000 468 L1000 538 L318 538Z" fill="url(#gHillF)"/>
+          <path d="M318 514 Q440 440 600 462 Q760 486 1000 468" fill="none" stroke="#B6E59C" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+          <rect x="296" y="532" width="704" height="8" fill="#B97E55" opacity=".6"/>
+          <rect class="focus-ring" x="440" y="470" width="220" height="140" rx="20"/>
+        </g>
+
+        <!-- flowers & grass -->
+        <g pointer-events="none">
+          <g class="flower" transform="translate(648 482)"><path d="M0 0 V-14" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -18)" fill="#FF9DB0"/><circle cy="-18" r="3.4" fill="#FFD45C"/></g>
+          <g class="flower f2" transform="translate(700 486)"><path d="M0 0 V-11" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -15) scale(.8)" fill="#FFE07A"/><circle cy="-15" r="2.8" fill="#F7943A"/></g>
+          <g class="flower f3" transform="translate(770 486)"><path d="M0 0 V-13" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -17) scale(.9)" fill="#C9B8FF"/><circle cy="-17" r="3" fill="#FFD45C"/></g>
+          <g class="flower f4" transform="translate(800 450)"><path d="M0 0 V-10" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -14) scale(.75)" fill="#FF9DB0"/><circle cy="-14" r="2.6" fill="#FFD45C"/></g>
+          <g fill="none" stroke="#6CB65F" stroke-width="3" stroke-linecap="round">
+            <path d="M600 470 l-3 -9 M604 470 l1 -11 M608 470 l4 -8"/><path d="M880 474 l-3 -9 M884 474 l1 -11 M888 474 l4 -8"/><path d="M470 434 l-3 -8 M474 434 l1 -10 M478 434 l4 -7"/>
+          </g>
+        </g>
+
+        <!-- river -->
+        <g id="riverG" data-act="limp" tabindex="0" role="button" aria-label="Sungai: meluncur di sungai (limpasan)">
+          <use href="#river" fill="none" stroke="#4DB3F5" stroke-width="24" stroke-linecap="round"/>
+          <use href="#river" class="river-body" fill="none" stroke="#8FDBFF" stroke-width="15" stroke-linecap="round"/>
+          <use href="#river" class="flow" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" opacity=".9"/>
+          <use href="#river" fill="none" stroke="transparent" stroke-width="50"/>
+          <circle class="focus-ring" cx="740" cy="390" r="50"/>
+        </g>
+
+        <!-- sand + sea -->
+        <path d="M232 468 Q318 466 376 506 Q356 524 330 524Z" fill="#FFE2B0"/>
+        <g id="sea">
+          <path class="sea-body" d="M0 464 Q150 452 262 470 Q322 481 352 506 L330 620 L0 620Z" fill="url(#gSea)"/>
+          <path d="M0 464 Q150 452 262 470 Q322 481 352 506" fill="none" stroke="#C9EEFF" stroke-width="5" stroke-linecap="round"/>
+          <g class="waves" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".75">
+            <path d="M30 505 q12 -10 24 0 t24 0"/><path d="M160 525 q12 -10 24 0 t24 0"/><path d="M60 578 q12 -10 24 0 t24 0"/>
+          </g>
+          <g class="waves w2" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55">
+            <path d="M225 565 q12 -10 24 0 t24 0"/><path d="M120 604 q12 -10 24 0 t24 0"/>
+          </g>
+          <g fill="#fff">
+            <path class="twinkle" d="M40 545 l3 -9 3 9 9 3 -9 3 -3 9 -3 -9 -9 -3z"/>
+            <path class="twinkle t2" d="M250 520 l2.4 -7 2.4 7 7 2.4 -7 2.4 -2.4 7 -2.4 -7 -7 -2.4z"/>
+            <path class="twinkle t3" d="M180 590 l2.4 -7 2.4 7 7 2.4 -7 2.4 -2.4 7 -2.4 -7 -7 -2.4z"/>
+            <path class="twinkle t4" d="M290 600 l2 -6 2 6 6 2 -6 2 -2 6 -2 -6 -6 -2z"/>
+          </g>
+        </g>
+        <!-- boat -->
+        <g transform="translate(62 462)" pointer-events="none"><g class="boat">
+          <path d="M-22 -4 H22 L15 8 H-15Z" fill="#FF8A7A"/><path d="M-22 -4 H22" stroke="#E8685A" stroke-width="3"/>
+          <line x1="0" y1="-4" x2="0" y2="-38" stroke="#8A6A55" stroke-width="3"/>
+          <path d="M2 -36 L22 -8 H2Z" fill="#fff"/><path d="M-2 -30 L-16 -8 H-2Z" fill="#FFE07A"/>
+        </g></g>
+        <!-- fish -->
+        <g id="fish" opacity="0" pointer-events="none">
+          <ellipse rx="13" ry="8" fill="#FF9F6B"/><path d="M11 0 L22 -8 L22 8Z" fill="#FF8A5B"/><circle cx="-6" cy="-2" r="2" fill="#3A3350"/><path d="M-2 -7 q4 -5 8 0" fill="#FFB98F"/>
+        </g>
+
+        <!-- trees -->
+        <g id="tree" data-act="trans" tabindex="0" role="button" aria-label="Pohon: lihat transpirasi" transform="translate(480 410)">
+          <g class="sway">
+            <rect x="-8" y="-42" width="16" height="44" rx="5" fill="#B07A52"/><rect x="2" y="-42" width="6" height="44" rx="3" fill="#97653F"/>
+            <g fill="#5FBA5C"><circle cx="0" cy="-60" r="35"/><circle cx="-27" cy="-44" r="23"/><circle cx="27" cy="-44" r="23"/></g>
+            <g fill="#7DD06B"><circle cx="-2" cy="-66" r="31"/><circle cx="-27" cy="-48" r="19"/><circle cx="25" cy="-49" r="19"/></g>
+            <circle cx="-14" cy="-78" r="9" fill="#AEE79C" opacity=".9"/>
+            <g class="blink b2"><ellipse cx="-9" cy="-56" rx="3.4" ry="4.4" fill="#3A3350"/><ellipse cx="9" cy="-56" rx="3.4" ry="4.4" fill="#3A3350"/></g>
+            <path d="M-5 -47 Q0 -42 5 -47" fill="none" stroke="#3A3350" stroke-width="2.6" stroke-linecap="round"/>
+            <ellipse cx="-17" cy="-49" rx="4.5" ry="2.6" fill="#FF9DB0" opacity=".9"/><ellipse cx="17" cy="-49" rx="4.5" ry="2.6" fill="#FF9DB0" opacity=".9"/>
+            <circle cx="20" cy="-78" r="4" fill="#FF7A7A"/><circle cx="-30" cy="-58" r="3.6" fill="#FF7A7A"/><circle cx="34" cy="-52" r="3.4" fill="#FF7A7A"/>
+          </g>
+          <circle class="focus-ring" cx="0" cy="-50" r="58"/>
+        </g>
+        <g transform="translate(850 452)" data-act="trans">
+          <g class="sway" style="animation-delay:-1.4s">
+            <rect x="-5" y="-26" width="10" height="28" rx="3" fill="#B07A52"/>
+            <circle cx="0" cy="-40" r="22" fill="#5FBA5C"/><circle cx="-2" cy="-43" r="19" fill="#7DD06B"/>
+            <circle cx="-8" cy="-50" r="6" fill="#AEE79C" opacity=".9"/>
+          </g>
+        </g>
+
+        <!-- well -->
+        <g id="well" transform="translate(930 470)">
+          <line x1="-22" y1="-34" x2="-22" y2="-4" stroke="#8A6A55" stroke-width="4" stroke-linecap="round"/><line x1="22" y1="-34" x2="22" y2="-4" stroke="#8A6A55" stroke-width="4" stroke-linecap="round"/>
+          <path d="M-33 -31 L0 -53 L33 -31Z" fill="#FF8A7A" stroke="#FF8A7A" stroke-width="4" stroke-linejoin="round"/><path d="M0 -53 L33 -31 H0Z" fill="#E8685A"/>
+          <g class="bucket"><line x1="0" y1="-31" x2="0" y2="-18" stroke="#8A6A55" stroke-width="2"/><rect x="-6" y="-18" width="12" height="10" rx="2" fill="#4DB3F5"/></g>
+          <rect x="-26" y="-6" width="52" height="22" rx="6" fill="#E6E2F0"/><rect x="-26" y="-6" width="52" height="6" rx="3" fill="#CFC8E2"/>
+        </g>
+
+        <!-- butterflies -->
+        <g id="bf1" pointer-events="none"><g class="bfly-w"><path d="M0 0 C-10 -12 -16 -2 -8 3 C-14 8 -6 12 0 3 C6 12 14 8 8 3 C16 -2 10 -12 0 0Z" fill="#FFB8D0"/></g><circle r="1.8" fill="#3A3350"/></g>
+        <g id="bf2" pointer-events="none"><g class="bfly-w" style="animation-delay:-.1s"><path d="M0 0 C-10 -12 -16 -2 -8 3 C-14 8 -6 12 0 3 C6 12 14 8 8 3 C16 -2 10 -12 0 0Z" fill="#FFE07A"/></g><circle r="1.8" fill="#3A3350"/></g>
+
+        <!-- sun -->
+        <g id="sun" data-act="evap" tabindex="0" role="button" aria-label="Tuan Matahari: panaskan laut (evaporasi)" transform="translate(120 105)">
+          <circle class="sun-glow" r="108" fill="url(#gGlow)"/>
+          <g class="rays" fill="#FFC23C">
+            <rect x="-6" y="-82" width="12" height="22" rx="6"/><rect x="-6" y="60" width="12" height="22" rx="6"/><rect x="-82" y="-6" width="22" height="12" rx="6"/><rect x="60" y="-6" width="22" height="12" rx="6"/>
+            <rect x="-6" y="-82" width="12" height="22" rx="6" transform="rotate(45)"/><rect x="-6" y="-82" width="12" height="22" rx="6" transform="rotate(135)"/><rect x="-6" y="-82" width="12" height="22" rx="6" transform="rotate(225)"/><rect x="-6" y="-82" width="12" height="22" rx="6" transform="rotate(315)"/>
+          </g>
+          <circle r="50" fill="url(#gSunFace)" stroke="#F5A524" stroke-width="3"/>
+          <ellipse cx="-18" cy="-24" rx="12" ry="7" fill="#fff" opacity=".45" transform="rotate(-25 -18 -24)"/>
+          <g class="blink b3"><ellipse cx="-15" cy="-4" rx="4.5" ry="6" fill="#3A3350"/><ellipse cx="15" cy="-4" rx="4.5" ry="6" fill="#3A3350"/></g>
+          <circle cx="-13.5" cy="-6.5" r="1.6" fill="#fff"/><circle cx="16.5" cy="-6.5" r="1.6" fill="#fff"/>
+          <ellipse cx="-28" cy="11" rx="7.5" ry="4.5" fill="#FF9DB0"/><ellipse cx="28" cy="11" rx="7.5" ry="4.5" fill="#FF9DB0"/>
+          <path d="M-11 13 Q0 23 11 13" fill="none" stroke="#3A3350" stroke-width="3.5" stroke-linecap="round"/>
+          <g class="shades"><rect x="-32" y="-14" width="26" height="15" rx="6" fill="#3A3350"/><rect x="6" y="-14" width="26" height="15" rx="6" fill="#3A3350"/><line x1="-6" y1="-8" x2="6" y2="-8" stroke="#3A3350" stroke-width="3.5"/><rect x="-28" y="-11" width="8" height="3" rx="1.5" fill="#fff" opacity=".7"/><rect x="10" y="-11" width="8" height="3" rx="1.5" fill="#fff" opacity=".7"/></g>
+          <circle class="focus-ring" r="68"/>
+        </g>
+
+        <!-- clouds -->
+        <g id="cloudA" data-act="kond" tabindex="0" role="button" aria-label="Awan kecil: satukan awan (kondensasi)" transform="translate(420 115)">
+          <g class="cl">
+            <use href="#cloudShape" class="cloud-shade" fill="#D3E6F8" transform="translate(0 5)"/>
+            <use href="#cloudShape" class="cloud-top" fill="#fff"/>
+            <g class="blink"><ellipse cx="-13" cy="-2" rx="3.4" ry="4.4" fill="#3A3350"/><ellipse cx="13" cy="-2" rx="3.4" ry="4.4" fill="#3A3350"/></g>
+            <ellipse cx="-24" cy="7" rx="5.5" ry="3.2" fill="#FF9DB0" opacity=".9"/><ellipse cx="24" cy="7" rx="5.5" ry="3.2" fill="#FF9DB0" opacity=".9"/>
+            <path d="M-5 6 Q0 11 5 6" fill="none" stroke="#3A3350" stroke-width="2.6" stroke-linecap="round"/>
+          </g>
+          <circle class="focus-ring" r="72"/>
+        </g>
+        <g id="cloudB" data-act="kond" tabindex="0" role="button" aria-label="Awan kecil kedua: satukan awan (kondensasi)" transform="translate(600 95) scale(.9)">
+          <g class="cl">
+            <use href="#cloudShape" class="cloud-shade" fill="#D3E6F8" transform="translate(0 5)"/>
+            <use href="#cloudShape" class="cloud-top" fill="#fff"/>
+            <path d="M-17 -2 q4 -5 8 0 M9 -2 q4 -5 8 0" fill="none" stroke="#3A3350" stroke-width="2.8" stroke-linecap="round"/>
+            <ellipse cx="-24" cy="7" rx="5.5" ry="3.2" fill="#FF9DB0" opacity=".9"/><ellipse cx="24" cy="7" rx="5.5" ry="3.2" fill="#FF9DB0" opacity=".9"/>
+            <path d="M-5 6 Q0 11 5 6" fill="none" stroke="#3A3350" stroke-width="2.6" stroke-linecap="round"/>
+          </g>
+          <circle class="focus-ring" r="72"/>
+        </g>
+        <g id="cloudC" data-act="pres" tabindex="0" role="button" aria-label="Awan besar: turunkan hujan (presipitasi)" transform="translate(515 110) scale(1.35)" style="opacity:0;display:none">
+          <g class="cl">
+            <use href="#cloudShape" class="cloud-shade" fill="#D3E6F8" transform="translate(0 5)"/>
+            <use href="#cloudShape" class="cloud-top" fill="#fff"/>
+            <g class="blink"><ellipse cx="-13" cy="-2" rx="3.2" ry="4.2" fill="#3A3350"/><ellipse cx="13" cy="-2" rx="3.2" ry="4.2" fill="#3A3350"/></g>
+            <ellipse cx="-24" cy="7" rx="5" ry="3" fill="#FF9DB0" opacity=".9"/><ellipse cx="24" cy="7" rx="5" ry="3" fill="#FF9DB0" opacity=".9"/>
+            <ellipse cx="0" cy="8" rx="4" ry="3.4" fill="#3A3350"/>
+          </g>
+          <circle class="focus-ring" r="70"/>
+        </g>
+
+        <g id="fx" pointer-events="none"></g>
+
+        <!-- Cipi -->
+        <g id="cipi" data-mood="happy" transform="translate(170 520)" pointer-events="none">
+          <g class="cipi-bob">
+            <ellipse cx="0" cy="40" rx="20" ry="4" fill="#3A3350" opacity=".12"/>
+            <ellipse cx="-26" cy="16" rx="5.5" ry="9" fill="#5EBBF3" transform="rotate(30 -26 16)"/>
+            <g class="arm-r"><ellipse cx="26" cy="16" rx="5.5" ry="9" fill="#5EBBF3" transform="rotate(-30 26 16)"/></g>
+            <path d="M0 -38 C10 -22 28 -6 28 12 C28 28 15 38 0 38 C-15 38 -28 28 -28 12 C-28 -6 -10 -22 0 -38Z" fill="url(#gCipi)" stroke="#2B8ED3" stroke-width="3.5" stroke-linejoin="round"/>
+            <ellipse cx="-13" cy="0" rx="4" ry="8" fill="#fff" opacity=".85" transform="rotate(20 -13 0)"/>
+            <circle cx="-4" cy="-18" r="2.4" fill="#fff" opacity=".85"/>
+            <g id="cipiLook"><g class="blink"><ellipse cx="-9" cy="10" rx="4" ry="5.5" fill="#3A3350"/><ellipse cx="9" cy="10" rx="4" ry="5.5" fill="#3A3350"/></g>
+            <circle cx="-7.5" cy="8" r="1.6" fill="#fff"/><circle cx="10.5" cy="8" r="1.6" fill="#fff"/></g>
+            <ellipse cx="-17" cy="19" rx="5" ry="3" fill="#FF9DB0" opacity=".9"/><ellipse cx="17" cy="19" rx="5" ry="3" fill="#FF9DB0" opacity=".9"/>
+            <path class="m m-happy" d="M-6 21 Q0 28 6 21" fill="none" stroke="#3A3350" stroke-width="3" stroke-linecap="round"/>
+            <ellipse class="m m-wow" cx="0" cy="24" rx="3.6" ry="4.6" fill="#3A3350"/>
+            <path class="m m-hot" d="M-7 24 Q-3.5 20 0 24 Q3.5 28 7 24" fill="none" stroke="#3A3350" stroke-width="3" stroke-linecap="round"/>
+            <path class="m sweat" d="M25 -10 C28 -5 30 -2 30 1 a4 4 0 0 1 -8 0 C22 -2 23 -5 25 -10Z" fill="#CFEFFF" stroke="#2B8ED3" stroke-width="2"/>
+          </g>
+        </g>
+        <style>
+          #cipi .m{display:none}
+          #cipi[data-mood="happy"] .m-happy,#cipi[data-mood="wow"] .m-wow,#cipi[data-mood="hot"] .m-hot,#cipi[data-mood="hot"] .sweat{display:inline}
+        </style>
+
+        <g id="labels"></g>
+
+        <g id="hint" pointer-events="none">
+          <g class="hint-in">
+            <circle class="ring" r="50" fill="none" stroke="#fff" stroke-width="6"/>
+            <circle class="ring2" r="50" fill="none" stroke="#FFC93C" stroke-width="5"/>
+            <g id="hintPill"><g class="tap-pill">
+              <rect x="-58" y="-15" width="116" height="36" rx="18" fill="#DFA417"/>
+              <rect x="-58" y="-19" width="116" height="36" rx="18" fill="#FFC93C"/>
+              <text x="0" y="5" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="18" fill="#3A3350">Ketuk aku!</text>
+            </g></g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <aside class="panel">
+      <section class="card speech" aria-live="polite">
+        <div class="speech-head">
+          <svg viewBox="0 0 64 84" aria-hidden="true"><use href="#drop"/></svg>
+          <div><b>Cipi</b><span>Si tetes air pemandu siklus</span></div>
+        </div>
+        <p id="speechText">Halo, aku Cipi! Ayo ikut aku keliling siklus air, dari laut ke langit lalu kembali lagi ke laut.</p>
+        <div class="term" id="term">
+          <span class="term-label">Istilah sains</span>
+          <b id="termName">Siklus Air</b>
+          <p id="termFact">Perjalanan air yang terus berputar: menguap dari laut, menjadi awan, turun sebagai hujan, lalu mengalir kembali ke laut.</p>
+        </div>
+        <p id="speechNext"><svg><use href="#i-arrow"/></svg><span id="nextText">Ketuk Tuan Matahari atau tombol di bawah untuk mulai.</span></p>
+      </section>
+
+      <button class="cta" id="cta" type="button"><svg><use href="#i-sun"/></svg><span id="ctaText">Panaskan Laut</span></button>
+
+      <section class="card reward" id="reward">
+        <div class="thumb" id="rwThumb"><svg viewBox="0 0 160 140" aria-hidden="true"><use href="#chestS"/></svg></div>
+        <div class="rw">
+          <b id="rwTitle">Peti hadiah Cipi</b>
+          <small id="rwSub">Selesaikan 5 tahap untuk membukanya</small>
+          <div class="rbar"><i id="rwBar"></i><span><b id="rwCount" style="font:inherit">0 / 5</b><svg><use href="#gem"/></svg></span></div>
+        </div>
+        <button class="b3 green claim" id="btnClaim" disabled>Buka</button>
+      </section>
+
+      <section class="card">
+        <div class="q-head"><h2>Misi Siklus</h2><span id="progText">0 dari 5 selesai</span></div>
+        <ol class="quests" id="quests"></ol>
+        <div class="qsep">Misi bonus</div>
+        <ol class="quests" id="bonus"></ol>
+        <div class="reset"><button class="linkbtn" id="btnReset" type="button"><svg><use href="#i-reset"/></svg>Mulai lagi dari laut</button></div>
+      </section>
+    </aside>
+  </main>
+</div>
+
+<!-- help -->
+<div class="modal" id="help" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="sheet">
+    <div class="sheet-head"><h2 id="helpTitle"><svg style="color:var(--c1)"><use href="#i-help"/></svg>Cara bermain</h2><button class="x" data-close aria-label="Tutup"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sheet-body">
+      <ul class="tips">
+        <li><span class="tile" style="--c:var(--c1)"><svg><use href="#i-sun"/></svg></span><div><b>Ikuti yang berkedip</b><p>Lingkaran kuning menunjukkan benda yang harus kamu ketuk berikutnya. Kamu juga bisa menekan tombol besar di panel.</p></div></li>
+        <li><span class="tile" style="--c:var(--c2)"><svg><use href="#i-cloud"/></svg></span><div><b>Selesaikan 5 misi</b><p>Setiap tahap siklus air memberi 10 tetes air. Lima tahap selesai membuka peti hadiah Cipi.</p></div></li>
+        <li><span class="tile" style="--c:var(--cT)"><svg><use href="#i-leaf"/></svg></span><div><b>Cari misi bonus</b><p>Ketuk pohon kapan saja untuk melihat transpirasi, yaitu uap air yang keluar dari daun.</p></div></li>
+        <li><span class="tile" style="--c:var(--yellow-d)"><svg><use href="#i-star"/></svg></span><div><b>Ikut Ujian Cipi</b><p>Setiap ujian berisi 10 soal yang diambil acak dari 60 soal, jadi paket soalnya berganti setiap kali dimulai.</p></div></li>
+      </ul>
+      <div class="foot"><button class="b3 green big" data-close>Aku siap bermain</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- quiz -->
+<div class="modal" id="quiz" hidden role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+  <div class="sheet">
+    <div class="sheet-head"><h2 id="quizTitle"><svg style="color:var(--yellow-d)"><use href="#i-star"/></svg>Ujian Cipi</h2><span class="pill" id="qCount">Soal 1/10</span><button class="x" data-close aria-label="Tutup ujian"><svg><use href="#i-close"/></svg></button></div>
+    <div class="qtrack" aria-hidden="true"><i id="qFill"></i><svg id="qCipi" viewBox="0 0 64 84"><use href="#drop"/></svg></div>
+    <div class="sheet-body" id="qBody"></div>
+  </div>
+</div>
+
+<!-- chest reveal -->
+<div class="modal reveal" id="chestModal" hidden role="dialog" aria-modal="true" aria-labelledby="chestTitle">
+  <div class="burst" aria-hidden="true"></div>
+  <div class="stage">
+    <h2 id="chestTitle">Hore, kamu dapat hadiah!</h2>
+    <p class="sub" id="chestSub">Kamu sudah menyelesaikan 5 misi siklus air.</p>
+    <div class="prize" id="prize" hidden><svg aria-hidden="true"><use href="#medal"/></svg><b>Lencana Ahli Siklus Air</b></div>
+    <svg class="chest" id="chest" viewBox="0 0 160 140" aria-hidden="true">
+      <circle class="cglow" cx="80" cy="66" r="78" fill="url(#gGlow)"/>
+      <g class="beams" fill="#FFF3B0" opacity=".9"><path d="M80 64 L40 -20 L62 -20Z"/><path d="M80 64 L72 -24 L90 -24Z"/><path d="M80 64 L102 -20 L122 -16Z"/></g>
+      <rect x="16" y="64" width="128" height="62" rx="12" fill="#7A5240"/><rect x="24" y="74" width="112" height="42" rx="6" fill="#6A4535"/>
+      <rect x="16" y="64" width="128" height="10" fill="#F2B544"/>
+      <rect x="16" y="64" width="16" height="62" rx="6" fill="#F2B544"/><rect x="128" y="64" width="16" height="62" rx="6" fill="#F2B544"/>
+      <g class="lid">
+        <path d="M16 68 V48 Q16 20 80 20 Q144 20 144 48 V68Z" fill="#8F6450"/>
+        <path d="M16 68 V48 Q16 20 80 20 Q144 20 144 48 V68" fill="none" stroke="#F2B544" stroke-width="9"/>
+        <path d="M36 40 Q50 30 70 29" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".35"/>
+        <rect x="68" y="56" width="24" height="26" rx="6" fill="#FFD45C"/><circle cx="80" cy="66" r="4" fill="#7A5240"/><rect x="78" y="67" width="4" height="9" rx="2" fill="#7A5240"/>
+      </g>
+    </svg>
+    <button class="b3 green big" id="btnOpenChest" type="button">Buka peti</button>
+    <button class="b3 green big" id="btnTakePrize" type="button" hidden>Ambil hadiah</button>
+  </div>
+</div>
+
+<canvas id="confetti" hidden></canvas>
+
+<!--
+  BANK SOAL UJIAN CIPI
+  - Satu objek = satu soal. "o[0]" SELALU jawaban benar; urutan opsi diacak saat tampil.
+  - "t" = kode topik (lihat TOPICS di script). "id" harus unik, diawali kode topik.
+  - Dokumentasi lengkap: BANK-SOAL.md
+-->
+<script type="application/json" id="bank">
+[
+{"id":"EVAP-01","t":"EVAP","q":"Tuan Matahari memanaskan air laut sampai berubah menjadi uap dan naik ke udara. Proses ini disebut...","o":["Evaporasi","Kondensasi","Presipitasi","Infiltrasi"],"e":"Evaporasi adalah penguapan air karena panas matahari."},
+{"id":"EVAP-02","t":"EVAP","q":"Saat evaporasi, air berubah wujud dari...","o":["Cair menjadi gas","Gas menjadi cair","Padat menjadi cair","Cair menjadi padat"],"e":"Air cair dipanaskan lalu berubah menjadi uap air, yaitu gas."},
+{"id":"EVAP-03","t":"EVAP","q":"Baju yang dijemur cepat kering saat siang hari yang terik. Peristiwa ini adalah contoh...","o":["Penguapan","Pengembunan","Peresapan","Pembekuan"],"e":"Air di baju menguap karena panas matahari, sama seperti air laut saat evaporasi."},
+{"id":"EVAP-04","t":"EVAP","q":"Di mana evaporasi paling banyak terjadi di bumi?","o":["Di laut dan samudra","Di dalam tanah","Di dalam gua","Di dalam akar pohon"],"e":"Laut dan samudra sangat luas dan terkena sinar matahari, jadi paling banyak air menguap dari sana."},
+{"id":"EVAP-05","t":"EVAP","q":"Genangan air hujan di halaman bisa hilang saat siang hari. Mengapa?","o":["Airnya menguap karena panas matahari","Airnya berubah menjadi es","Airnya berubah menjadi pasir","Airnya naik menjadi pelangi"],"e":"Panas matahari membuat air genangan menguap ke udara."},
+{"id":"EVAP-06","t":"EVAP","q":"Uap air hasil evaporasi bergerak ke mana?","o":["Naik ke udara","Turun ke dalam tanah","Masuk ke dasar laut","Masuk ke akar tumbuhan"],"e":"Uap air yang hangat dan ringan naik ke udara, lalu nanti membentuk awan."},
+{"id":"EVAP-07","t":"EVAP","q":"Pada keadaan mana air paling cepat menguap?","o":["Hari panas dan berangin","Malam yang dingin","Hari mendung tanpa angin","Saat air disimpan di kulkas"],"e":"Panas dan angin sama-sama mempercepat penguapan."},
+{"id":"KOND-01","t":"KOND","q":"Uap air di langit mendingin lalu berubah menjadi titik-titik air yang membentuk awan. Proses ini disebut...","o":["Kondensasi","Evaporasi","Transpirasi","Infiltrasi"],"e":"Kondensasi adalah pengembunan uap air menjadi titik air karena suhu yang dingin."},
+{"id":"KOND-02","t":"KOND","q":"Kondensasi terjadi karena uap air...","o":["Mendingin","Dipanaskan","Meresap ke tanah","Diserap akar"],"e":"Udara di tempat tinggi lebih dingin, sehingga uap air mengembun."},
+{"id":"KOND-03","t":"KOND","q":"Saat kondensasi, air berubah wujud dari...","o":["Gas menjadi cair","Cair menjadi gas","Padat menjadi gas","Cair menjadi padat"],"e":"Uap air (gas) berubah menjadi titik-titik air (cair)."},
+{"id":"KOND-04","t":"KOND","q":"Bagian luar gelas berisi es batu menjadi basah. Peristiwa ini mirip dengan...","o":["Kondensasi","Evaporasi","Infiltrasi","Limpasan"],"e":"Uap air di udara mengembun saat menyentuh permukaan gelas yang dingin."},
+{"id":"KOND-05","t":"KOND","q":"Awan terbentuk dari...","o":["Kumpulan titik-titik air yang sangat kecil","Asap kendaraan","Kapas yang terbang","Debu dari gunung"],"e":"Awan adalah kumpulan titik air kecil hasil kondensasi."},
+{"id":"KOND-06","t":"KOND","q":"Embun di daun pada pagi hari terbentuk karena...","o":["Uap air mengembun saat udara dingin","Daun mengeluarkan air hujan","Air sumur naik ke daun","Matahari memanaskan daun"],"e":"Udara malam yang dingin membuat uap air mengembun menjadi titik air di daun."},
+{"id":"KOND-07","t":"KOND","q":"Mengapa awan terlihat gelap sebelum hujan?","o":["Titik-titik airnya semakin banyak dan rapat","Awannya terbakar matahari","Awannya kehilangan air","Awannya berubah menjadi asap"],"e":"Awan yang penuh titik air menghalangi cahaya matahari, jadi terlihat gelap."},
+{"id":"PRES-01","t":"PRES","q":"Awan yang sudah berat menjatuhkan air ke bumi. Peristiwa ini disebut...","o":["Presipitasi","Evaporasi","Kondensasi","Transpirasi"],"e":"Presipitasi adalah turunnya air dari awan ke permukaan bumi."},
+{"id":"PRES-02","t":"PRES","q":"Contoh presipitasi adalah...","o":["Hujan, salju, dan hujan es","Embun, kabut, dan uap","Air sungai dan air sumur","Ombak dan arus laut"],"e":"Presipitasi bisa berupa hujan, salju, atau hujan es."},
+{"id":"PRES-03","t":"PRES","q":"Di daerah yang sangat dingin, presipitasi dapat turun dalam bentuk...","o":["Salju","Uap air","Embun","Pelangi"],"e":"Di tempat yang sangat dingin, air membeku dan turun sebagai salju."},
+{"id":"PRES-04","t":"PRES","q":"Mengapa titik-titik air di awan akhirnya jatuh ke bumi?","o":["Titik air bergabung menjadi besar dan berat","Awan didorong oleh matahari","Awan ditarik oleh gunung","Titik air berubah menjadi uap"],"e":"Titik air bergabung menjadi butiran besar yang terlalu berat untuk melayang."},
+{"id":"PRES-05","t":"PRES","q":"Di Indonesia, bentuk presipitasi yang paling sering terjadi adalah...","o":["Hujan","Salju","Hujan es","Embun beku"],"e":"Indonesia beriklim tropis dan hangat, jadi presipitasi umumnya berupa hujan."},
+{"id":"PRES-06","t":"PRES","q":"Hujan biasanya turun dari awan yang...","o":["Tebal dan gelap","Tipis dan sangat tinggi","Berasal dari asap pabrik","Menempel di permukaan tanah"],"e":"Awan mendung yang tebal dan gelap menyimpan banyak titik air."},
+{"id":"TRAN-01","t":"TRAN","q":"Tumbuhan mengeluarkan uap air melalui pori-pori kecil di daun. Proses ini disebut...","o":["Transpirasi","Infiltrasi","Presipitasi","Kondensasi"],"e":"Transpirasi adalah penguapan air dari tumbuhan melalui daun."},
+{"id":"TRAN-02","t":"TRAN","q":"Pori-pori kecil di daun tempat keluarnya uap air bernama...","o":["Stomata","Akar","Akuifer","Muara"],"e":"Stomata adalah pori-pori kecil di daun tempat uap air keluar."},
+{"id":"TRAN-03","t":"TRAN","q":"Air yang dikeluarkan tumbuhan saat transpirasi berasal dari...","o":["Air tanah yang diserap akar","Air laut","Awan","Embun di batang"],"e":"Akar menyerap air dari tanah, lalu air naik ke daun dan menguap."},
+{"id":"TRAN-04","t":"TRAN","q":"Transpirasi paling banyak terjadi ketika...","o":["Cuaca panas dan cerah","Malam hari yang dingin","Tumbuhan tidak berdaun","Hujan deras"],"e":"Saat panas dan cerah, daun melepaskan lebih banyak uap air."},
+{"id":"TRAN-05","t":"TRAN","q":"Mengapa hutan yang lebat membantu terbentuknya awan dan hujan?","o":["Banyak pohon melepaskan uap air ke udara","Pohon menghalangi matahari","Pohon menyerap awan","Pohon membuat laut menjadi asin"],"e":"Uap air dari jutaan daun ikut naik dan membentuk awan."},
+{"id":"TRAN-06","t":"TRAN","q":"Gabungan penguapan dari permukaan air dan dari tumbuhan disebut...","o":["Evapotranspirasi","Kondensasi","Infiltrasi","Presipitasi"],"e":"Evapotranspirasi adalah gabungan evaporasi dan transpirasi."},
+{"id":"LIMP-01","t":"LIMP","q":"Air hujan yang mengalir di atas permukaan tanah menuju sungai disebut...","o":["Limpasan permukaan","Infiltrasi","Kondensasi","Transpirasi"],"e":"Limpasan permukaan adalah aliran air hujan di atas tanah menuju sungai, danau, atau laut."},
+{"id":"LIMP-02","t":"LIMP","q":"Ke mana air sungai selalu mengalir?","o":["Dari tempat tinggi ke tempat rendah","Dari tempat rendah ke tempat tinggi","Berputar di tempat yang sama","Naik ke puncak gunung"],"e":"Air selalu mengalir dari tempat tinggi ke tempat rendah, dari gunung menuju laut."},
+{"id":"LIMP-03","t":"LIMP","q":"Tempat bertemunya sungai dengan laut disebut...","o":["Muara","Hulu","Danau","Akuifer"],"e":"Muara adalah ujung sungai, tempat air sungai masuk ke laut."},
+{"id":"LIMP-04","t":"LIMP","q":"Bagian sungai tempat aliran berasal, biasanya di pegunungan, disebut...","o":["Hulu","Hilir","Muara","Pantai"],"e":"Hulu adalah bagian awal sungai, biasanya di daerah tinggi."},
+{"id":"LIMP-05","t":"LIMP","q":"Limpasan air hujan menjadi sangat banyak ketika tanah...","o":["Tertutup semen dan aspal","Banyak ditumbuhi pohon","Gembur dan berpori","Ditanami rumput"],"e":"Semen dan aspal membuat air sulit meresap, jadi air mengalir di permukaan dan bisa menyebabkan banjir."},
+{"id":"LIMP-06","t":"LIMP","q":"Wilayah yang menampung air hujan lalu mengalirkannya ke satu sungai disebut...","o":["Daerah Aliran Sungai (DAS)","Akuifer","Muara","Samudra"],"e":"DAS adalah seluruh wilayah yang airnya mengalir ke sungai yang sama."},
+{"id":"LIMP-07","t":"LIMP","q":"Air sungai pada akhirnya akan mengalir ke...","o":["Laut","Puncak gunung","Awan","Akar pohon"],"e":"Sungai mengalir ke tempat yang lebih rendah sampai akhirnya bermuara di laut."},
+{"id":"INFI-01","t":"INFI","q":"Air hujan yang meresap masuk ke dalam tanah disebut...","o":["Infiltrasi","Evaporasi","Kondensasi","Presipitasi"],"e":"Infiltrasi adalah peresapan air hujan ke dalam tanah."},
+{"id":"INFI-02","t":"INFI","q":"Lapisan di bawah tanah yang menyimpan air tanah disebut...","o":["Akuifer","Stomata","Muara","Awan"],"e":"Akuifer adalah lapisan tanah atau batuan yang menyimpan air tanah."},
+{"id":"INFI-03","t":"INFI","q":"Air sumur berasal dari...","o":["Air tanah","Air laut","Awan","Embun"],"e":"Sumur digali sampai ke lapisan akuifer yang menyimpan air tanah."},
+{"id":"INFI-04","t":"INFI","q":"Permukaan seperti apa yang paling mudah meresapkan air hujan?","o":["Tanah gembur yang banyak pori","Lantai keramik","Jalan aspal","Halaman yang disemen"],"e":"Tanah gembur punya banyak rongga, sehingga air mudah masuk."},
+{"id":"INFI-05","t":"INFI","q":"Apa manfaat infiltrasi bagi manusia?","o":["Menyimpan cadangan air tanah untuk sumur","Membuat laut menjadi asin","Membuat sungai mengering","Membuat awan menjadi gelap"],"e":"Air yang meresap tersimpan sebagai air tanah yang bisa diambil lewat sumur."},
+{"id":"INFI-06","t":"INFI","q":"Lubang kecil di tanah yang dibuat untuk membantu air hujan meresap disebut...","o":["Lubang biopori","Saluran irigasi","Kolam ikan","Terowongan"],"e":"Lubang biopori membantu air hujan cepat meresap ke dalam tanah."},
+{"id":"INFI-07","t":"INFI","q":"Air tanah yang mengalir pelan di dalam tanah akhirnya bisa sampai ke...","o":["Sungai atau laut","Awan","Puncak gunung","Matahari"],"e":"Air tanah mengalir pelan ke tempat yang lebih rendah, seperti sungai dan laut."},
+{"id":"SIKL-01","t":"SIKL","q":"Apa sumber energi utama yang membuat siklus air terus berputar?","o":["Matahari","Bulan","Angin","Gunung"],"e":"Panas matahari membuat air menguap, sehingga siklus air bisa terus berulang."},
+{"id":"SIKL-02","t":"SIKL","q":"Urutan tiga tahap siklus air yang benar, dimulai dari laut, adalah...","o":["Evaporasi, kondensasi, presipitasi","Evaporasi, presipitasi, kondensasi","Kondensasi, evaporasi, presipitasi","Presipitasi, kondensasi, evaporasi"],"e":"Air menguap (evaporasi), menjadi awan (kondensasi), lalu turun sebagai hujan (presipitasi)."},
+{"id":"SIKL-03","t":"SIKL","q":"Setelah uap air menjadi awan, tahap berikutnya adalah...","o":["Presipitasi","Evaporasi","Infiltrasi","Transpirasi"],"e":"Awan yang sudah berat menurunkan hujan, yaitu presipitasi."},
+{"id":"SIKL-04","t":"SIKL","q":"Setelah hujan turun di darat, air dapat...","o":["Mengalir di sungai atau meresap ke tanah","Naik ke awan tanpa menguap","Berubah menjadi batu","Hilang selamanya"],"e":"Air hujan menjadi limpasan di sungai atau meresap ke tanah (infiltrasi)."},
+{"id":"SIKL-05","t":"SIKL","q":"Mengapa peristiwa ini disebut siklus air?","o":["Karena terjadi terus-menerus dan berulang","Karena hanya terjadi sekali","Karena hanya terjadi di laut","Karena hanya terjadi saat hujan"],"e":"Siklus berarti perputaran yang terus berulang tanpa henti."},
+{"id":"SIKL-06","t":"SIKL","q":"Apakah jumlah air di bumi habis karena siklus air?","o":["Tidak, air hanya berpindah tempat dan berubah wujud","Ya, air habis karena menguap","Ya, air hilang ke luar angkasa","Ya, air berubah menjadi tanah"],"e":"Dalam siklus air, air hanya berpindah dan berubah wujud, jumlahnya tetap."},
+{"id":"SIKL-07","t":"SIKL","q":"Tahap siklus air yang paling membutuhkan panas matahari adalah...","o":["Evaporasi","Kondensasi","Infiltrasi","Limpasan"],"e":"Evaporasi butuh panas untuk mengubah air menjadi uap."},
+{"id":"SUMB-01","t":"SUMB","q":"Sebagian besar air di bumi berada di...","o":["Laut dan samudra","Sungai","Danau","Sumur"],"e":"Hampir semua air di bumi ada di laut dan samudra."},
+{"id":"SUMB-02","t":"SUMB","q":"Air laut tidak bisa langsung kita minum karena...","o":["Rasanya asin karena mengandung garam","Warnanya biru","Terlalu dingin","Terlalu banyak ombak"],"e":"Air laut mengandung banyak garam sehingga tidak baik untuk diminum langsung."},
+{"id":"SUMB-03","t":"SUMB","q":"Air hujan berasal dari laut, tetapi rasanya tidak asin. Mengapa?","o":["Garam tertinggal di laut saat air menguap","Garam larut di awan","Garam dimakan ikan","Garam terbakar matahari"],"e":"Saat menguap, hanya airnya yang naik. Garamnya tetap tertinggal di laut."},
+{"id":"SUMB-04","t":"SUMB","q":"Contoh sumber air tawar di darat adalah...","o":["Sungai, danau, dan air tanah","Laut dan samudra","Pelangi dan awan","Ombak dan pasir"],"e":"Sungai, danau, dan air tanah adalah sumber air tawar yang kita gunakan sehari-hari."},
+{"id":"SUMB-05","t":"SUMB","q":"Berapa kira-kira bagian air di bumi yang merupakan air tawar?","o":["Sangat sedikit, sekitar 3 persen","Sekitar setengahnya","Hampir semuanya","Sekitar tiga perempat"],"e":"Hanya sekitar 3 persen air di bumi yang tawar, jadi kita harus menghematnya."},
+{"id":"SUMB-06","t":"SUMB","q":"Es di kutub dan di puncak gunung yang sangat tinggi menyimpan...","o":["Air tawar dalam bentuk padat","Air laut yang asin","Uap air panas","Minyak bumi"],"e":"Es di kutub dan gletser adalah air tawar yang membeku."},
+{"id":"JAGA-01","t":"JAGA","q":"Perbuatan mana yang membantu air hujan meresap ke dalam tanah?","o":["Menanam pohon dan membuat lubang biopori","Menebang pohon di hutan","Menutup halaman dengan semen","Membuang sampah ke sungai"],"e":"Pohon dan lubang biopori membantu air hujan meresap, sehingga air tanah tetap terjaga."},
+{"id":"JAGA-02","t":"JAGA","q":"Salah satu cara menghemat air di rumah adalah...","o":["Menutup keran saat menggosok gigi","Membiarkan keran tetap terbuka","Mencuci motor setiap jam","Mandi berjam-jam"],"e":"Menutup keran saat tidak dipakai mencegah air terbuang percuma."},
+{"id":"JAGA-03","t":"JAGA","q":"Menebang hutan secara sembarangan dapat menyebabkan...","o":["Banjir dan tanah longsor","Air tanah bertambah","Udara semakin sejuk","Sungai semakin jernih"],"e":"Tanpa akar pohon, air hujan tidak tertahan dan tanah mudah longsor."},
+{"id":"JAGA-04","t":"JAGA","q":"Membuang sampah ke sungai dapat menyebabkan...","o":["Sungai tersumbat dan banjir","Air sungai semakin bersih","Ikan semakin banyak","Air sungai mengalir ke gunung"],"e":"Sampah menyumbat aliran sungai sehingga air meluap saat hujan."},
+{"id":"JAGA-05","t":"JAGA","q":"Sumur resapan berguna untuk...","o":["Menampung air hujan agar meresap ke tanah","Membuang sampah rumah tangga","Membuat air laut menjadi tawar","Mengeringkan sawah"],"e":"Sumur resapan membantu air hujan masuk ke tanah dan menambah air tanah."},
+{"id":"JAGA-06","t":"JAGA","q":"Mengapa air tanah di kota besar bisa berkurang?","o":["Air tanah banyak diambil dan tanahnya tertutup bangunan","Terlalu banyak pohon","Terlalu sering hujan","Terlalu banyak sungai"],"e":"Pengambilan air tanah yang berlebihan dan sedikitnya tanah terbuka membuat air tanah berkurang."},
+{"id":"JAGA-07","t":"JAGA","q":"Kekeringan dapat terjadi ketika...","o":["Lama tidak turun hujan dan air tanah berkurang","Hujan turun setiap hari","Sungai meluap","Banyak pohon ditanam"],"e":"Tanpa hujan dalam waktu lama, sungai dan sumur bisa mengering."}
+]
+</script>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const NS = 'http://www.w3.org/2000/svg';
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const E = {
+  inOut: t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2,
+  out: t => 1 - Math.pow(1 - t, 3),
+  in: t => t*t*t,
+  back: t => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3*Math.pow(t - 1, 3) + c1*Math.pow(t - 1, 2); },
+  lin: t => t
+};
+const lerp = (a, b, t) => a + (b - a) * t;
+const rand = (a, b) => a + Math.random() * (b - a);
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const shuffle = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function tween(ms, fn, e = E.inOut) {
+  if (reduced) ms = Math.min(ms, 200);
+  return new Promise(res => {
+    const t0 = performance.now();
+    const step = now => { const t = Math.min(1, (now - t0) / ms); fn(e(t), t); t < 1 ? requestAnimationFrame(step) : res(); };
+    requestAnimationFrame(step);
+  });
+}
+const wait = ms => new Promise(r => setTimeout(r, reduced ? Math.min(ms, 120) : ms));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+
+/* ---------- state + sound ---------- */
+const S = { stage: 0, busy: false, sound: true, labels: true, trans: false, gems: store.get('cipi-gems', 0), badge: store.get('cipi-badge', false), lastAct: performance.now() };
+let actx = null;
+function ac() { if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } if (actx && actx.state === 'suspended') actx.resume(); return actx; }
+function tone(f, dur = .15, type = 'sine', vol = .15, to = null, delay = 0) {
+  if (!S.sound) return; const a = ac(); if (!a) return;
+  const t = a.currentTime + delay, o = a.createOscillator(), g = a.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t); if (to) o.frequency.exponentialRampToValueAtTime(to, t + dur);
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t + dur + .05);
+}
+function noise(dur = .6, vol = .06, freq = 1200) {
+  if (!S.sound) return; const a = ac(); if (!a) return;
+  const len = Math.floor(a.sampleRate * dur), buf = a.createBuffer(1, len, a.sampleRate), d = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * i / len);
+  const src = a.createBufferSource(), flt = a.createBiquadFilter(), g = a.createGain();
+  flt.type = 'bandpass'; flt.frequency.value = freq; g.gain.value = vol; src.buffer = buf;
+  src.connect(flt).connect(g).connect(a.destination); src.start();
+}
+const sfx = {
+  pop: () => tone(500, .14, 'sine', .18, 900),
+  ding: () => { tone(880, .18, 'triangle', .14); tone(1320, .28, 'triangle', .11, null, .1); },
+  coin: () => { tone(1180, .08, 'square', .045); tone(1580, .14, 'square', .045, null, .06); },
+  wrong: () => tone(240, .22, 'square', .05, 170),
+  whoosh: () => noise(.8, .08, 700),
+  rain: () => noise(2.2, .07, 3000),
+  slide: () => tone(760, 1.2, 'sine', .1, 260),
+  bubble: () => [0, .15, .3].forEach(d => tone(rand(300, 500), .12, 'sine', .12, 700, d)),
+  splash: () => noise(.25, .06, 1800),
+  win: () => [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, .3, 'triangle', .13, null, i * .11))
+};
+
+/* ---------- scene refs ---------- */
+const scene = $('#scene'), card = $('#sceneCard'), fx = $('#fx');
+const cipiEl = $('#cipi'), cipiBob = cipiEl.querySelector('.cipi-bob'), armR = cipiEl.querySelector('.arm-r'), look = $('#cipiLook');
+const sunEl = $('#sun'), seaEl = $('#sea'), river = $('#river'), riverG = $('#riverG');
+const ground = $('#ground'), well = $('#well'), tree = $('#tree');
+const cl = { A: { el: $('#cloudA'), x: 420, y: 115, s: 1 }, B: { el: $('#cloudB'), x: 600, y: 95, s: .9 }, C: { el: $('#cloudC'), x: 515, y: 110, s: 1.35 } };
+const HOME = { x: 170, y: 520 };
+const cipi = { x: HOME.x, y: HOME.y, s: 1, o: 1 };
+const sun = { x: 120, y: 105 };
+
+function place(el, p) { el.setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) scale(${(p.s ?? 1).toFixed(3)})`); }
+function drawCipi() { place(cipiEl, cipi); cipiEl.style.opacity = cipi.o; }
+function mood(m) { cipiEl.dataset.mood = m; }
+function moveCipi(to, ms, e = E.inOut) {
+  const from = { ...cipi };
+  return tween(ms, k => { for (const key of ['x', 'y', 's', 'o']) if (to[key] != null) cipi[key] = lerp(from[key], to[key], k); drawCipi(); }, e);
+}
+function mk(tag, attrs, parent = fx) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; }
+function toScreen(x, y) { const pt = scene.createSVGPoint(); pt.x = x; pt.y = y; const p = pt.matrixTransform(scene.getScreenCTM()); return { x: p.x, y: p.y }; }
+
+/* ---------- particles ---------- */
+function vapor(x0, y0, x1, y1, delay, ms, color = '#fff') {
+  setTimeout(() => {
+    const p = mk('path', { d: 'M0 0 q7 -8 0 -16 q-7 -8 0 -16', fill: 'none', stroke: color, 'stroke-width': 5, 'stroke-linecap': 'round', opacity: 0 });
+    const ph = rand(0, 6);
+    tween(ms, k => {
+      p.setAttribute('transform', `translate(${(lerp(x0, x1, k) + Math.sin(k * 9 + ph) * 10).toFixed(1)} ${lerp(y0, y1, k).toFixed(1)}) scale(${(1 - k * .45).toFixed(2)})`);
+      p.setAttribute('opacity', (k < .15 ? k / .15 : 1 - (k - .15) / .85) * .95);
+    }, E.out).then(() => p.remove());
+  }, delay);
+}
+function sparkle(x, y, color = '#fff', r = 4) {
+  const c = mk('circle', { cx: x, cy: y, r, fill: color });
+  tween(600, k => { c.setAttribute('r', (r * (1 - k)).toFixed(2)); c.setAttribute('cy', (y - k * 12).toFixed(1)); }, E.out).then(() => c.remove());
+}
+function splash(x, y, color = '#fff') {
+  const c = mk('ellipse', { cx: x, cy: y, rx: 4, ry: 2, fill: 'none', stroke: color, 'stroke-width': 3 });
+  tween(500, k => { c.setAttribute('rx', 4 + k * 18); c.setAttribute('ry', 2 + k * 6); c.setAttribute('opacity', 1 - k); }, E.out).then(() => c.remove());
+}
+const mountainY = x => Math.min(470, x <= 790 ? 225 + (790 - x) / .776 : 225 + (x - 790) / .977);
+function raindrop(x, y0, delay) {
+  setTimeout(() => {
+    const yEnd = mountainY(x) - 2;
+    const d = mk('path', { d: 'M0 0 l-3 14', stroke: '#3FA6EE', 'stroke-width': 4.5, 'stroke-linecap': 'round' });
+    tween(rand(450, 650), k => d.setAttribute('transform', `translate(${(x - k * 10).toFixed(1)} ${lerp(y0, yEnd - 14, k).toFixed(1)})`), E.in)
+      .then(() => { d.remove(); splash(x - 10, yEnd); });
+  }, delay);
+}
+
+/* ---------- labels ---------- */
+const LABELS = [
+  { n: '1', t: 'Evaporasi', x: 24, y: 400, ax: 150, ay: 462, c: '#F7943A', bx: 60, by: 405 },
+  { n: '2', t: 'Kondensasi', x: 236, y: 40, ax: 392, ay: 92, c: '#8E7CF5', bx: 330, by: 50 },
+  { n: '3', t: 'Presipitasi', x: 832, y: 200, ax: 800, ay: 240, c: '#3FA6EE', bx: 850, by: 210 },
+  { n: 'T', t: 'Transpirasi', x: 282, y: 322, ax: 448, ay: 352, c: '#56BB64', bx: 400, by: 325 },
+  { n: '4', t: 'Limpasan', x: 838, y: 365, ax: 756, ay: 382, c: '#26B3A1', bx: 850, by: 370 },
+  { n: '5', t: 'Infiltrasi', x: 604, y: 552, ax: 548, ay: 548, c: '#C98A5B', bx: 620, by: 555 },
+  { n: '', t: 'Muara', x: 214, y: 438, ax: 334, ay: 500, c: '#26B3A1' }
+];
+function buildLabels() {
+  const g = $('#labels'); g.innerHTML = '';
+  const full = mk('g', { class: 'lbl-full' }, g), badge = mk('g', { class: 'lbl-badge' }, g);
+  const lines = mk('g', {}, full);
+  LABELS.forEach(L => {
+    const grp = mk('g', { transform: `translate(${L.x} ${L.y})` }, full);
+    const sh = mk('rect', { x: 0, y: -15, height: 36, rx: 18, fill: '#3A3350', opacity: .14 }, grp);
+    const rect = mk('rect', { x: 0, y: -18, height: 36, rx: 18, fill: '#fff' }, grp);
+    let tx = 16;
+    if (L.n) {
+      mk('circle', { cx: 19, cy: 0, r: 13, fill: L.c }, grp);
+      const nt = mk('text', { x: 19, y: 6, 'text-anchor': 'middle', 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 16, fill: '#fff' }, grp);
+      nt.textContent = L.n; tx = 39;
+    }
+    const t = mk('text', { x: tx, y: 6, 'font-family': 'Fredoka, sans-serif', 'font-weight': 600, 'font-size': 18, fill: '#3A3350' }, grp);
+    t.textContent = L.t;
+    let w = 0; try { w = t.getComputedTextLength(); } catch (e) {}
+    if (!w) w = L.t.length * 9.5;
+    const W = tx + w + 15; rect.setAttribute('width', W.toFixed(1)); sh.setAttribute('width', W.toFixed(1));
+    mk('line', { x1: L.x + W / 2, y1: L.y, x2: L.ax, y2: L.ay, stroke: '#fff', 'stroke-width': 3, 'stroke-dasharray': '2 6', 'stroke-linecap': 'round', opacity: .95 }, lines);
+    mk('circle', { cx: L.ax, cy: L.ay, r: 5.5, fill: L.c, stroke: '#fff', 'stroke-width': 2.5 }, lines);
+    if (L.bx != null) {
+      mk('circle', { cx: L.bx, cy: L.by + 3, r: 24, fill: '#3A3350', opacity: .16 }, badge);
+      mk('circle', { cx: L.bx, cy: L.by, r: 24, fill: L.c, stroke: '#fff', 'stroke-width': 4 }, badge);
+      const bt = mk('text', { x: L.bx, y: L.by + 9, 'text-anchor': 'middle', 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 26, fill: '#fff' }, badge);
+      bt.textContent = L.n;
+    }
+  });
+}
+
+/* ---------- idle life (subtle, never during a stage) ---------- */
+const bf = [{ el: $('#bf1'), cx: 440, cy: 330, ax: 70, ay: 26, sp: .55, ph: 0 }, { el: $('#bf2'), cx: 720, cy: 440, ax: 60, ay: 18, sp: .7, ph: 2 }];
+const birds = $('#birds');
+let birdX = 1100, nextFish = performance.now() + 4000, nextLeaf = performance.now() + 7000, nextIdle = performance.now() + 5000;
+function idleLoop(now) {
+  const t = now / 1000;
+  bf.forEach(b => {
+    const x = b.cx + Math.sin(t * b.sp + b.ph) * b.ax, y = b.cy + Math.sin(t * b.sp * 2.1 + b.ph) * b.ay - Math.abs(Math.sin(t * 3 + b.ph)) * 6;
+    b.el.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(Math.cos(t * b.sp + b.ph) * 18).toFixed(1)})`);
+  });
+  birdX -= .55; if (birdX < -120) birdX = 1150;
+  birds.setAttribute('transform', `translate(${birdX.toFixed(1)} ${(64 + Math.sin(t * .8) * 8).toFixed(1)})`);
+  if (now > nextFish) { nextFish = now + rand(6500, 10000); if (!S.busy) jumpFish(); }
+  if (now > nextLeaf) { nextLeaf = now + rand(8000, 12000); fallingLeaf(); }
+  if (now > nextIdle) { nextIdle = now + rand(4500, 7000); cipiIdle(); }
+  requestAnimationFrame(idleLoop);
+}
+function jumpFish() {
+  const f = $('#fish'), x0 = rand(30, 230), dx = rand(40, 70) * (Math.random() < .5 ? -1 : 1), y0 = 505;
+  if (Math.abs(x0 + dx / 2 - cipi.x) < 50 && cipi.y > 450) return;
+  splash(x0, y0 - 6); sfx.splash();
+  tween(1000, k => {
+    const x = x0 + dx * k, y = y0 - Math.sin(k * Math.PI) * 60;
+    f.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(dx > 0 ? -1 : 1) * (60 - k * 120)}) scale(${dx > 0 ? -1 : 1} 1)`);
+    f.setAttribute('opacity', k < .08 || k > .92 ? 0 : 1);
+  }, E.lin).then(() => splash(x0 + dx, y0 - 6));
+}
+function fallingLeaf() {
+  const l = mk('path', { d: 'M0 0 C4 -6 10 -6 12 0 C10 6 4 6 0 0Z', fill: '#7DD06B' });
+  const x0 = rand(455, 505), y0 = 345;
+  tween(3200, k => { l.setAttribute('transform', `translate(${(x0 + Math.sin(k * 8) * 14 + k * 20).toFixed(1)} ${lerp(y0, 412, k).toFixed(1)}) rotate(${(Math.sin(k * 8) * 50).toFixed(1)})`); l.setAttribute('opacity', k > .85 ? (1 - k) / .15 : 1); }, E.lin).then(() => l.remove());
+}
+function cipiIdle() {
+  if (S.busy) return;
+  const r = Math.random();
+  if (r < .35) { look.setAttribute('transform', `translate(${pick([-3, 3])} ${pick([-1, 0])})`); setTimeout(() => look.removeAttribute('transform'), 1300); }
+  else if (r < .65) { armR.classList.remove('wave'); void armR.getBBox(); armR.classList.add('wave'); }
+  else { cipiBob.classList.remove('hop'); void cipiBob.getBBox(); cipiBob.classList.add('hop'); setTimeout(() => cipiBob.classList.remove('hop'), 750); }
+}
+
+/* ---------- stages ---------- */
+const STAGES = [
+  { id: 'evap', n: 1, name: 'Evaporasi', color: 'var(--c1)', icon: 'i-sun', cta: 'Panaskan Laut', hint: [120, 105, 70, 0, 108],
+    ask: 'Ketuk Tuan Matahari supaya laut jadi hangat.',
+    say: 'Wah, panas! Tuan Matahari memanaskan laut. Aku berubah jadi uap air dan melayang naik ke langit.',
+    fact: 'Air berubah dari cair menjadi uap (gas) karena panas matahari. Uap air yang ringan naik ke udara.' },
+  { id: 'kond', n: 2, name: 'Kondensasi', color: 'var(--c2)', icon: 'i-cloud', cta: 'Satukan Awan', hint: [510, 105, 110, 0, 140],
+    ask: 'Di atas sini dingin sekali. Ketuk awan kecil supaya bergabung.',
+    say: 'Brrr, dingin! Uap air mengembun menjadi titik-titik air kecil, lalu berkumpul menjadi awan besar.',
+    fact: 'Uap air mendingin di udara atas dan berubah menjadi titik-titik air. Kumpulan titik air itulah yang kita lihat sebagai awan.' },
+  { id: 'pres', n: 3, name: 'Presipitasi', color: 'var(--c3)', icon: 'i-rain', cta: 'Turunkan Hujan', hint: [515, 110, 90, 0, 122],
+    ask: 'Awannya makin berat. Ketuk awan besar untuk menurunkan hujan.',
+    say: 'Byur! Awan jadi terlalu berat, dan aku jatuh sebagai hujan di puncak gunung.',
+    fact: 'Air jatuh dari awan ke permukaan bumi. Bentuknya bisa hujan, salju, atau hujan es.' },
+  { id: 'limp', n: 4, name: 'Limpasan', color: 'var(--c4)', icon: 'i-river', cta: 'Meluncur di Sungai', hint: [752, 352, 46, -128, 6],
+    ask: 'Aku sudah di puncak gunung. Ketuk sungai, ayo meluncur.',
+    say: 'Wiii! Aku meluncur di sungai, dari gunung yang tinggi menuju dataran yang rendah.',
+    fact: 'Air hujan mengalir di permukaan tanah menuju sungai, danau, dan laut. Air selalu mengalir dari tempat tinggi ke tempat rendah.' },
+  { id: 'infil', n: 5, name: 'Infiltrasi', color: 'var(--c5)', icon: 'i-ground', cta: 'Menyelam ke Tanah', hint: [560, 525, 46, 140, -4],
+    ask: 'Sebagian air hujan meresap ke tanah. Ketuk tanah untuk menyelam.',
+    say: 'Aku meresap ke dalam tanah dan tersimpan di akuifer, lalu mengalir pelan kembali ke laut.',
+    fact: 'Air meresap ke dalam tanah dan tersimpan di lapisan akuifer sebagai air tanah. Air inilah yang diambil lewat sumur.' }
+];
+const TRANS = { name: 'Transpirasi', color: 'var(--cT)', icon: 'i-leaf',
+  say: 'Psst, pohon juga ikut! Daun mengeluarkan uap air lewat pori-pori kecil bernama stomata.',
+  fact: 'Tumbuhan melepaskan uap air ke udara melalui stomata di daun. Uap ini ikut naik dan membantu membentuk awan.' };
+const INTRO = { name: 'Siklus Air', color: 'var(--c3)', fact: 'Perjalanan air yang terus berputar: menguap dari laut, menjadi awan, turun sebagai hujan, lalu mengalir kembali ke laut.' };
+
+const FX = {
+  async evap() {
+    sunEl.classList.add('hot'); seaEl.classList.add('shimmer'); mood('hot'); sfx.whoosh();
+    await tween(700, k => { sun.x = lerp(120, 200, k); sun.y = lerp(105, 175, k); place(sunEl, sun); }, E.out);
+    for (let i = 0; i < 18; i++) vapor(rand(40, 320), rand(475, 500), rand(300, 440), rand(150, 210), i * 120, rand(1700, 2300));
+    await wait(700); mood('wow');
+    const from = { ...cipi };
+    await tween(2200, k => {
+      cipi.x = lerp(from.x, 430, k) + Math.sin(k * 12) * 14 * (1 - k);
+      cipi.y = lerp(from.y, 150, k); cipi.s = lerp(1, .62, k); cipi.o = lerp(1, .8, k); drawCipi();
+    }, E.inOut);
+    seaEl.classList.remove('shimmer'); sunEl.classList.remove('hot');
+    tween(800, k => { sun.x = lerp(200, 120, k); sun.y = lerp(175, 105, k); place(sunEl, sun); });
+    mood('happy');
+  },
+  async kond() {
+    cipiBob.classList.add('shiver'); mood('wow');
+    const A = cl.A, B = cl.B, C = cl.C;
+    await tween(1000, k => {
+      A.x = lerp(420, 486, k); A.y = lerp(115, 112, k); B.x = lerp(600, 548, k); B.y = lerp(95, 106, k);
+      place(A.el, A); place(B.el, B);
+      cipi.x = lerp(430, 515, k); cipi.y = lerp(150, 160, k); cipi.s = lerp(.62, .55, k); cipi.o = lerp(.8, 1, k); drawCipi();
+    });
+    sfx.pop();
+    C.el.style.display = ''; C.s = .9; place(C.el, C);
+    await Promise.all([
+      tween(450, k => { A.el.style.opacity = 1 - k; B.el.style.opacity = 1 - k; }),
+      tween(700, k => { C.s = lerp(.9, 1.35, k); place(C.el, C); C.el.style.opacity = Math.min(1, k * 2); }, E.back)
+    ]);
+    A.el.style.display = 'none'; B.el.style.display = 'none';
+    for (let i = 0; i < 14; i++) setTimeout(() => sparkle(rand(450, 590), rand(80, 140), '#BFE8FF', 5), i * 90);
+    await wait(900); cipiBob.classList.remove('shiver'); mood('happy');
+  },
+  async pres() {
+    const C = cl.C; C.el.classList.add('storm'); sfx.whoosh();
+    await tween(1200, k => { C.x = lerp(515, 770, k); C.y = lerp(110, 118, k); place(C.el, C); cipi.x = C.x; cipi.y = C.y + 50; drawCipi(); });
+    sfx.rain();
+    for (let i = 0; i < 48; i++) raindrop(rand(700, 850), rand(150, 165), i * 42);
+    await wait(650); mood('wow');
+    await moveCipi({ x: 786, y: 248, s: .6 }, 700, E.in);
+    splash(786, 266); splash(786, 266); sfx.pop();
+    await wait(1300); mood('happy');
+    C.el.classList.remove('storm');
+    await tween(900, k => { C.x = lerp(770, 515, k); C.y = lerp(118, 110, k); C.s = lerp(1.35, 1.1, k); place(C.el, C); });
+    resetSmallClouds(true);
+    await Promise.all([
+      tween(500, k => { C.el.style.opacity = 1 - k; }),
+      tween(600, k => { cl.A.el.style.opacity = k; cl.B.el.style.opacity = k; })
+    ]);
+    C.el.style.display = 'none';
+  },
+  async limp() {
+    const L = river.getTotalLength();
+    let best = L * .6, bd = 1e9;
+    for (let i = 0; i <= 200; i++) { const l = L * (.4 + .5 * i / 200), p = river.getPointAtLength(l), d = Math.abs(p.x - 545); if (d < bd) { bd = d; best = l; } }
+    const p0 = river.getPointAtLength(0);
+    await moveCipi({ x: p0.x, y: p0.y - 14 }, 300);
+    riverG.classList.add('fast'); sfx.slide(); mood('wow');
+    let f = 0;
+    await tween(2800, k => {
+      const p = river.getPointAtLength(k * best); cipi.x = p.x; cipi.y = p.y - 14; drawCipi();
+      if (++f % 4 === 0) sparkle(p.x + rand(-6, 6), p.y - 4, '#E6F7FF', 4);
+    }, E.inOut);
+    riverG.classList.remove('fast'); mood('happy');
+  },
+  async infil() {
+    ground.classList.add('active'); sfx.bubble(); mood('wow');
+    const x0 = cipi.x;
+    let f = 0;
+    await tween(1600, k => {
+      cipi.y = lerp(431, 588, k); cipi.s = lerp(.6, .45, k); drawCipi();
+      if (++f % 6 === 0) sparkle(x0 + rand(-10, 10), cipi.y - 10, '#A9E2FB', 4);
+    }, E.inOut);
+    well.classList.add('pump'); sfx.bubble();
+    await tween(1700, k => { cipi.x = lerp(x0, 318, k); cipi.y = 588 + Math.sin(k * 14) * 3; drawCipi(); }, E.inOut);
+    ground.classList.remove('active');
+    await moveCipi({ x: HOME.x, y: HOME.y, s: 1, o: 1 }, 1000, E.out);
+    splash(HOME.x, HOME.y + 30); splash(HOME.x, HOME.y + 30);
+    well.classList.remove('pump'); mood('happy');
+  }
+};
+
+/* ---------- drops economy ---------- */
+function setGems(v, bumpIt) {
+  S.gems = v; $('#gemCount').textContent = v.toLocaleString('id-ID'); store.set('cipi-gems', v);
+  if (bumpIt) { const g = $('#gems'); g.classList.remove('bump'); void g.offsetWidth; g.classList.add('bump'); }
+}
+function flyGems(sx, sy, amount, n = 6) {
+  const target = $('#gems svg').getBoundingClientRect(), tx = target.left + target.width / 2, ty = target.top + target.height / 2;
+  const per = Math.floor(amount / n); let rest = amount - per * n;
+  for (let i = 0; i < n; i++) {
+    const el = document.createElementNS(NS, 'svg'); el.setAttribute('class', 'fly'); el.setAttribute('viewBox', '0 0 24 32');
+    const u = document.createElementNS(NS, 'use'); u.setAttribute('href', '#gem'); el.appendChild(u); document.body.appendChild(el);
+    const ox = sx + rand(-30, 30), oy = sy + rand(-20, 20), cx = (ox + tx) / 2 + rand(-80, 80), cy = Math.min(oy, ty) - rand(60, 140);
+    const add = per + (i === n - 1 ? rest : 0);
+    setTimeout(() => {
+      tween(reduced ? 150 : 750, k => {
+        const x = (1 - k) * (1 - k) * ox + 2 * (1 - k) * k * cx + k * k * tx, y = (1 - k) * (1 - k) * oy + 2 * (1 - k) * k * cy + k * k * ty;
+        el.style.transform = `translate(${x - 11}px, ${y - 14}px) scale(${1.2 - k * .5})`;
+      }, E.inOut).then(() => { el.remove(); setGems(S.gems + add, true); sfx.coin(); });
+    }, i * 90);
+  }
+}
+function rewardFromScene(x, y, amount) { const p = toScreen(x, y); flyGems(p.x, p.y, amount); }
+
+/* ---------- speech + panel ---------- */
+function say(text, termObj, next) {
+  $('#speechText').textContent = text;
+  const term = $('#term');
+  if (termObj) { term.hidden = false; term.style.setProperty('--tc', termObj.color); $('#termName').textContent = termObj.name; $('#termFact').textContent = termObj.fact; }
+  else term.hidden = true;
+  const nx = $('#speechNext');
+  if (next) { nx.hidden = false; $('#nextText').textContent = next; } else nx.hidden = true;
+}
+const use = id => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
+function questRow(state, color, icon, name, key) {
+  const go = state === 'done' ? use('i-check') : state === 'next' ? use('i-lock') : use('i-arrow');
+  return `<li class="qrow ${state}" style="--c:${color}"><span class="qdot">${state === 'done' ? use('i-check') : ''}</span>
+    <button class="quest" type="button" data-step="${key}"><span class="tile">${state === 'done' ? `<svg aria-hidden="true" viewBox="0 0 48 48"><use href="#i-badge"/></svg>` : use(icon)}</span>
+    <span class="qt"><b>${name}</b><span class="mini"><i style="--p:${state === 'done' ? 100 : 0}%"></i><em>${state === 'done' ? 1 : 0} / 1</em></span></span>
+    <span class="go">${go}</span></button></li>`;
+}
+function update() {
+  const st = S.stage;
+  $('#progText').textContent = `${st} dari 5 selesai`;
+  $('#quests').innerHTML = STAGES.map((s, i) => questRow(i < st ? 'done' : i === st ? 'now' : 'next', s.color, s.icon, s.name, i)).join('');
+  $('#bonus').innerHTML = questRow(S.trans ? 'done' : 'free', TRANS.color, TRANS.icon, 'Transpirasi: ketuk pohon', 'T');
+  // reward card
+  $('#rwBar').style.width = (st / 5 * 100) + '%';
+  $('#rwCount').textContent = `${st} / 5`;
+  const rw = $('#reward'), claim = $('#btnClaim');
+  if (S.badge) {
+    rw.classList.add('owned'); $('#rwThumb').innerHTML = `<svg viewBox="0 0 120 120" aria-hidden="true"><use href="#medal"/></svg>`;
+    $('#rwTitle').textContent = 'Lencana Ahli Siklus Air'; $('#rwSub').textContent = 'Sudah kamu dapatkan. Main lagi untuk tetes air tambahan.';
+    claim.hidden = true;
+  } else {
+    claim.hidden = false; claim.disabled = st < 5 || S.busy; claim.classList.toggle('ready', st >= 5 && !S.busy);
+  }
+  const cta = $('#cta'); cta.disabled = S.busy;
+  if (st < 5) {
+    const s = STAGES[st];
+    cta.classList.remove('quiz'); cta.style.setProperty('--cc', s.color);
+    cta.querySelector('use').setAttribute('href', '#' + s.icon);
+    $('#ctaText').textContent = S.busy ? 'Lihat Cipi...' : s.cta;
+  } else {
+    cta.classList.add('quiz'); cta.style.removeProperty('--cc'); cta.querySelector('use').setAttribute('href', '#i-star');
+    $('#ctaText').textContent = S.busy ? 'Lihat Cipi...' : 'Ikut Ujian Cipi';
+  }
+  showHint();
+}
+function showHint() {
+  const h = $('#hint');
+  if (S.busy || S.stage >= 5) { h.style.opacity = 0; return; }
+  const [x, y, r, px, py] = STAGES[S.stage].hint;
+  h.style.opacity = 1;
+  h.setAttribute('transform', `translate(${x} ${y})`);
+  h.querySelectorAll('circle').forEach(c => c.setAttribute('r', r));
+  const big = card.classList.contains('compact');
+  $('#hintPill').setAttribute('transform', `translate(${px * (big ? 1.25 : 1)} ${py * (big ? 1.25 : 1)}) scale(${big ? 1.6 : 1})`);
+}
+
+async function runStage(i) {
+  if (S.busy) return;
+  const st = STAGES[i];
+  S.busy = true; update(); sfx.pop();
+  say(st.say, st, null);
+  await FX[st.id]();
+  S.stage = i + 1; S.busy = false;
+  rewardFromScene(cipi.x, cipi.y, 10);
+  if (S.stage < 5) { sfx.ding(); say(st.say, st, 'Selanjutnya: ' + STAGES[S.stage].ask); update(); }
+  else complete();
+}
+async function runTrans() {
+  S.busy = true; update();
+  tree.classList.add('wiggle'); sfx.whoosh();
+  say(TRANS.say, TRANS, S.stage < 5 ? STAGES[S.stage].ask : 'Siklus lengkap! Coba Ujian Cipi atau mulai lagi dari laut.');
+  for (let i = 0; i < 12; i++) vapor(rand(440, 520), rand(335, 360), rand(470, 560), rand(170, 220), i * 140, rand(1600, 2100), '#EFFFF2');
+  await wait(2300);
+  tree.classList.remove('wiggle');
+  if (!S.trans) { S.trans = true; sfx.ding(); rewardFromScene(480, 340, 5); }
+  S.busy = false; update();
+}
+function complete() {
+  update(); sfx.win(); confetti();
+  if (S.badge) {
+    say('Hore! Aku sudah keliling satu siklus penuh dan kembali ke laut. Siklus ini terus berulang tanpa henti.', INTRO, 'Siap? Uji pemahamanmu di Ujian Cipi.');
+  } else {
+    say('Hore! Aku sudah keliling satu siklus penuh. Peti hadiahku sudah bisa dibuka!', INTRO, 'Buka peti hadiah, lalu ikut Ujian Cipi.');
+    setTimeout(openChest, reduced ? 200 : 1300);
+  }
+  cipiBob.classList.remove('hop'); void cipiBob.getBBox(); cipiBob.classList.add('hop');
+}
+function act(a) {
+  ac(); S.lastAct = performance.now();
+  if (S.busy) return;
+  if (a === 'trans') return runTrans();
+  if (S.stage >= 5) { say('Siklusnya sudah lengkap! Kamu bisa ikut Ujian Cipi, atau mulai lagi dari laut.', INTRO, null); return; }
+  const idx = STAGES.findIndex(s => s.id === a);
+  if (idx === S.stage) return runStage(idx);
+  sfx.wrong();
+  const now = STAGES[S.stage];
+  say(`Eits, belum waktunya. Sekarang giliran ${now.name}. Cari lingkaran kuning yang berkedip, ya.`, now, now.ask);
+}
+function resetSmallClouds(hiddenStart) {
+  Object.assign(cl.A, { x: 420, y: 115, s: 1 }); Object.assign(cl.B, { x: 600, y: 95, s: .9 });
+  ['A', 'B'].forEach(k => { place(cl[k].el, cl[k]); cl[k].el.style.display = ''; cl[k].el.style.opacity = hiddenStart ? 0 : 1; });
+}
+function resetAll() {
+  if (S.busy) return;
+  S.stage = 0; S.trans = false;
+  Object.assign(cipi, { x: HOME.x, y: HOME.y, s: 1, o: 1 }); drawCipi(); mood('happy');
+  sun.x = 120; sun.y = 105; place(sunEl, sun);
+  resetSmallClouds(false);
+  Object.assign(cl.C, { x: 515, y: 110, s: 1.35 }); place(cl.C.el, cl.C); cl.C.el.style.display = 'none'; cl.C.el.style.opacity = 0; cl.C.el.classList.remove('storm');
+  say('Aku kembali ke laut. Ayo berpetualang lagi!', INTRO, STAGES[0].ask);
+  update();
+}
+
+/* ---------- chest reveal ---------- */
+function openChest() {
+  if (S.badge) return;
+  const chest = $('#chest');
+  chest.classList.remove('open', 'shake'); $('#prize').hidden = true;
+  $('#btnOpenChest').hidden = false; $('#btnTakePrize').hidden = true;
+  $('#chestTitle').textContent = 'Hore, kamu dapat hadiah!';
+  $('#chestSub').textContent = 'Kamu sudah menyelesaikan 5 misi siklus air.';
+  openModal('chestModal');
+}
+$('#btnOpenChest').addEventListener('click', async () => {
+  ac(); const chest = $('#chest'); $('#btnOpenChest').hidden = true;
+  chest.classList.add('shake'); sfx.pop(); await wait(750);
+  chest.classList.add('open'); sfx.win(); await wait(500);
+  $('#prize').hidden = false;
+  $('#chestTitle').textContent = 'Lencana Ahli Siklus Air'; $('#chestSub').textContent = 'Bonus 50 tetes air untukmu!';
+  const b = $('#btnTakePrize'); b.hidden = false; b.focus();
+});
+$('#btnTakePrize').addEventListener('click', () => {
+  const r = $('#prize').getBoundingClientRect();
+  S.badge = true; store.set('cipi-badge', true);
+  closeModal($('#chestModal'));
+  flyGems(r.left + r.width / 2, r.top + r.height / 2, 50, 10);
+  confetti(); update();
+  say('Lencanaku sekarang jadi milikmu! Ayo buktikan kamu ahli siklus air.', INTRO, 'Tekan Ikut Ujian Cipi untuk mulai.');
+});
+
+/* ---------- confetti ---------- */
+function confetti() {
+  if (reduced) return;
+  const cv = $('#confetti'); cv.hidden = false;
+  const ctx = cv.getContext('2d'), dpr = Math.min(2, devicePixelRatio || 1);
+  cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const cols = ['#F7943A', '#8E7CF5', '#3FA6EE', '#26B3A1', '#FFC93C', '#FF9DB0', '#56BB64'];
+  const ps = Array.from({ length: 160 }, () => ({ x: innerWidth / 2 + rand(-80, 80), y: innerHeight * .45, vx: rand(-9, 9), vy: rand(-15, -5), r: rand(5, 10), c: pick(cols), a: rand(0, 6), va: rand(-.3, .3), round: Math.random() < .3 }));
+  const t0 = performance.now();
+  (function fr(now) {
+    const t = now - t0; ctx.clearRect(0, 0, innerWidth, innerHeight);
+    ps.forEach(p => {
+      p.vy += .32; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.a += p.va;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.globalAlpha = Math.max(0, 1 - t / 3200);
+      if (p.round) { ctx.beginPath(); ctx.arc(0, 0, p.r * .6, 0, 7); ctx.fill(); } else ctx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2);
+      ctx.restore();
+    });
+    if (t < 3200) requestAnimationFrame(fr); else cv.hidden = true;
+  })(t0);
+}
+
+/* ---------- modals ---------- */
+let lastFocus = null;
+function openModal(id) { lastFocus = document.activeElement; const m = $('#' + id); m.hidden = false; setTimeout(() => (m.querySelector('.opt, .b3.green, .b3.blue, [data-close]'))?.focus(), 60); }
+function closeModal(m) { m.hidden = true; lastFocus?.focus?.(); }
+document.querySelectorAll('.modal').forEach(m => {
+  m.addEventListener('click', e => { if (e.target.closest('[data-close]') || (e.target === m && m.id !== 'chestModal')) closeModal(m); });
+});
+addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal:not([hidden])').forEach(m => { if (m.id !== 'chestModal') closeModal(m); }); });
+
+/* ---------- quiz: 10 random questions per round ---------- */
+const TOPICS = {
+  EVAP: { name: 'Evaporasi', c: 'var(--c1)' }, KOND: { name: 'Kondensasi', c: 'var(--c2)' }, PRES: { name: 'Presipitasi', c: 'var(--c3)' },
+  TRAN: { name: 'Transpirasi', c: 'var(--cT)' }, LIMP: { name: 'Sungai & limpasan', c: 'var(--c4)' }, INFI: { name: 'Infiltrasi & air tanah', c: 'var(--c5)' },
+  SIKL: { name: 'Siklus air', c: '#5B8DEF' }, SUMB: { name: 'Sumber air', c: '#1F9FD0' }, JAGA: { name: 'Menjaga air', c: '#4FA85A' }
+};
+const BANK = JSON.parse($('#bank').textContent);
+const QUIZ_SIZE = 10;
+function drawRound() {
+  let seen = store.get('cipi-seen', []).filter(id => BANK.some(q => q.id === id));
+  const chosen = [];
+  for (const t of Object.keys(TOPICS)) {
+    const all = BANK.filter(q => q.t === t);
+    let pool = all.filter(q => !seen.includes(q.id));
+    if (!pool.length) { seen = seen.filter(id => !id.startsWith(t + '-')); pool = all; }
+    chosen.push(pick(pool));
+  }
+  let rest = BANK.filter(q => !chosen.includes(q) && !seen.includes(q.id));
+  if (!rest.length) rest = BANK.filter(q => !chosen.includes(q));
+  while (chosen.length < QUIZ_SIZE && rest.length) { const q = pick(rest); chosen.push(q); rest = rest.filter(x => x !== q); }
+  store.set('cipi-seen', [...seen, ...chosen.map(q => q.id)]);
+  return shuffle(chosen).map(q => { const order = shuffle([0, 1, 2, 3]); return { ...q, opts: order.map(i => q.o[i]), ans: order.indexOf(0) }; });
+}
+const Q = { set: [], i: 0, score: 0, round: store.get('cipi-round', 0) };
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function qProgress(n) { const pct = n / QUIZ_SIZE * 100; $('#qFill').style.width = pct + '%'; $('#qCipi').style.left = pct + '%'; }
+function renderQ() {
+  const it = Q.set[Q.i], tp = TOPICS[it.t];
+  $('#qCount').textContent = `Soal ${Q.i + 1}/${QUIZ_SIZE}`;
+  qProgress(Q.i);
+  $('#qBody').innerHTML = `
+    <div class="qmeta"><span class="topic" style="--tc:${tp.c}">${esc(tp.name)}</span><span class="score">${use('gem')}<span>Skor ${Q.score}</span></span></div>
+    <div class="qcard"><p class="q">${esc(it.q)}</p>
+    <div class="opts">${it.opts.map((o, k) => `<button class="opt" type="button" data-k="${k}"><span class="letter">${'ABCD'[k]}</span>${esc(o)}</button>`).join('')}</div></div>
+    <div id="fb"></div>`;
+  $('#qBody').querySelector('.score svg').setAttribute('viewBox', '0 0 24 32');
+  $('#qBody').querySelectorAll('.opt').forEach(b => b.addEventListener('click', () => answer(+b.dataset.k, b)));
+}
+function answer(k, btn) {
+  const it = Q.set[Q.i], ok = k === it.ans;
+  if (ok) Q.score++;
+  $('#qBody').querySelectorAll('.opt').forEach(b => {
+    const j = +b.dataset.k; b.disabled = true;
+    if (j === it.ans) b.classList.add('right'); else if (j === k) b.classList.add('wrong'); else b.classList.add('dim');
+  });
+  $('#qBody').querySelector('.score span').textContent = `Skor ${Q.score}`;
+  if (ok) { sfx.ding(); const r = btn.getBoundingClientRect(); flyGems(r.left + 30, r.top + r.height / 2, 5, 3); } else sfx.wrong();
+  const last = Q.i === QUIZ_SIZE - 1;
+  $('#fb').innerHTML = `<div class="feedback ${ok ? 'good' : 'bad'}"><svg viewBox="0 0 64 84" aria-hidden="true"><use href="#drop"/></svg><div><b>${ok ? 'Benar, hebat! +5 tetes air' : 'Belum tepat. Jawabannya: ' + esc(it.opts[it.ans])}</b><p>${esc(it.e)}</p></div></div>
+    <div class="foot"><button class="b3 blue big" id="qNext" type="button">${last ? 'Lihat hasil' : 'Soal berikutnya'}<svg><use href="#i-arrow"/></svg></button></div>`;
+  qProgress(Q.i + 1);
+  const nb = $('#qNext'); nb.focus({ preventScroll: true }); nb.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
+  nb.addEventListener('click', () => { if (last) result(); else { Q.i++; renderQ(); $('#qBody').querySelector('.opt').focus(); } });
+}
+function result() {
+  const n = QUIZ_SIZE, s = Q.score, stars = s >= 9 ? 3 : s >= 6 ? 2 : 1;
+  const msg = s === n ? 'Sempurna! Kamu benar-benar ahli siklus air.' : s >= 6 ? 'Keren! Sedikit lagi kamu jadi ahli siklus air.' : 'Tidak apa-apa. Ayo main lagi bersama Cipi, lalu coba paket soal yang baru.';
+  $('#qCount').textContent = `Paket #${Q.round} selesai`;
+  qProgress(n);
+  $('#qBody').innerHTML = `<div class="result">
+    <div class="stars">${[0, 1, 2].map(i => `<svg class="${i < stars ? 'on' : ''}" style="color:${i < stars ? '#FFC93C' : '#E8D9C4'};animation-delay:${i * .15}s"><use href="#i-star"/></svg>`).join('')}</div>
+    <div class="big">${s}/${n}</div><div style="font-weight:900;color:var(--ink-soft)">jawaban benar</div>
+    <div class="earned">${use('gem')}+${s * 5} tetes air</div>
+    <p>${msg}</p>
+    <div class="foot"><button class="b3 green big" id="qAgain" type="button"><svg><use href="#i-shuffle"/></svg>Paket soal baru</button><button class="b3 big" data-close type="button">Kembali bermain</button></div></div>`;
+  $('#qBody').querySelector('.earned svg').setAttribute('viewBox', '0 0 24 32');
+  if (s >= 6) { sfx.win(); confetti(); }
+  $('#qAgain').addEventListener('click', startQuiz);
+}
+function startQuiz() {
+  ac(); Q.set = drawRound(); Q.i = 0; Q.score = 0; Q.round += 1; store.set('cipi-round', Q.round);
+  renderQ();
+  if ($('#quiz').hidden) openModal('quiz'); else $('#qBody').querySelector('.opt').focus();
+}
+
+/* ---------- wiring ---------- */
+scene.addEventListener('click', e => { const t = e.target.closest('[data-act]'); if (t) act(t.dataset.act); });
+scene.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset?.act) { e.preventDefault(); act(e.target.dataset.act); } });
+$('#cta').addEventListener('click', () => { ac(); if (S.busy) return; S.stage < 5 ? runStage(S.stage) : startQuiz(); });
+$('#quests').addEventListener('click', e => {
+  const b = e.target.closest('[data-step]'); if (!b || S.busy) return;
+  const i = +b.dataset.step, s = STAGES[i];
+  if (i === S.stage) return runStage(i);
+  if (i < S.stage) { sfx.pop(); say(s.say, s, S.stage < 5 ? 'Selanjutnya: ' + STAGES[S.stage].ask : 'Siklus lengkap! Coba Ujian Cipi.'); }
+  else { sfx.wrong(); const now = STAGES[S.stage]; say(`Misi ${s.name} masih terkunci. Selesaikan ${now.name} dulu, ya.`, now, now.ask); }
+});
+$('#bonus').addEventListener('click', e => { if (e.target.closest('[data-step]')) act('trans'); });
+$('#btnClaim').addEventListener('click', () => { ac(); openChest(); });
+$('#btnReset').addEventListener('click', () => { ac(); sfx.pop(); resetAll(); });
+$('#btnHelp').addEventListener('click', () => openModal('help'));
+$('#btnQuiz').addEventListener('click', startQuiz);
+$('#btnSound').addEventListener('click', e => {
+  S.sound = !S.sound; const b = e.currentTarget;
+  b.setAttribute('aria-pressed', S.sound); b.querySelector('use').setAttribute('href', S.sound ? '#i-sound' : '#i-mute');
+  if (S.sound) { ac(); sfx.pop(); }
+});
+$('#btnLabels').addEventListener('click', e => {
+  S.labels = !S.labels; e.currentTarget.setAttribute('aria-pressed', S.labels); card.classList.toggle('nolabels', !S.labels);
+});
+const fullBtn = $('#btnFull');
+if (!document.fullscreenEnabled) fullBtn.hidden = true;
+fullBtn.addEventListener('click', () => {
+  try {
+    if (document.fullscreenElement) document.exitFullscreen?.();
+    else document.documentElement.requestFullscreen?.().catch(() => {});
+  } catch (e) {}
+});
+new ResizeObserver(([en]) => { card.classList.toggle('compact', en.contentRect.width < 620); showHint(); }).observe(card);
+
+setGems(S.gems, false);
+buildLabels();
+if (document.fonts?.ready) document.fonts.ready.then(buildLabels);
+update();
+if (!reduced) requestAnimationFrame(idleLoop);
+})();
+</script>
+</body>
+</html>
