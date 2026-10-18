@@ -426,6 +426,13 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
 @keyframes honk{50%{transform:translateY(-9px) rotate(-8deg)}}
 @media (max-width:620px){ .strip-tools{flex-wrap:wrap;gap:6px} .chip{min-height:36px;padding:0 10px;font-size:.78rem} .node.node-chest.done .ntile svg{width:38px;height:38px} }
 
+
+/* v6 */
+.duck-bob{animation:float 2.6s ease-in-out infinite}
+.rs-desc{margin:0 0 10px;font-weight:800}
+.rs-list{margin:0;padding:12px 14px 12px 32px;background:#fff;border-radius:16px;box-shadow:0 3px 0 #E5CDAA;display:grid;gap:4px;font-weight:700}
+.rs-note{margin:12px 0 0;font-weight:900;color:var(--green-d);font-size:.92rem}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
@@ -541,7 +548,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         <rect width="1000" height="620" fill="url(#gSky)"/>
 
         <!-- rainbow -->
-        <g fill="none" stroke-width="10" opacity=".42">
+        <g id="rainbow" fill="none" stroke-width="10" opacity=".42">
           <path d="M260 470 A300 300 0 0 1 860 470" stroke="#FF8C8C"/>
           <path d="M270 470 A290 290 0 0 1 850 470" stroke="#FFB86B"/>
           <path d="M280 470 A280 280 0 0 1 840 470" stroke="#FFE07A"/>
@@ -550,10 +557,12 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
           <path d="M310 470 A250 250 0 0 1 810 470" stroke="#B9A4FF"/>
         </g>
 
+        <path data-egg="rainbow" d="M265 470 A295 295 0 0 1 855 470" fill="none" stroke="transparent" stroke-width="64"/>
+
         <!-- background clouds -->
-        <g class="drift"><use href="#cloudShape" transform="translate(300 60) scale(.45)" fill="#fff" opacity=".7"/></g>
-        <g class="drift d2"><use href="#cloudShape" transform="translate(880 70) scale(.55)" fill="#fff" opacity=".65"/></g>
-        <g class="drift d3"><use href="#cloudShape" transform="translate(720 30) scale(.35)" fill="#fff" opacity=".6"/></g>
+        <g data-egg="bgcloud" class="drift"><use href="#cloudShape" transform="translate(300 60) scale(.45)" fill="#fff" opacity=".7"/></g>
+        <g data-egg="bgcloud" class="drift d2"><use href="#cloudShape" transform="translate(880 70) scale(.55)" fill="#fff" opacity=".65"/></g>
+        <g data-egg="bgcloud" class="drift d3"><use href="#cloudShape" transform="translate(720 30) scale(.35)" fill="#fff" opacity=".6"/></g>
 
         <!-- birds -->
         <g id="birds">
@@ -614,13 +623,14 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
           <rect x="330" y="532" width="670" height="8" fill="#B97E55" opacity=".6"/>
           <rect class="focus-ring" x="440" y="470" width="220" height="140" rx="20"/>
         </g>
+        <g id="crystal" transform="translate(862 556)" data-egg="crystal"><rect x="-12" y="-14" width="24" height="24" fill="transparent"/><path d="M-7 7 L-5 -3 0 -9 5 -3 7 7Z" fill="#C9B8FF"/><path d="M0 -9 L5 -3 7 7 0 7Z" fill="#A58BF5"/><path d="M-3 -2 L0 -6" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></g>
 
         <!-- flowers & grass -->
         <g pointer-events="none">
-          <g class="flower" transform="translate(648 482)"><path d="M0 0 V-14" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -18)" fill="#FF9DB0"/><circle cy="-18" r="3.4" fill="#FFD45C"/></g>
-          <g class="flower f2" transform="translate(700 486)"><path d="M0 0 V-11" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -15) scale(.8)" fill="#FFE07A"/><circle cy="-15" r="2.8" fill="#F7943A"/></g>
-          <g class="flower f3" transform="translate(770 486)"><path d="M0 0 V-13" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -17) scale(.9)" fill="#C9B8FF"/><circle cy="-17" r="3" fill="#FFD45C"/></g>
-          <g class="flower f4" transform="translate(800 450)"><path d="M0 0 V-10" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -14) scale(.75)" fill="#FF9DB0"/><circle cy="-14" r="2.6" fill="#FFD45C"/></g>
+          <g data-egg="flower" pointer-events="all" class="flower" transform="translate(648 482)"><path d="M0 0 V-14" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -18)" fill="#FF9DB0"/><circle cy="-18" r="3.4" fill="#FFD45C"/></g>
+          <g data-egg="flower" pointer-events="all" class="flower f2" transform="translate(700 486)"><path d="M0 0 V-11" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -15) scale(.8)" fill="#FFE07A"/><circle cy="-15" r="2.8" fill="#F7943A"/></g>
+          <g data-egg="flower" pointer-events="all" class="flower f3" transform="translate(770 486)"><path d="M0 0 V-13" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -17) scale(.9)" fill="#C9B8FF"/><circle cy="-17" r="3" fill="#FFD45C"/></g>
+          <g data-egg="flower" pointer-events="all" class="flower f4" transform="translate(800 450)"><path d="M0 0 V-10" stroke="#5DA55A" stroke-width="3" stroke-linecap="round"/><use href="#flowerP" transform="translate(0 -14) scale(.75)" fill="#FF9DB0"/><circle cy="-14" r="2.6" fill="#FFD45C"/></g>
           <g fill="none" stroke="#6CB65F" stroke-width="3" stroke-linecap="round">
             <path d="M600 470 l-3 -9 M604 470 l1 -11 M608 470 l4 -8"/><path d="M880 474 l-3 -9 M884 474 l1 -11 M888 474 l4 -8"/><path d="M470 434 l-3 -8 M474 434 l1 -10 M478 434 l4 -7"/>
           </g>
@@ -635,6 +645,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
           <circle class="focus-ring" cx="740" cy="390" r="50"/>
         </g>
         <circle data-egg="snow" cx="792" cy="244" r="24" fill="transparent"/>
+        <g id="duck" transform="translate(644 412)" data-egg="duck"><g class="duck-bob"><circle r="16" fill="transparent"/><ellipse cx="2" cy="0" rx="10" ry="6.5" fill="#FFD45C"/><path d="M9 -2 L14 -6 L12 1Z" fill="#F5C342"/><circle cx="-5" cy="-7" r="5.5" fill="#FFD45C"/><path d="M-10 -7.5 L-14.5 -5.5 L-10 -4Z" fill="#FFB347"/><circle cx="-6.5" cy="-8" r="1.3" fill="#3A3350"/><ellipse cx="3" cy="-1" rx="5" ry="3" fill="#F5C342"/></g></g>
 
         <!-- sand + sea -->
         <path d="M232 468 Q318 466 376 506 Q356 524 330 524Z" fill="#FFE2B0"/>
@@ -657,6 +668,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         <!-- seabed: sand under the sea that joins the soil layers -->
         <path d="M352 506 C336 534 306 552 260 562 C180 576 90 574 0 572 L0 584 C90 586 186 588 266 574 C318 562 350 542 366 512Z" fill="#EFD3A4"/>
         <g fill="#E2BE86"><circle cx="70" cy="579" r="2.2"/><circle cx="160" cy="580" r="1.8"/><circle cx="250" cy="569" r="2"/><circle cx="320" cy="545" r="1.8"/></g>
+        <g id="starfish" transform="translate(118 571) rotate(-12)" data-egg="starfish"><circle r="14" fill="transparent"/><path d="M0 -8 L2.4 -2.6 8 -2.4 3.6 1.4 5 7 0 4 -5 7 -3.6 1.4 -8 -2.4 -2.4 -2.6Z" fill="#FF8A7A"/><circle cx="0" cy="-3" r="1" fill="#FFD0C7"/><circle cx="2" cy="1" r="1" fill="#FFD0C7"/><circle cx="-2" cy="1" r="1" fill="#FFD0C7"/></g>
         <!-- boat -->
         <g transform="translate(62 462)" data-egg="boat"><g class="boat"><rect x="-26" y="-42" width="52" height="54" fill="transparent"/>
           <path d="M-22 -4 H22 L15 8 H-15Z" fill="#FF8A7A"/><path d="M-22 -4 H22" stroke="#E8685A" stroke-width="3"/>
@@ -682,7 +694,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
           </g>
           <circle class="focus-ring" cx="0" cy="-50" r="58"/>
         </g>
-        <g transform="translate(850 452)" data-act="trans">
+        <g id="tree2" transform="translate(850 452)" data-act="trans">
           <g class="sway" style="animation-delay:-1.4s">
             <rect x="-5" y="-26" width="10" height="28" rx="3" fill="#B07A52"/>
             <circle cx="0" cy="-40" r="22" fill="#5FBA5C"/><circle cx="-2" cy="-43" r="19" fill="#7DD06B"/>
@@ -699,8 +711,8 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         </g>
 
         <!-- butterflies -->
-        <g id="bf1" pointer-events="none"><g class="bfly-w"><path d="M0 0 C-10 -12 -16 -2 -8 3 C-14 8 -6 12 0 3 C6 12 14 8 8 3 C16 -2 10 -12 0 0Z" fill="#FFB8D0"/></g><circle r="1.8" fill="#3A3350"/></g>
-        <g id="bf2" pointer-events="none"><g class="bfly-w" style="animation-delay:-.1s"><path d="M0 0 C-10 -12 -16 -2 -8 3 C-14 8 -6 12 0 3 C6 12 14 8 8 3 C16 -2 10 -12 0 0Z" fill="#FFE07A"/></g><circle r="1.8" fill="#3A3350"/></g>
+        <g id="bf1" data-egg="butterfly"><circle r="16" fill="transparent"/><g class="bfly-w"><path d="M0 0 C-10 -12 -16 -2 -8 3 C-14 8 -6 12 0 3 C6 12 14 8 8 3 C16 -2 10 -12 0 0Z" fill="#FFB8D0"/></g><circle r="1.8" fill="#3A3350"/></g>
+        <g id="bf2" data-egg="butterfly"><circle r="16" fill="transparent"/><g class="bfly-w" style="animation-delay:-.1s"><path d="M0 0 C-10 -12 -16 -2 -8 3 C-14 8 -6 12 0 3 C6 12 14 8 8 3 C16 -2 10 -12 0 0Z" fill="#FFE07A"/></g><circle r="1.8" fill="#3A3350"/></g>
 
         <!-- sun -->
         <g id="sun" data-act="evap" tabindex="0" role="button" aria-label="Tuan Matahari: panaskan laut (evaporasi)" transform="translate(120 105)">
@@ -754,8 +766,9 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         <g id="fx" pointer-events="none"></g>
 
         <!-- Cipi -->
-        <g id="cipi" data-mood="happy" transform="translate(170 520)" pointer-events="none">
+        <g id="cipi" data-mood="happy" transform="translate(170 520)" data-egg="cipi">
           <g class="cipi-bob">
+            <circle r="36" cy="4" fill="transparent"/>
             <ellipse cx="0" cy="40" rx="20" ry="4" fill="#3A3350" opacity=".12"/>
             <ellipse cx="-26" cy="16" rx="5.5" ry="9" fill="#5EBBF3" transform="rotate(30 -26 16)"/>
             <g class="arm-r"><ellipse cx="26" cy="16" rx="5.5" ry="9" fill="#5EBBF3" transform="rotate(-30 26 16)"/></g>
@@ -831,7 +844,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         </div>
         <div class="rbar"><i id="lvBar"></i><span><b id="lvCount" style="font:inherit">0 / 100</b><svg viewBox="0 0 24 32"><use href="#gem"/></svg></span></div>
         <ol class="tiers" id="tiers"></ol>
-        <p class="earn">Dapatkan tetes air: +10 tiap tahap, +5 transpirasi, +50 peti hadiah, +5 tiap jawaban benar.</p>
+        <p class="earn" id="earnText"></p>
       </section>
     </aside>
   </main>
@@ -846,9 +859,9 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         <li><span class="tile" style="--c:var(--c1)"><svg><use href="#i-sun"/></svg></span><div><b>Ikuti yang berkedip</b><p>Lingkaran kuning menunjukkan benda yang harus kamu ketuk berikutnya. Kamu juga bisa menekan tombol besar di panel.</p></div></li>
         <li><span class="tile" style="--c:var(--c2)"><svg><use href="#i-cloud"/></svg></span><div><b>Selesaikan 5 misi</b><p>Misi Siklus ada di bawah layar utama. Setiap tahap memberi 10 tetes air, dan lima tahap membuka peti hadiah berisi 50 tetes air.</p></div></li>
         <li><span class="tile" style="--c:var(--cT)"><svg><use href="#i-leaf"/></svg></span><div><b>Cari misi bonus</b><p>Ketuk pohon kapan saja untuk melihat transpirasi, yaitu uap air yang keluar dari daun.</p></div></li>
-        <li><span class="tile" style="--c:#C2743F"><svg viewBox="0 0 120 120"><use href="#medal"/></svg></span><div><b>Naikkan lencanamu</b><p>Tetes air menaikkan lencanamu: Bronze, Silver, Gold, Platinum, lalu Diamond.</p></div></li>
-        <li><span class="tile" style="--c:#E0A417"><svg><use href="#i-sparkle"/></svg></span><div><b>Cari 6 rahasia</b><p>Ada hadiah tersembunyi di pemandangan. Coba ketuk benda-benda di sekitar Cipi, beberapa harus diketuk berkali-kali!</p></div></li>
-        <li><span class="tile" style="--c:var(--yellow-d)"><svg><use href="#i-star"/></svg></span><div><b>Ikut Ujian Cipi</b><p>Setiap ujian berisi 10 soal yang diambil acak dari 60 soal, jadi paket soalnya berganti. Selama ujian, layar di belakang diburamkan.</p></div></li>
+        <li><span class="tile" style="--c:#C2743F"><svg viewBox="0 0 120 120"><use href="#medal"/></svg></span><div><b>Naikkan lencanamu</b><p>Tetes air menaikkan lencanamu: Bronze, Silver, Gold, Platinum, lalu Diamond. Diamond bisa diraih kalau kamu menuntaskan siklus, menguasai banyak soal, dan menemukan rahasia.</p></div></li>
+        <li><span class="tile" style="--c:#E0A417"><svg><use href="#i-sparkle"/></svg></span><div><b>Cari 16 rahasia</b><p>Ada hadiah tersembunyi di pemandangan. Coba ketuk benda-benda di sekitar Cipi, beberapa harus diketuk berkali-kali!</p></div></li>
+        <li><span class="tile" style="--c:var(--yellow-d)"><svg><use href="#i-star"/></svg></span><div><b>Ikut Ujian Cipi</b><p>Setiap ujian berisi 10 soal yang diambil acak dari 60 soal, dan soal yang baru pertama kali kamu jawab benar memberi 5 tetes air. Selama ujian, layar di belakang diburamkan.</p></div></li>
       </ul>
       <div class="foot"><button class="b3 green big" data-close>Aku siap bermain</button></div>
     </div>
@@ -887,6 +900,24 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
     </svg>
     <button class="b3 green big" id="btnOpenChest" type="button">Buka peti</button>
     <button class="b3 green big" id="btnTakePrize" type="button" hidden>Ambil hadiah</button>
+  </div>
+</div>
+
+<!-- full reset -->
+<div class="modal" id="resetModal" hidden role="alertdialog" aria-modal="true" aria-labelledby="rsTitle" aria-describedby="rsDesc">
+  <div class="sheet" style="width:min(470px,100%)">
+    <div class="sheet-head"><h2 id="rsTitle"><svg style="color:var(--red)"><use href="#i-reset"/></svg>Mulai ulang dari awal?</h2><button class="x" data-close aria-label="Batal"><svg><use href="#i-close"/></svg></button></div>
+    <div class="sheet-body">
+      <p id="rsDesc" class="rs-desc">Semua data di perangkat ini akan dihapus dan tidak bisa dikembalikan:</p>
+      <ul class="rs-list">
+        <li>Nama: <b id="rsName">-</b></li>
+        <li><b id="rsGems">0</b> tetes air dan lencana <b id="rsTier">Bronze</b></li>
+        <li>Progres Misi Siklus dan peti hadiah</li>
+        <li>Rahasia <b id="rsEggs">0/16</b> dan soal dikuasai <b id="rsQs">0/60</b></li>
+      </ul>
+      <p class="rs-note">Kalau hanya me-refresh halaman, datamu tetap aman.</p>
+      <div class="foot"><button class="b3 big" data-close type="button">Batal</button><button class="b3 red big" id="btnResetYes" type="button">Ya, hapus semua</button></div>
+    </div>
   </div>
 </div>
 
@@ -1038,7 +1069,7 @@ const store = {
 };
 
 /* ---------- state ---------- */
-const S = { stage: 0, busy: false, labels: true, trans: false, chestDone: false, gems: store.get('cipi-gems', 0), eggs: new Set(), name: store.get('cipi-name', '') };
+const S = { stage: 0, busy: false, labels: true, trans: false, chestDone: false, gems: store.get('cipi-gems', 0), eggs: new Set(store.get('cipi-eggs', [])), earned: new Set(store.get('cipi-earned', [])), name: store.get('cipi-name', '') };
 
 /* ---------- audio: one context, separate music + effects buses ---------- */
 const AUD = {
@@ -1099,6 +1130,8 @@ const sfx = {
   chirp: () => { tone(2400, .07, 'sine', .035, 3200); tone(2600, .08, 'sine', .03, 3400, .11); },
   toot: () => { tone(330, .18, 'square', .05); tone(262, .28, 'square', .05, null, .22); },
   magic: () => [784, 988, 1175, 1568].forEach((f, i) => tone(f, .2, 'sine', .1, null, i * .07)),
+  quack: () => { tone(520, .12, 'square', .05, 300); tone(480, .14, 'square', .05, 280, .18); },
+  giggle: () => [900, 1100, 950, 1200].forEach((f, i) => tone(f, .09, 'triangle', .08, null, i * .09)),
   win: () => [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, .3, 'triangle', .13, null, i * .11))
 };
 
@@ -1486,6 +1519,8 @@ function renderLevel() {
     $('#lvNext').textContent = 'Level tertinggi. Kamu juara air!';
   }
   $('#tiers').innerHTML = TIERS.map((tt, k) => `<li class="${k <= i ? 'got' : 'lock'}${k === i ? ' cur' : ''}"><svg viewBox="0 0 120 120" style="${medalStyle(k)}" aria-hidden="true"><use href="#medal"/></svg><span>${tt.name}</span><small>${tt.min}</small></li>`).join('');
+  const maxPts = 50 + 5 + 50 + BANK.length * 5 + EGG_IDS.reduce((a, id) => a + EGGS[id].pts, 0);
+  $('#earnText').textContent = `+10 tiap tahap · +5 transpirasi · +50 peti · +5 tiap soal baru yang dijawab benar (${S.earned.size}/${BANK.length} soal) · rahasia tersembunyi (${S.eggs.size}/${EGG_IDS.length}). Total maksimal ${maxPts} tetes air.`;
 }
 function setGems(v, bumpIt) {
   const before = tierOf(S.gems);
@@ -1523,16 +1558,38 @@ const rewardFromScene = (x, y, amount) => { const p = toScreen(x, y); flyGems(p.
 
 /* ---------- easter eggs: 6 hidden secrets, points once per cycle ---------- */
 const EGGS = {
-  apple: { name: 'Apel emas', pts: 25, say: 'Wah, kamu menemukan apel emas! Pohon yang sehat menyimpan air di akar dan daunnya.' },
-  fish: { name: 'Ikan lompat', pts: 15, say: 'Hap! Kamu menangkap ikan yang melompat. Ikan butuh air laut yang bersih untuk hidup.' },
-  bird: { name: 'Teman burung', pts: 10, say: 'Cuit cuit! Burung juga minum air dari sungai dan embun di daun.' },
-  well: { name: 'Ember sumur', pts: 10, say: 'Byur! Ember sumur mengambil air tanah dari akuifer. Pakai secukupnya, ya.' },
-  snow: { name: 'Salju gunung', pts: 10, say: 'Brrr! Salju di puncak gunung adalah air tawar yang membeku. Saat mencair, airnya mengalir ke sungai.' },
-  boat: { name: 'Perahu tut-tut', pts: 5, say: 'Tut tut! Perahu nelayan berlayar di laut, tempat evaporasi paling banyak terjadi.' }
+  apple: { name: 'Apel emas', pts: 30, say: 'Wah, kamu menemukan apel emas! Pohon yang sehat menyimpan air di akar dan daunnya.' },
+  starfish: { name: 'Bintang laut', pts: 30, say: 'Bintang laut hidup di dasar laut. Laut menyimpan hampir semua air di bumi.' },
+  crystal: { name: 'Kristal tanah', pts: 30, say: 'Kamu menemukan kristal di dalam tanah! Di bawah tanah juga ada air yang tersimpan di akuifer.' },
+  fish: { name: 'Ikan lompat', pts: 25, say: 'Hap! Kamu menangkap ikan yang melompat. Ikan butuh air laut yang bersih untuk hidup.' },
+  butterfly: { name: 'Kupu-kupu', pts: 25, say: 'Kupu-kupu minum nektar bunga, dan bunga butuh air hujan untuk tumbuh.' },
+  duck: { name: 'Bebek sungai', pts: 25, say: 'Kwek kwek! Bebek suka berenang di sungai yang bersih. Jangan buang sampah ke sungai, ya.' },
+  bird: { name: 'Teman burung', pts: 20, say: 'Cuit cuit! Burung juga minum air dari sungai dan embun di daun.' },
+  well: { name: 'Ember sumur', pts: 20, say: 'Byur! Ember sumur mengambil air tanah dari akuifer. Pakai secukupnya, ya.' },
+  snow: { name: 'Salju gunung', pts: 20, say: 'Brrr! Salju di puncak gunung adalah air tawar yang membeku. Saat mencair, airnya mengalir ke sungai.' },
+  sun: { name: 'Kacamata matahari', pts: 20, say: 'Tuan Matahari pakai kacamata keren! Panas matahari adalah sumber energi siklus air.' },
+  rainbow: { name: 'Pelangi berkilau', pts: 20, say: 'Pelangi muncul saat cahaya matahari menembus titik-titik air hujan di udara.' },
+  cipi: { name: 'Cipi geli', pts: 20, say: 'Hihi, geli! Kamu menemukan Cipi yang suka digelitik.' },
+  bgcloud: { name: 'Awan di kejauhan', pts: 15, say: 'Awan kecil di kejauhan juga kumpulan titik-titik air hasil kondensasi.' },
+  tree2: { name: 'Pohon kecil', pts: 15, say: 'Pohon kecil juga ikut menyerap air tanah lewat akarnya.' },
+  flower: { name: 'Bunga mekar', pts: 15, say: 'Bunga mekar karena akarnya mendapat air dari tanah.' },
+  boat: { name: 'Perahu tut-tut', pts: 15, say: 'Tut tut! Perahu nelayan berlayar di laut, tempat evaporasi paling banyak terjadi.' }
 };
 const EGG_IDS = Object.keys(EGGS);
 const FISH = { live: false, x: 0, y: 0 };
 let treeTaps = [], wellTaps = [];
+const tapLog = {};
+function multiTap(key, n, ms, fn) {
+  const now = performance.now();
+  tapLog[key] = (tapLog[key] || []).filter(t => now - t < ms); tapLog[key].push(now);
+  if (tapLog[key].length >= n) { tapLog[key] = []; fn(); }
+}
+function sunEgg() { sunEl.classList.add('hot'); setTimeout(() => { if (!S.busy) sunEl.classList.remove('hot'); }, 1800); foundEgg('sun', sun.x, sun.y - 40); }
+function tree2Egg() {
+  const t2 = $('#tree2'); t2.classList.remove('wiggle'); void t2.getBBox(); t2.classList.add('wiggle'); setTimeout(() => t2.classList.remove('wiggle'), 2200);
+  for (let i = 0; i < 8; i++) setTimeout(() => sparkle(850 + rand(-20, 20), 412 + rand(-20, 10), '#AEE79C', 5), i * 60);
+  foundEgg('tree2', 850, 396);
+}
 function toSvg(e) { const pt = scene.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(scene.getScreenCTM().inverse()); }
 function floatText(x, y, text, color = '#FFD45C') {
   const t = mk('text', { x, y, 'text-anchor': 'middle', 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 24, fill: color, stroke: '#3A3350', 'stroke-width': 5, 'paint-order': 'stroke', 'stroke-linejoin': 'round' });
@@ -1542,13 +1599,13 @@ function floatText(x, y, text, color = '#FFD45C') {
 function foundEgg(id, x, y) {
   const e = EGGS[id];
   if (S.eggs.has(id)) { floatText(x, y - 10, 'Sudah ketemu!', '#fff'); return; }
-  S.eggs.add(id); sfx.magic();
+  S.eggs.add(id); store.set('cipi-eggs', [...S.eggs]); sfx.magic();
   floatText(x, y - 10, `+${e.pts} ${e.name}!`);
   for (let i = 0; i < 10; i++) setTimeout(() => sparkle(x + rand(-24, 24), y + rand(-24, 10), '#FFE07A', 5), i * 50);
   rewardFromScene(x, y, e.pts);
   const all = S.eggs.size === EGG_IDS.length;
   say(e.say + (all ? ' Semua rahasia sudah kamu temukan!' : ''),
-    { name: `Rahasia ${S.eggs.size}/${EGG_IDS.length}: ${e.name}`, color: '#E0A417', fact: all ? 'Hebat! Kamu menemukan semua rahasia di siklus ini. Tekan Mulai ulang untuk mencarinya lagi.' : 'Masih ada rahasia lain di pemandangan. Coba ketuk benda-benda lain, ada yang perlu diketuk berkali-kali!' },
+    { name: `Rahasia ${S.eggs.size}/${EGG_IDS.length}: ${e.name}`, color: '#E0A417', fact: all ? 'Hebat! Kamu sudah menemukan semua rahasia tersembunyi.' : 'Masih ada rahasia lain di pemandangan. Coba ketuk benda-benda lain, ada yang perlu diketuk berkali-kali!' },
     S.stage < 5 ? STAGES[S.stage].ask : null);
   update();
 }
@@ -1568,6 +1625,22 @@ function goldenApple() {
 }
 function egg(kind, ev) {
   const p = toSvg(ev);
+  if (kind === 'rainbow') {
+    const rb = $('#rainbow'); tween(1400, k => rb.setAttribute('opacity', (.42 + Math.sin(k * Math.PI) * .55).toFixed(2)), E.lin);
+    for (let i = 0; i < 12; i++) setTimeout(() => { const a = Math.PI * (1 - i / 11); sparkle(560 + Math.cos(a) * 280, 470 - Math.sin(a) * 280, '#fff', 5); }, i * 60);
+    foundEgg('rainbow', p.x, p.y); return;
+  }
+  if (kind === 'butterfly') { for (let i = 0; i < 8; i++) setTimeout(() => sparkle(p.x + rand(-14, 14), p.y + rand(-14, 8), '#FFB8D0', 4), i * 60); foundEgg('butterfly', p.x, p.y); return; }
+  if (kind === 'bgcloud') { sfx.pop(); for (let i = 0; i < 8; i++) sparkle(p.x + rand(-26, 26), p.y + rand(-12, 12), '#fff', 6); foundEgg('bgcloud', p.x, p.y + 24); return; }
+  if (kind === 'starfish') { const sf = $('#starfish'); tween(900, k => sf.setAttribute('transform', `translate(118 ${(571 - Math.sin(k * Math.PI) * 14).toFixed(1)}) rotate(${(-12 + k * 360).toFixed(0)})`), E.out); foundEgg('starfish', 118, 540); return; }
+  if (kind === 'crystal') { sfx.coin(); for (let i = 0; i < 10; i++) setTimeout(() => sparkle(862 + rand(-12, 12), 556 + rand(-14, 6), '#E3D8FF', 4), i * 50); foundEgg('crystal', 862, 530); return; }
+  if (kind === 'duck') { sfx.quack(); const d = $('#duck'); tween(800, k => d.setAttribute('transform', `translate(644 ${(412 - Math.sin(k * Math.PI) * 18).toFixed(1)}) rotate(${(k * 360).toFixed(0)})`), E.out); splash(644, 418); foundEgg('duck', 644, 392); return; }
+  if (kind === 'flower') { for (let i = 0; i < 8; i++) setTimeout(() => sparkle(p.x + rand(-12, 12), p.y + rand(-16, 4), '#FFB3C1', 4), i * 50); foundEgg('flower', p.x, p.y - 10); return; }
+  if (kind === 'cipi') {
+    if (!S.eggs.has('cipi')) { armR.classList.remove('wave'); void armR.getBBox(); armR.classList.add('wave'); }
+    multiTap('cipi', 5, 2500, () => { sfx.giggle(); cipiBob.classList.remove('hop'); void cipiBob.getBBox(); cipiBob.classList.add('hop'); setTimeout(() => cipiBob.classList.remove('hop'), 750); foundEgg('cipi', cipi.x, cipi.y - 40); });
+    return;
+  }
   if (kind === 'fish') { if (!FISH.live) return; splash(FISH.x, FISH.y + 8); sfx.splash(); foundEgg('fish', FISH.x, FISH.y); return; }
   if (kind === 'bird') {
     sfx.chirp();
@@ -1650,7 +1723,7 @@ async function runStage(i) {
   S.busy = true; update(); sfx.pop();
   say(st.say, st, null);
   await FX[st.id]();
-  S.stage = i + 1; S.busy = false;
+  S.stage = i + 1; S.busy = false; saveProgress();
   rewardFromScene(cipi.x, cipi.y, 10);
   if (S.stage < 5) { sfx.ding(); say(st.say, st, 'Selanjutnya: ' + STAGES[S.stage].ask); update(); }
   else complete();
@@ -1658,11 +1731,11 @@ async function runStage(i) {
 async function runTrans() {
   S.busy = true; update();
   tree.classList.add('wiggle'); sfx.whoosh();
-  say(TRANS.say, TRANS, S.stage < 5 ? STAGES[S.stage].ask : 'Siklus lengkap! Coba Ujian Cipi atau mulai ulang dari laut.');
+  say(TRANS.say, TRANS, S.stage < 5 ? STAGES[S.stage].ask : 'Siklus lengkap! Coba Ujian Cipi atau cari rahasia lain.');
   for (let i = 0; i < 12; i++) vapor(rand(440, 520), rand(335, 360), rand(470, 560), rand(170, 220), i * 140, rand(1600, 2100), '#EFFFF2');
   await wait(2300);
   tree.classList.remove('wiggle');
-  if (!S.trans) { S.trans = true; sfx.ding(); rewardFromScene(480, 340, 5); }
+  if (!S.trans) { S.trans = true; saveProgress(); sfx.ding(); rewardFromScene(480, 340, 5); }
   S.busy = false; update();
 }
 function complete() {
@@ -1675,12 +1748,28 @@ function act(a) {
   ac();
   if (S.busy) return;
   if (a === 'trans') return runTrans();
-  if (S.stage >= 5) { say('Siklusnya sudah lengkap! Kamu bisa ikut Ujian Cipi, atau tekan Mulai ulang di bawah layar.', INTRO, null); return; }
+  if (S.stage >= 5) { say('Siklusnya sudah lengkap! Ayo ikut Ujian Cipi, atau cari rahasia yang tersembunyi di pemandangan.', INTRO, null); return; }
   const idx = STAGES.findIndex(s => s.id === a);
   if (idx === S.stage) return runStage(idx);
   sfx.wrong();
   const now = STAGES[S.stage];
   say(`Eits, belum waktunya. Sekarang giliran ${now.name}. Cari lingkaran kuning yang berkedip, ya.`, now, now.ask);
+}
+function saveProgress() { store.set('cipi-progress', { stage: S.stage, trans: S.trans, chestDone: S.chestDone }); }
+function riverStop() {
+  const L = river.getTotalLength(); let best = L * .6, bd = 1e9;
+  for (let i = 0; i <= 200; i++) { const l = L * (.4 + .5 * i / 200), d = Math.abs(river.getPointAtLength(l).x - 545); if (d < bd) { bd = d; best = l; } }
+  return river.getPointAtLength(best);
+}
+function applySceneState(st) {
+  resetSmallClouds(false);
+  Object.assign(cl.C, { x: 515, y: 110, s: 1.35 }); place(cl.C.el, cl.C); cl.C.el.style.display = 'none'; cl.C.el.style.opacity = 0;
+  let c = { x: HOME.x, y: HOME.y, s: 1, o: 1 };
+  if (st === 1) c = { x: 430, y: 150, s: .62, o: .8 };
+  if (st === 2) { cl.A.el.style.display = 'none'; cl.B.el.style.display = 'none'; cl.C.el.style.display = ''; cl.C.el.style.opacity = 1; c = { x: 515, y: 160, s: .55, o: 1 }; }
+  if (st === 3) c = { x: 786, y: 248, s: .6, o: 1 };
+  if (st === 4) { const p = riverStop(); c = { x: p.x, y: p.y - 14, s: .6, o: 1 }; }
+  Object.assign(cipi, c); drawCipi();
 }
 function resetSmallClouds(hiddenStart) {
   Object.assign(cl.A, { x: 420, y: 115, s: 1 }); Object.assign(cl.B, { x: 600, y: 95, s: .9 });
@@ -1716,7 +1805,7 @@ $('#btnOpenChest').addEventListener('click', async () => {
 });
 $('#btnTakePrize').addEventListener('click', () => {
   const r = $('#prize').getBoundingClientRect();
-  S.chestDone = true;
+  S.chestDone = true; saveProgress();
   closeModal($('#chestModal'));
   flyGems(r.left + r.width / 2, r.top + r.height / 2, 50, 10);
   confetti(); update();
@@ -1801,17 +1890,20 @@ function drawRound() {
   const chosen = [];
   for (const t of Object.keys(TOPICS)) {
     const all = BANK.filter(q => q.t === t);
-    let pool = all.filter(q => !seen.includes(q.id));
+    let pool = all.filter(q => !seen.includes(q.id) && !S.earned.has(q.id));
+    if (!pool.length) pool = all.filter(q => !S.earned.has(q.id));
+    if (!pool.length) pool = all.filter(q => !seen.includes(q.id));
     if (!pool.length) { seen = seen.filter(id => !id.startsWith(t + '-')); pool = all; }
     chosen.push(pick(pool));
   }
-  let rest = BANK.filter(q => !chosen.includes(q) && !seen.includes(q.id));
+  let rest = BANK.filter(q => !chosen.includes(q) && !S.earned.has(q.id));
+  if (!rest.length) rest = BANK.filter(q => !chosen.includes(q) && !seen.includes(q.id));
   if (!rest.length) rest = BANK.filter(q => !chosen.includes(q));
   while (chosen.length < QUIZ_SIZE && rest.length) { const q = pick(rest); chosen.push(q); rest = rest.filter(x => x !== q); }
   store.set('cipi-seen', [...seen, ...chosen.map(q => q.id)]);
   return shuffle(chosen).map(q => { const order = shuffle([0, 1, 2, 3]); return { ...q, opts: order.map(i => q.o[i]), ans: order.indexOf(0) }; });
 }
-const Q = { set: [], i: 0, score: 0, active: false, round: store.get('cipi-round', 0) };
+const Q = { set: [], i: 0, score: 0, gain: 0, active: false, round: store.get('cipi-round', 0) };
 const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function qProgress(n) { const pct = n / QUIZ_SIZE * 100; $('#qFill').style.width = pct + '%'; $('#qCipi').style.left = pct + '%'; }
 function renderQ() {
@@ -1828,14 +1920,16 @@ function renderQ() {
 function answer(k, btn) {
   const it = Q.set[Q.i], ok = k === it.ans;
   if (ok) Q.score++;
+  const fresh = ok && !S.earned.has(it.id);
+  if (fresh) { S.earned.add(it.id); store.set('cipi-earned', [...S.earned]); Q.gain += 5; }
   $('#qBody').querySelectorAll('.opt').forEach(b => {
     const j = +b.dataset.k; b.disabled = true;
     if (j === it.ans) b.classList.add('right'); else if (j === k) b.classList.add('wrong'); else b.classList.add('dim');
   });
   $('#qBody').querySelector('.score span').textContent = `Skor ${Q.score}`;
-  if (ok) { sfx.ding(); const r = btn.getBoundingClientRect(); flyGems(r.left + 30, r.top + r.height / 2, 5, 3); } else sfx.wrong();
+  if (ok) { sfx.ding(); if (fresh) { const r = btn.getBoundingClientRect(); flyGems(r.left + 30, r.top + r.height / 2, 5, 3); } } else sfx.wrong();
   const last = Q.i === QUIZ_SIZE - 1;
-  $('#fb').innerHTML = `<div class="feedback ${ok ? 'good' : 'bad'}"><svg viewBox="0 0 64 84" aria-hidden="true"><use href="#drop"/></svg><div><b>${ok ? 'Benar, hebat! +5 tetes air' : 'Belum tepat. Jawabannya: ' + esc(it.opts[it.ans])}</b><p>${esc(it.e)}</p></div></div>
+  $('#fb').innerHTML = `<div class="feedback ${ok ? 'good' : 'bad'}"><svg viewBox="0 0 64 84" aria-hidden="true"><use href="#drop"/></svg><div><b>${ok ? (fresh ? 'Benar, hebat! +5 tetes air' : 'Benar! Poin soal ini sudah pernah kamu dapat.') : 'Belum tepat. Jawabannya: ' + esc(it.opts[it.ans])}</b><p>${esc(it.e)}</p></div></div>
     <div class="foot"><button class="b3 blue big" id="qNext" type="button">${last ? 'Lihat hasil' : 'Soal berikutnya'}<svg><use href="#i-arrow"/></svg></button></div>`;
   qProgress(Q.i + 1);
   const nb = $('#qNext'); nb.focus({ preventScroll: true }); nb.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
@@ -1851,7 +1945,7 @@ function result() {
   $('#qBody').innerHTML = `<div class="result">
     <div class="stars">${[0, 1, 2].map(i => `<svg class="${i < stars ? 'on' : ''}" style="color:${i < stars ? '#FFC93C' : '#E8D9C4'};animation-delay:${i * .15}s"><use href="#i-star"/></svg>`).join('')}</div>
     <div class="big">${s}/${n}</div><div style="font-weight:900;color:var(--ink-soft)">jawaban benar</div>
-    <div class="earned"><svg viewBox="0 0 24 32" aria-hidden="true"><use href="#gem"/></svg>+${s * 5} tetes air</div>
+    <div class="earned"><svg viewBox="0 0 24 32" aria-hidden="true"><use href="#gem"/></svg>+${Q.gain} tetes air · ${S.earned.size}/${BANK.length} soal dikuasai</div>
     <p>${msg}</p>
     <div class="foot"><button class="b3 green big" id="qAgain" type="button"><svg><use href="#i-shuffle"/></svg>Paket soal baru</button><button class="b3 big" data-close type="button">Kembali bermain</button></div></div>`;
   if (s >= 6) { sfx.win(); confetti(); }
@@ -1859,7 +1953,7 @@ function result() {
 }
 function startQuiz() {
   ac(); musicStart();
-  Q.set = drawRound(); Q.i = 0; Q.score = 0; Q.active = true; Q.round += 1; store.set('cipi-round', Q.round);
+  Q.set = drawRound(); Q.i = 0; Q.score = 0; Q.gain = 0; Q.active = true; Q.round += 1; store.set('cipi-round', Q.round);
   $('#qLeave').hidden = true;
   document.body.classList.add('exam'); setFocus(true);
   renderQ();
@@ -1871,16 +1965,22 @@ $('#qExit').addEventListener('click', () => { Q.active = false; closeModal($('#q
 /* ---------- wiring ---------- */
 scene.addEventListener('click', e => {
   ac();
-  const eg = e.target.closest('[data-egg]'); if (eg) return egg(eg.dataset.egg, e);
-  const t = e.target.closest('[data-act]'); if (!t) return;
-  if (t.dataset.act === 'trans') treeTap();
+  const eg = e.target.closest('[data-egg]');
+  const cipiAway = eg && eg.dataset.egg === 'cipi' && (S.busy || S.stage % 5 !== 0);
+  if (eg && !cipiAway) return egg(eg.dataset.egg, e);
+  let t = e.target.closest('[data-act]');
+  if (cipiAway) t = document.elementsFromPoint(e.clientX, e.clientY).map(el => el.closest && el.closest('[data-act]')).find(Boolean) || null;
+  if (!t) return;
+  if (t.id === 'tree2') multiTap('tree2', 3, 2000, tree2Egg);
+  else if (t.dataset.act === 'trans') treeTap();
+  if (t.dataset.act === 'evap') multiTap('sun', 5, 2500, sunEgg);
   act(t.dataset.act);
 });
 $('#btnEggs').addEventListener('click', () => {
   sfx.pop();
   const found = EGG_IDS.filter(id => S.eggs.has(id)).map(id => EGGS[id].name);
   say(found.length ? `Rahasia yang sudah kamu temukan: ${found.join(', ')}.` : 'Belum ada rahasia yang ditemukan.',
-    { name: `Rahasia ${S.eggs.size}/${EGG_IDS.length}`, color: '#E0A417', fact: 'Petunjuk: coba ketuk pohon berkali-kali, ikan yang melompat, burung yang terbang, perahu, sumur, dan puncak gunung bersalju.' },
+    { name: `Rahasia ${S.eggs.size}/${EGG_IDS.length}`, color: '#E0A417', fact: 'Petunjuk: rahasia ada di langit, laut, darat, sungai, dan di dalam tanah. Beberapa harus diketuk berkali-kali, dan ada yang hanya muncul sebentar!' },
     S.stage < 5 ? STAGES[S.stage].ask : null);
 });
 
@@ -1889,7 +1989,10 @@ const cleanName = v => v.replace(/\s+/g, ' ').trim().slice(0, 20);
 function greet() {
   const nm = S.name || 'Teman';
   $('#helloName').textContent = nm;
-  if (S.stage === 0 && !S.busy) say(`Halo, ${nm}! Aku Cipi si tetes air. Ayo ikut aku keliling siklus air, dari laut ke langit lalu kembali lagi ke laut.`, INTRO, 'Ketuk Tuan Matahari atau tombol di bawah untuk mulai.');
+  if (S.busy) return;
+  if (S.stage === 0) say(`Halo, ${nm}! Aku Cipi si tetes air. Ayo ikut aku keliling siklus air, dari laut ke langit lalu kembali lagi ke laut.`, INTRO, 'Ketuk Tuan Matahari atau tombol di bawah untuk mulai.');
+  else if (S.stage < 5) say(`Selamat datang lagi, ${nm}! Kita lanjutkan petualangannya dari tahap ${STAGES[S.stage].name}.`, STAGES[S.stage - 1], 'Selanjutnya: ' + STAGES[S.stage].ask);
+  else say(`Selamat datang lagi, ${nm}! Siklus airmu sudah lengkap.`, INTRO, S.chestDone ? 'Ikut Ujian Cipi atau cari rahasia lain.' : 'Buka peti hadiahmu di Misi Siklus.');
 }
 function askName() { $('#nameInput').value = S.name; openModal('nameModal'); setTimeout(() => $('#nameInput').focus(), 120); }
 $('#nameForm').addEventListener('submit', e => {
@@ -1906,7 +2009,7 @@ $('#cta').addEventListener('click', () => { ac(); if (S.busy) return; S.stage < 
 $('#quests').addEventListener('click', e => {
   const b = e.target.closest('[data-step]'); if (!b || S.busy) return;
   if (b.dataset.step === 'C') {
-    if (S.chestDone) { sfx.pop(); say('Peti di siklus ini sudah dibuka. Tekan Mulai ulang untuk siklus baru dan peti baru.', INTRO, null); }
+    if (S.chestDone) { sfx.pop(); say('Peti hadiah sudah kamu buka. Kumpulkan tetes air lagi dari Ujian Cipi dan rahasia tersembunyi.', INTRO, null); }
     else if (S.stage >= 5) openChest();
     else { sfx.wrong(); say(`Peti hadiah terbuka setelah 5 misi selesai. Sekarang giliran ${STAGES[S.stage].name}.`, STAGES[S.stage], STAGES[S.stage].ask); }
     return;
@@ -1917,7 +2020,18 @@ $('#quests').addEventListener('click', e => {
   else { sfx.wrong(); const now = STAGES[S.stage]; say(`Misi ${s.name} masih terkunci. Selesaikan ${now.name} dulu, ya.`, now, now.ask); }
 });
 $('#btnBonus').addEventListener('click', () => act('trans'));
-$('#btnReset').addEventListener('click', () => { ac(); sfx.pop(); resetAll(); });
+$('#btnReset').addEventListener('click', () => {
+  ac(); sfx.pop();
+  $('#rsName').textContent = S.name || '(belum diisi)';
+  $('#rsGems').textContent = S.gems.toLocaleString('id-ID'); $('#rsTier').textContent = TIERS[tierOf(S.gems)].name;
+  $('#rsEggs').textContent = `${S.eggs.size}/${EGG_IDS.length}`; $('#rsQs').textContent = `${S.earned.size}/${BANK.length}`;
+  openModal('resetModal');
+});
+$('#btnResetYes').addEventListener('click', () => {
+  ['cipi-gems', 'cipi-name', 'cipi-name-skip', 'cipi-progress', 'cipi-eggs', 'cipi-earned', 'cipi-seen', 'cipi-round', 'cipi-badge']
+    .forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+  location.reload();
+});
 $('#btnHelp').addEventListener('click', () => openModal('help'));
 $('#btnQuiz').addEventListener('click', startQuiz);
 $('#btnSound').addEventListener('click', () => { ac(); musicStart(); syncAudioUI(); openModal('audioModal'); });
@@ -1938,6 +2052,9 @@ fullBtn.addEventListener('click', () => {
 });
 new ResizeObserver(([en]) => { card.classList.toggle('compact', en.contentRect.width < 620); showHint(); }).observe(card);
 
+const PR = store.get('cipi-progress', null);
+if (PR) { S.stage = Math.max(0, Math.min(5, PR.stage | 0)); S.trans = !!PR.trans; S.chestDone = !!PR.chestDone; }
+applySceneState(S.stage);
 renderLevel();
 syncAudioUI();
 greet();

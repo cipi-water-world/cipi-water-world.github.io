@@ -10,7 +10,7 @@ Catatan dokumentasi untuk kuis di `app.html` (Cipi's Water World, IPAS Kelas 5 S
 | Soal per ujian | 10 |
 | Jumlah topik | 9 |
 | Opsi per soal | 4 (A–D) |
-| Poin | +5 tetes air per jawaban benar |
+| Poin | +5 tetes air per soal yang pertama kali dijawab benar (maks 300). Menjawab ulang soal yang sama tidak menambah poin. |
 | Bintang | 9–10 benar = 3 bintang, 6–8 = 2 bintang, 0–5 = 1 bintang |
 
 ## Cara soal dipilih (kenapa tiap paket terasa beda)
@@ -27,7 +27,9 @@ Riwayat soal yang sudah muncul disimpan di browser perangkat itu (`localStorage`
 - Di perangkat lain, riwayat mulai dari nol.
 - Membuka di jendela private atau menghapus data situs membuat riwayat ikut hilang. Ujian tetap jalan normal, hanya pengecualian soal lama yang mulai dari awal lagi.
 
-Kunci lain yang disimpan di browser: `cipi-gems` (jumlah tetes air), `cipi-badge` (lencana sudah diambil), `cipi-round` (nomor paket).
+Kunci lain yang disimpan di browser: `cipi-earned` (ID soal yang sudah dijawab benar), `cipi-gems` (jumlah tetes air), `cipi-round` (nomor paket). Semuanya terhapus saat tombol **Mulai ulang** dikonfirmasi.
+
+Urutan prioritas saat memilih soal per topik: soal yang belum pernah muncul dan belum dikuasai, lalu soal yang belum dikuasai, lalu soal yang belum muncul, lalu soal mana saja.
 
 ## Topik
 
