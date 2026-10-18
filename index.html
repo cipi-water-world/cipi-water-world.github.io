@@ -59,7 +59,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .pill-sep{width:2px;height:24px;border-radius:2px;background:var(--line);margin:0 2px}
 .tier-name{font-size:.95rem;font-weight:600}
 .gems.bump{animation:bump .3s ease}
-@media (max-width:760px){ .brand p, .hide-sm{display:none!important} .tools{gap:6px} .b3{min-width:42px;min-height:42px} .gems{height:42px;padding:0 10px 0 6px;font-size:1rem;gap:4px} .gems .gem-ic{width:19px;height:26px} .gems .tier-ic{width:26px;height:26px} }
+@media (max-width:760px){ .brand .sub-info, .hide-sm{display:none!important} .tools{gap:6px} .b3{min-width:42px;min-height:42px} .gems{height:42px;padding:0 10px 0 6px;font-size:1rem;gap:4px} .gems .gem-ic{width:19px;height:26px} .gems .tier-ic{width:26px;height:26px} }
 @media (max-width:480px){ .b3 .lbl{display:none} .b3.star-btn{padding:0} .brand h1{font-size:.95rem;line-height:1.1} .brand .logo{width:28px;height:38px} .tier-name{display:none} .tools{gap:5px} .b3{min-width:40px;min-height:40px} }
 @media (max-width:400px){ .brand .logo{display:none} }
 
@@ -330,10 +330,10 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
 .b3.small svg{width:17px;height:17px}
 .nodes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
 .node{position:relative;display:flex;justify-content:center}
-.node::before{content:"";position:absolute;top:24px;left:-50%;right:50%;height:6px;border-radius:3px;background:#EFE4D3}
+.node::before{content:"";position:absolute;z-index:0;top:24px;left:-50%;right:50%;height:6px;border-radius:3px;background:#EFE4D3}
 .node:first-child::before{display:none}
 .node.done::before,.node.now::before{background:var(--green)}
-.node button{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;padding:0;border-radius:16px}
+.node button{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;padding:0;border-radius:16px}
 .ntile{width:54px;height:54px;border-radius:17px;display:grid;place-items:center;background:var(--c);color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.14),0 0 0 5px #fff;transition:transform .15s}
 .node button:hover .ntile{transform:translateY(-2px)}
 .ntile svg{width:28px;height:28px}
@@ -411,6 +411,21 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
 #bird2 .wing{animation-delay:-.1s}#bird3 .wing{animation-delay:-.18s}
 @keyframes wingflap{from{transform:rotate(-12deg)}to{transform:rotate(70deg)}}
 
+
+/* v5: greeting, name form, secrets */
+.hello button{padding:0;font-weight:900;color:var(--blue-d);border-radius:6px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hello button:hover b{text-decoration:underline}
+.name-form{gap:12px}
+.name-cipi{width:84px;height:110px;animation:bob 2.4s ease-in-out infinite}
+#nameInput{width:min(320px,100%);min-height:58px;padding:0 18px;border-radius:18px;border:3px solid #fff;background:#fff;box-shadow:0 4px 0 #D9BE98;font-family:var(--font-display);font-size:1.35rem;font-weight:600;color:var(--ink);text-align:center;outline:none}
+#nameInput:focus{border-color:var(--blue)}
+#nameInput.shake{animation:shake .4s}
+.egg-chip{color:#A8730E}
+.egg-chip.done{background:#FFF4D1;border-color:#F5D77A}
+.boat.honk{animation:honk .5s ease 2}
+@keyframes honk{50%{transform:translateY(-9px) rotate(-8deg)}}
+@media (max-width:620px){ .strip-tools{flex-wrap:wrap;gap:6px} .chip{min-height:36px;padding:0 10px;font-size:.78rem} .node.node-chest.done .ntile svg{width:38px;height:38px} }
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
@@ -453,6 +468,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
     <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5.5l11-2.2V16"/><circle cx="6.5" cy="18" r="2.8"/><circle cx="17.5" cy="16" r="2.8"/></symbol>
     <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></symbol>
     <symbol id="i-next" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l9 7-9 7z" fill="currentColor"/><path d="M18 5v14"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24" fill="currentColor"><path d="M11 2l2.2 6.3L19.5 10l-6.3 2.2L11 18.5l-2.2-6.3L2.5 10l6.3-1.7z"/><path d="M19 14.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"/></symbol>
     <symbol id="gemPile" viewBox="0 0 120 120">
       <use href="#gem" x="14" y="46" width="40" height="54"/><use href="#gem" x="66" y="46" width="40" height="54"/><use href="#gem" x="36" y="20" width="48" height="66"/>
       <path d="M100 20 l3 -9 3 9 9 3 -9 3 -3 9 -3 -9 -9 -3z" fill="#FFE07A"/><path d="M14 30 l2 -6 2 6 6 2 -6 2 -2 6 -2 -6 -6 -2z" fill="#FFE07A"/>
@@ -491,7 +507,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
       <svg class="logo" viewBox="0 0 64 84" aria-hidden="true"><use href="#drop"/></svg>
       <div style="min-width:0">
         <h1>Cipi's Water World</h1>
-        <p>Petualangan siklus air · IPAS Kelas 5 SD Bab 4</p>
+        <p class="hello"><button id="btnName" type="button" title="Ganti nama">Hai, <b id="helloName">Teman</b>!</button><span class="sub-info"> · Petualangan siklus air · IPAS Kelas 5 SD Bab 4</span></p>
       </div>
     </div>
     <div class="tools">
@@ -540,8 +556,8 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         <g class="drift d3"><use href="#cloudShape" transform="translate(720 30) scale(.35)" fill="#fff" opacity=".6"/></g>
 
         <!-- birds -->
-        <g id="birds" pointer-events="none">
-          <g id="bird1" class="bird">
+        <g id="birds">
+          <g id="bird1" class="bird" data-egg="bird"><circle r="24" fill="transparent"/>
             <path d="M8 -2 Q16 -9 23 -9 Q19 -3 22 2 Q15 4 8 3Z" fill="#F58EA6"/>
             <ellipse cx="1" cy="1" rx="12.5" ry="9.5" fill="#FFB3C1"/>
             <circle cx="-8.5" cy="-5" r="7.5" fill="#FFB3C1"/>
@@ -551,7 +567,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
             <ellipse cx="-9" cy="-1.5" rx="2.4" ry="1.4" fill="#FF8FA8" opacity=".85"/>
             <g class="wing"><path d="M-1 -2 Q2 -19 15 -17 Q11 -9 8 -1Z" fill="#F58EA6"/></g>
           </g>
-          <g id="bird2" class="bird">
+          <g id="bird2" class="bird" data-egg="bird"><circle r="24" fill="transparent"/>
             <path d="M8 -2 Q16 -9 23 -9 Q19 -3 22 2 Q15 4 8 3Z" fill="#5FB8EE"/>
             <ellipse cx="1" cy="1" rx="12.5" ry="9.5" fill="#8FD3FF"/>
             <circle cx="-8.5" cy="-5" r="7.5" fill="#8FD3FF"/>
@@ -561,7 +577,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
             <ellipse cx="-9" cy="-1.5" rx="2.4" ry="1.4" fill="#FF8FA8" opacity=".85"/>
             <g class="wing"><path d="M-1 -2 Q2 -19 15 -17 Q11 -9 8 -1Z" fill="#5FB8EE"/></g>
           </g>
-          <g id="bird3" class="bird">
+          <g id="bird3" class="bird" data-egg="bird"><circle r="24" fill="transparent"/>
             <path d="M8 -2 Q16 -9 23 -9 Q19 -3 22 2 Q15 4 8 3Z" fill="#F5C842"/>
             <ellipse cx="1" cy="1" rx="12.5" ry="9.5" fill="#FFE07A"/>
             <circle cx="-8.5" cy="-5" r="7.5" fill="#FFE07A"/>
@@ -584,18 +600,18 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
 
         <!-- ground cross-section -->
         <g id="ground" data-act="infil" tabindex="0" role="button" aria-label="Tanah: menyelam ke dalam tanah (infiltrasi)">
-          <rect x="296" y="526" width="704" height="94" fill="url(#gSoil)"/>
+          <rect x="0" y="526" width="1000" height="94" fill="url(#gSoil)"/>
           <g fill="#B97E55" opacity=".55">
             <circle cx="420" cy="552" r="4"/><circle cx="520" cy="560" r="3"/><circle cx="660" cy="550" r="5"/><circle cx="760" cy="558" r="3"/><circle cx="860" cy="548" r="4"/><circle cx="960" cy="560" r="3"/><circle cx="600" cy="612" r="4"/><circle cx="820" cy="614" r="3"/>
           </g>
-          <path class="aquifer" d="M296 574 Q450 564 600 575 T1000 571 L1000 604 Q800 611 600 603 T296 607Z" fill="#A9E2FB"/>
-          <path d="M320 580 q20 -6 40 0 t40 0 M520 584 q20 -6 40 0 t40 0 M700 581 q20 -6 40 0 t40 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+          <path class="aquifer" d="M0 584 Q150 580 296 578 Q450 564 600 575 T1000 571 L1000 604 Q800 611 600 603 Q450 600 296 607 Q150 612 0 606Z" fill="#A9E2FB"/>
+          <path d="M60 595 q20 -6 40 0 t40 0 M190 593 q20 -6 40 0 t40 0 M320 580 q20 -6 40 0 t40 0 M520 584 q20 -6 40 0 t40 0 M700 581 q20 -6 40 0 t40 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
           <text x="790" y="595" font-family="Nunito, sans-serif" font-weight="900" font-size="14" fill="#2A6FA3">air tanah · akuifer</text>
           <line class="pipe" x1="930" y1="478" x2="930" y2="576" stroke="#4DB3F5" stroke-width="5" stroke-linecap="round"/>
           <path d="M290 492 Q430 360 610 425 Q700 455 800 440 Q900 425 1000 445 L1000 540 L290 540Z" fill="url(#gHillB)"/>
           <path d="M318 514 Q440 440 600 462 Q760 486 1000 468 L1000 538 L318 538Z" fill="url(#gHillF)"/>
           <path d="M318 514 Q440 440 600 462 Q760 486 1000 468" fill="none" stroke="#B6E59C" stroke-width="4" stroke-linecap="round" opacity=".8"/>
-          <rect x="296" y="532" width="704" height="8" fill="#B97E55" opacity=".6"/>
+          <rect x="330" y="532" width="670" height="8" fill="#B97E55" opacity=".6"/>
           <rect class="focus-ring" x="440" y="470" width="220" height="140" rx="20"/>
         </g>
 
@@ -618,33 +634,37 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
           <use href="#river" fill="none" stroke="transparent" stroke-width="50"/>
           <circle class="focus-ring" cx="740" cy="390" r="50"/>
         </g>
+        <circle data-egg="snow" cx="792" cy="244" r="24" fill="transparent"/>
 
         <!-- sand + sea -->
         <path d="M232 468 Q318 466 376 506 Q356 524 330 524Z" fill="#FFE2B0"/>
         <g id="sea">
-          <path class="sea-body" d="M0 464 Q150 452 262 470 Q322 481 352 506 L330 620 L0 620Z" fill="url(#gSea)"/>
+          <path class="sea-body" d="M0 464 Q150 452 262 470 Q322 481 352 506 C336 534 306 552 260 562 C180 576 90 574 0 572Z" fill="url(#gSea)"/>
           <path d="M0 464 Q150 452 262 470 Q322 481 352 506" fill="none" stroke="#C9EEFF" stroke-width="5" stroke-linecap="round"/>
           <g class="waves" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".75">
-            <path d="M30 505 q12 -10 24 0 t24 0"/><path d="M160 525 q12 -10 24 0 t24 0"/><path d="M60 578 q12 -10 24 0 t24 0"/>
+            <path d="M30 505 q12 -10 24 0 t24 0"/><path d="M160 525 q12 -10 24 0 t24 0"/><path d="M60 548 q12 -10 24 0 t24 0"/>
           </g>
           <g class="waves w2" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55">
-            <path d="M225 565 q12 -10 24 0 t24 0"/><path d="M120 604 q12 -10 24 0 t24 0"/>
+            <path d="M200 538 q12 -10 24 0 t24 0"/><path d="M120 560 q12 -10 24 0 t24 0"/>
           </g>
           <g fill="#fff">
             <path class="twinkle" d="M40 545 l3 -9 3 9 9 3 -9 3 -3 9 -3 -9 -9 -3z"/>
             <path class="twinkle t2" d="M250 520 l2.4 -7 2.4 7 7 2.4 -7 2.4 -2.4 7 -2.4 -7 -7 -2.4z"/>
-            <path class="twinkle t3" d="M180 590 l2.4 -7 2.4 7 7 2.4 -7 2.4 -2.4 7 -2.4 -7 -7 -2.4z"/>
-            <path class="twinkle t4" d="M290 600 l2 -6 2 6 6 2 -6 2 -2 6 -2 -6 -6 -2z"/>
+            <path class="twinkle t3" d="M160 548 l2.4 -7 2.4 7 7 2.4 -7 2.4 -2.4 7 -2.4 -7 -7 -2.4z"/>
+            <path class="twinkle t4" d="M292 528 l2 -6 2 6 6 2 -6 2 -2 6 -2 -6 -6 -2z"/>
           </g>
         </g>
+        <!-- seabed: sand under the sea that joins the soil layers -->
+        <path d="M352 506 C336 534 306 552 260 562 C180 576 90 574 0 572 L0 584 C90 586 186 588 266 574 C318 562 350 542 366 512Z" fill="#EFD3A4"/>
+        <g fill="#E2BE86"><circle cx="70" cy="579" r="2.2"/><circle cx="160" cy="580" r="1.8"/><circle cx="250" cy="569" r="2"/><circle cx="320" cy="545" r="1.8"/></g>
         <!-- boat -->
-        <g transform="translate(62 462)" pointer-events="none"><g class="boat">
+        <g transform="translate(62 462)" data-egg="boat"><g class="boat"><rect x="-26" y="-42" width="52" height="54" fill="transparent"/>
           <path d="M-22 -4 H22 L15 8 H-15Z" fill="#FF8A7A"/><path d="M-22 -4 H22" stroke="#E8685A" stroke-width="3"/>
           <line x1="0" y1="-4" x2="0" y2="-38" stroke="#8A6A55" stroke-width="3"/>
           <path d="M2 -36 L22 -8 H2Z" fill="#fff"/><path d="M-2 -30 L-16 -8 H-2Z" fill="#FFE07A"/>
         </g></g>
         <!-- fish -->
-        <g id="fish" opacity="0" pointer-events="none">
+        <g id="fish" opacity="0" data-egg="fish"><circle r="22" fill="transparent"/>
           <ellipse rx="13" ry="8" fill="#FF9F6B"/><path d="M11 0 L22 -8 L22 8Z" fill="#FF8A5B"/><circle cx="-6" cy="-2" r="2" fill="#3A3350"/><path d="M-2 -7 q4 -5 8 0" fill="#FFB98F"/>
         </g>
 
@@ -671,7 +691,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         </g>
 
         <!-- well -->
-        <g id="well" transform="translate(930 470)">
+        <g id="well" transform="translate(930 470)" data-egg="well"><rect x="-36" y="-56" width="72" height="76" fill="transparent"/>
           <line x1="-22" y1="-34" x2="-22" y2="-4" stroke="#8A6A55" stroke-width="4" stroke-linecap="round"/><line x1="22" y1="-34" x2="22" y2="-4" stroke="#8A6A55" stroke-width="4" stroke-linecap="round"/>
           <path d="M-33 -31 L0 -53 L33 -31Z" fill="#FF8A7A" stroke="#FF8A7A" stroke-width="4" stroke-linejoin="round"/><path d="M0 -53 L33 -31 H0Z" fill="#E8685A"/>
           <g class="bucket"><line x1="0" y1="-31" x2="0" y2="-18" stroke="#8A6A55" stroke-width="2"/><rect x="-6" y="-18" width="12" height="10" rx="2" fill="#4DB3F5"/></g>
@@ -701,23 +721,23 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
 
         <!-- clouds -->
         <g id="cloudA" data-act="kond" tabindex="0" role="button" aria-label="Awan kecil: satukan awan (kondensasi)" transform="translate(420 115)">
-          <g class="cl">
+          <g class="wind" id="windA"><g class="cl">
             <use href="#cloudShape" class="cloud-shade" fill="#D3E6F8" transform="translate(0 5)"/>
             <use href="#cloudShape" class="cloud-top" fill="#fff"/>
             <g class="blink"><ellipse cx="-13" cy="-2" rx="3.4" ry="4.4" fill="#3A3350"/><ellipse cx="13" cy="-2" rx="3.4" ry="4.4" fill="#3A3350"/></g>
             <ellipse cx="-24" cy="7" rx="5.5" ry="3.2" fill="#FF9DB0" opacity=".9"/><ellipse cx="24" cy="7" rx="5.5" ry="3.2" fill="#FF9DB0" opacity=".9"/>
             <path d="M-5 6 Q0 11 5 6" fill="none" stroke="#3A3350" stroke-width="2.6" stroke-linecap="round"/>
-          </g>
+          </g></g>
           <circle class="focus-ring" r="72"/>
         </g>
         <g id="cloudB" data-act="kond" tabindex="0" role="button" aria-label="Awan kecil kedua: satukan awan (kondensasi)" transform="translate(600 95) scale(.9)">
-          <g class="cl">
+          <g class="wind" id="windB"><g class="cl">
             <use href="#cloudShape" class="cloud-shade" fill="#D3E6F8" transform="translate(0 5)"/>
             <use href="#cloudShape" class="cloud-top" fill="#fff"/>
             <path d="M-17 -2 q4 -5 8 0 M9 -2 q4 -5 8 0" fill="none" stroke="#3A3350" stroke-width="2.8" stroke-linecap="round"/>
             <ellipse cx="-24" cy="7" rx="5.5" ry="3.2" fill="#FF9DB0" opacity=".9"/><ellipse cx="24" cy="7" rx="5.5" ry="3.2" fill="#FF9DB0" opacity=".9"/>
             <path d="M-5 6 Q0 11 5 6" fill="none" stroke="#3A3350" stroke-width="2.6" stroke-linecap="round"/>
-          </g>
+          </g></g>
           <circle class="focus-ring" r="72"/>
         </g>
         <g id="cloudC" data-act="pres" tabindex="0" role="button" aria-label="Awan besar: turunkan hujan (presipitasi)" transform="translate(515 110) scale(1.35)" style="opacity:0;display:none">
@@ -779,6 +799,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         <span class="strip-now" id="stripNow"></span>
         <div class="strip-tools">
           <button class="chip" id="btnBonus" type="button"></button>
+          <button class="chip egg-chip" id="btnEggs" type="button"></button>
           <button class="b3 small" id="btnReset" type="button"><svg><use href="#i-reset"/></svg>Mulai ulang</button>
         </div>
       </div>
@@ -826,6 +847,7 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
         <li><span class="tile" style="--c:var(--c2)"><svg><use href="#i-cloud"/></svg></span><div><b>Selesaikan 5 misi</b><p>Misi Siklus ada di bawah layar utama. Setiap tahap memberi 10 tetes air, dan lima tahap membuka peti hadiah berisi 50 tetes air.</p></div></li>
         <li><span class="tile" style="--c:var(--cT)"><svg><use href="#i-leaf"/></svg></span><div><b>Cari misi bonus</b><p>Ketuk pohon kapan saja untuk melihat transpirasi, yaitu uap air yang keluar dari daun.</p></div></li>
         <li><span class="tile" style="--c:#C2743F"><svg viewBox="0 0 120 120"><use href="#medal"/></svg></span><div><b>Naikkan lencanamu</b><p>Tetes air menaikkan lencanamu: Bronze, Silver, Gold, Platinum, lalu Diamond.</p></div></li>
+        <li><span class="tile" style="--c:#E0A417"><svg><use href="#i-sparkle"/></svg></span><div><b>Cari 6 rahasia</b><p>Ada hadiah tersembunyi di pemandangan. Coba ketuk benda-benda di sekitar Cipi, beberapa harus diketuk berkali-kali!</p></div></li>
         <li><span class="tile" style="--c:var(--yellow-d)"><svg><use href="#i-star"/></svg></span><div><b>Ikut Ujian Cipi</b><p>Setiap ujian berisi 10 soal yang diambil acak dari 60 soal, jadi paket soalnya berganti. Selama ujian, layar di belakang diburamkan.</p></div></li>
       </ul>
       <div class="foot"><button class="b3 green big" data-close>Aku siap bermain</button></div>
@@ -866,6 +888,19 @@ main{flex:1;width:100%;max-width:1500px;margin:0 auto;display:grid;grid-template
     <button class="b3 green big" id="btnOpenChest" type="button">Buka peti</button>
     <button class="b3 green big" id="btnTakePrize" type="button" hidden>Ambil hadiah</button>
   </div>
+</div>
+
+<!-- name -->
+<div class="modal reveal" id="nameModal" hidden role="dialog" aria-modal="true" aria-labelledby="nmTitle">
+  <div class="burst" aria-hidden="true"></div>
+  <form class="stage name-form" id="nameForm" autocomplete="off">
+    <svg class="name-cipi" viewBox="0 0 64 84" aria-hidden="true"><use href="#drop"/></svg>
+    <h2 id="nmTitle">Halo! Siapa namamu?</h2>
+    <p class="sub">Cipi akan memanggilmu dengan nama ini.</p>
+    <input id="nameInput" name="nama" type="text" maxlength="20" placeholder="Tulis namamu" aria-label="Namamu" enterkeyhint="go">
+    <button class="b3 green big" type="submit">Ayo mulai!</button>
+    <button class="linkbtn" id="nameSkip" type="button">Lewati dulu</button>
+  </form>
 </div>
 
 <!-- sound settings -->
@@ -1003,7 +1038,7 @@ const store = {
 };
 
 /* ---------- state ---------- */
-const S = { stage: 0, busy: false, labels: true, trans: false, chestDone: false, gems: store.get('cipi-gems', 0) };
+const S = { stage: 0, busy: false, labels: true, trans: false, chestDone: false, gems: store.get('cipi-gems', 0), eggs: new Set(), name: store.get('cipi-name', '') };
 
 /* ---------- audio: one context, separate music + effects buses ---------- */
 const AUD = {
@@ -1062,6 +1097,8 @@ const sfx = {
   bubble: () => [0, .15, .3].forEach(d => tone(rand(300, 500), .12, 'sine', .12, 700, d)),
   splash: () => noise(.25, .06, 1800),
   chirp: () => { tone(2400, .07, 'sine', .035, 3200); tone(2600, .08, 'sine', .03, 3400, .11); },
+  toot: () => { tone(330, .18, 'square', .05); tone(262, .28, 'square', .05, null, .22); },
+  magic: () => [784, 988, 1175, 1568].forEach((f, i) => tone(f, .2, 'sine', .1, null, i * .07)),
   win: () => [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, .3, 'triangle', .13, null, i * .11))
 };
 
@@ -1259,8 +1296,19 @@ const flock = [
 ];
 let flockX = 1150, flockWait = 0, chirped = false;
 let nextFish = performance.now() + 4000, nextLeaf = performance.now() + 7000, nextIdle = performance.now() + 5000;
+const windA = $('#windA'), windB = $('#windB');
+let windAmp = 1, nextStreak = performance.now() + 3000;
+function windStreak() {
+  const y = rand(50, 230), p = mk('path', { d: 'M0 0 q22 -9 44 0 t44 0 q14 6 6 14 q-8 6 -12 -2', fill: 'none', stroke: '#fff', 'stroke-width': 3.5, 'stroke-linecap': 'round', opacity: 0 });
+  tween(2600, k => { p.setAttribute('transform', `translate(${lerp(-120, 1060, k).toFixed(1)} ${(y + Math.sin(k * 6) * 6).toFixed(1)})`); p.setAttribute('opacity', (Math.sin(k * Math.PI) * .7).toFixed(2)); }, E.lin).then(() => p.remove());
+}
 function idleLoop(now) {
   const t = now / 1000;
+  windAmp += ((S.busy ? 0 : 1) - windAmp) * .03;
+  const gA = Math.sin(t * .23) + Math.sin(t * .61 + 1) * .45, gB = Math.sin(t * .23 - .8) + Math.sin(t * .53 + 2) * .45;
+  windA.setAttribute('transform', `translate(${(gA * 24 * windAmp).toFixed(1)} 0) skewX(${(-gA * 5 * windAmp).toFixed(2)})`);
+  windB.setAttribute('transform', `translate(${(gB * 24 * windAmp).toFixed(1)} 0) skewX(${(-gB * 5 * windAmp).toFixed(2)})`);
+  if (now > nextStreak) { nextStreak = now + rand(4500, 8000); windStreak(); }
   bf.forEach(b => {
     const x = b.cx + Math.sin(t * b.sp + b.ph) * b.ax, y = b.cy + Math.sin(t * b.sp * 2.1 + b.ph) * b.ay - Math.abs(Math.sin(t * 3 + b.ph)) * 6;
     b.el.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(Math.cos(t * b.sp + b.ph) * 18).toFixed(1)})`);
@@ -1286,8 +1334,8 @@ function jumpFish() {
   tween(1000, k => {
     const x = x0 + dx * k, y = y0 - Math.sin(k * Math.PI) * 60;
     f.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(dx > 0 ? -1 : 1) * (60 - k * 120)}) scale(${dx > 0 ? -1 : 1} 1)`);
-    f.setAttribute('opacity', k < .08 || k > .92 ? 0 : 1);
-  }, E.lin).then(() => splash(x0 + dx, y0 - 6));
+    f.setAttribute('opacity', k < .08 || k > .92 ? 0 : 1); FISH.live = k > .08 && k < .92; FISH.x = x; FISH.y = y;
+  }, E.lin).then(() => { FISH.live = false; splash(x0 + dx, y0 - 6); });
 }
 function fallingLeaf() {
   const l = mk('path', { d: 'M0 0 C4 -6 10 -6 12 0 C10 6 4 6 0 0Z', fill: '#7DD06B' });
@@ -1404,7 +1452,7 @@ const FX = {
       if (++f % 6 === 0) sparkle(x0 + rand(-10, 10), cipi.y - 10, '#A9E2FB', 4);
     }, E.inOut);
     well.classList.add('pump'); sfx.bubble();
-    await tween(1700, k => { cipi.x = lerp(x0, 318, k); cipi.y = 588 + Math.sin(k * 14) * 3; drawCipi(); }, E.inOut);
+    await tween(1700, k => { cipi.x = lerp(x0, 230, k); cipi.y = 590 + Math.sin(k * 14) * 3; drawCipi(); }, E.inOut);
     ground.classList.remove('active');
     await moveCipi({ x: HOME.x, y: HOME.y, s: 1, o: 1 }, 1000, E.out);
     splash(HOME.x, HOME.y + 30); splash(HOME.x, HOME.y + 30);
@@ -1449,6 +1497,7 @@ function setGems(v, bumpIt) {
 function showLevelUp() {
   if (levelQueue == null || document.querySelector('.modal:not([hidden])')) return;
   const i = levelQueue; levelQueue = null;
+  $('#luTitle').textContent = S.name ? `Naik level, ${S.name}!` : 'Naik level!';
   $('#luMedal').setAttribute('style', medalStyle(i)); $('#luName').textContent = TIERS[i].name;
   const nx = TIERS[i + 1];
   $('#luSub').textContent = nx ? `Lencanamu naik jadi ${TIERS[i].name}. Kumpulkan ${nx.min} tetes air untuk ${nx.name}.` : 'Ini lencana tertinggi. Kamu juara air!';
@@ -1471,6 +1520,79 @@ function flyGems(sx, sy, amount, n = 6) {
   }
 }
 const rewardFromScene = (x, y, amount) => { const p = toScreen(x, y); flyGems(p.x, p.y, amount); };
+
+/* ---------- easter eggs: 6 hidden secrets, points once per cycle ---------- */
+const EGGS = {
+  apple: { name: 'Apel emas', pts: 25, say: 'Wah, kamu menemukan apel emas! Pohon yang sehat menyimpan air di akar dan daunnya.' },
+  fish: { name: 'Ikan lompat', pts: 15, say: 'Hap! Kamu menangkap ikan yang melompat. Ikan butuh air laut yang bersih untuk hidup.' },
+  bird: { name: 'Teman burung', pts: 10, say: 'Cuit cuit! Burung juga minum air dari sungai dan embun di daun.' },
+  well: { name: 'Ember sumur', pts: 10, say: 'Byur! Ember sumur mengambil air tanah dari akuifer. Pakai secukupnya, ya.' },
+  snow: { name: 'Salju gunung', pts: 10, say: 'Brrr! Salju di puncak gunung adalah air tawar yang membeku. Saat mencair, airnya mengalir ke sungai.' },
+  boat: { name: 'Perahu tut-tut', pts: 5, say: 'Tut tut! Perahu nelayan berlayar di laut, tempat evaporasi paling banyak terjadi.' }
+};
+const EGG_IDS = Object.keys(EGGS);
+const FISH = { live: false, x: 0, y: 0 };
+let treeTaps = [], wellTaps = [];
+function toSvg(e) { const pt = scene.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(scene.getScreenCTM().inverse()); }
+function floatText(x, y, text, color = '#FFD45C') {
+  const t = mk('text', { x, y, 'text-anchor': 'middle', 'font-family': 'Fredoka, sans-serif', 'font-weight': 700, 'font-size': 24, fill: color, stroke: '#3A3350', 'stroke-width': 5, 'paint-order': 'stroke', 'stroke-linejoin': 'round' });
+  t.textContent = text;
+  tween(1600, k => { t.setAttribute('y', (y - k * 46).toFixed(1)); t.setAttribute('opacity', k < .7 ? 1 : (1 - k) / .3); }, E.out).then(() => t.remove());
+}
+function foundEgg(id, x, y) {
+  const e = EGGS[id];
+  if (S.eggs.has(id)) { floatText(x, y - 10, 'Sudah ketemu!', '#fff'); return; }
+  S.eggs.add(id); sfx.magic();
+  floatText(x, y - 10, `+${e.pts} ${e.name}!`);
+  for (let i = 0; i < 10; i++) setTimeout(() => sparkle(x + rand(-24, 24), y + rand(-24, 10), '#FFE07A', 5), i * 50);
+  rewardFromScene(x, y, e.pts);
+  const all = S.eggs.size === EGG_IDS.length;
+  say(e.say + (all ? ' Semua rahasia sudah kamu temukan!' : ''),
+    { name: `Rahasia ${S.eggs.size}/${EGG_IDS.length}: ${e.name}`, color: '#E0A417', fact: all ? 'Hebat! Kamu menemukan semua rahasia di siklus ini. Tekan Mulai ulang untuk mencarinya lagi.' : 'Masih ada rahasia lain di pemandangan. Coba ketuk benda-benda lain, ada yang perlu diketuk berkali-kali!' },
+    S.stage < 5 ? STAGES[S.stage].ask : null);
+  update();
+}
+function treeTap() {
+  const now = performance.now(); treeTaps = treeTaps.filter(t => now - t < 2500); treeTaps.push(now);
+  if (treeTaps.length >= 5) { treeTaps = []; goldenApple(); }
+}
+function goldenApple() {
+  const a = mk('g', {});
+  mk('circle', { r: 9, fill: '#FFC93C', stroke: '#E09A12', 'stroke-width': 2.5 }, a);
+  mk('path', { d: 'M0 -9 q2 -6 6 -7', stroke: '#8A5A2B', 'stroke-width': 2.5, fill: 'none', 'stroke-linecap': 'round' }, a);
+  mk('ellipse', { cx: 5, cy: -15, rx: 5, ry: 2.6, fill: '#7DD06B' }, a);
+  mk('circle', { cx: -3, cy: -3, r: 2.5, fill: '#fff', opacity: .8 }, a);
+  sfx.pop();
+  tween(900, k => { const y = lerp(330, 404, k); a.setAttribute('transform', `translate(${(500 + k * 18).toFixed(1)} ${y.toFixed(1)}) rotate(${(k * 200).toFixed(0)})`); }, E.in)
+    .then(async () => { splash(518, 412, '#FFE07A'); foundEgg('apple', 518, 400); await wait(1400); tween(400, k => a.setAttribute('opacity', 1 - k)).then(() => a.remove()); });
+}
+function egg(kind, ev) {
+  const p = toSvg(ev);
+  if (kind === 'fish') { if (!FISH.live) return; splash(FISH.x, FISH.y + 8); sfx.splash(); foundEgg('fish', FISH.x, FISH.y); return; }
+  if (kind === 'bird') {
+    sfx.chirp();
+    const f = mk('ellipse', { rx: 3, ry: 6, fill: '#fff' });
+    tween(1800, k => { f.setAttribute('transform', `translate(${(p.x + Math.sin(k * 9) * 12).toFixed(1)} ${lerp(p.y, p.y + 110, k).toFixed(1)}) rotate(${(Math.sin(k * 9) * 40).toFixed(0)})`); f.setAttribute('opacity', 1 - k); }, E.lin).then(() => f.remove());
+    foundEgg('bird', p.x, p.y); return;
+  }
+  if (kind === 'boat') {
+    sfx.toot(); const b = $('.boat'); b.classList.remove('honk'); void b.getBBox(); b.classList.add('honk'); setTimeout(() => b.classList.remove('honk'), 1100);
+    foundEgg('boat', 62, 424); return;
+  }
+  if (kind === 'well') {
+    const now = performance.now(); wellTaps = wellTaps.filter(t => now - t < 2000); wellTaps.push(now);
+    well.classList.remove('pump'); void well.getBBox(); well.classList.add('pump'); setTimeout(() => well.classList.remove('pump'), 2500); sfx.bubble();
+    if (wellTaps.length >= 3) { wellTaps = []; splash(930, 470, '#4DB3F5'); splash(930, 470, '#4DB3F5'); foundEgg('well', 930, 420); }
+    return;
+  }
+  if (kind === 'snow') {
+    for (let i = 0; i < 16; i++) setTimeout(() => {
+      const c = mk('circle', { r: rand(2, 4), fill: '#fff' }), x0 = rand(740, 840), y0 = rand(200, 230);
+      tween(1600, k => { c.setAttribute('cx', (x0 + Math.sin(k * 6 + i) * 10).toFixed(1)); c.setAttribute('cy', lerp(y0, y0 + 80, k).toFixed(1)); c.setAttribute('opacity', 1 - k); }, E.lin).then(() => c.remove());
+    }, i * 60);
+    foundEgg('snow', 792, 230);
+  }
+}
 
 /* ---------- speech + strip + panel ---------- */
 function say(text, termObj, next) {
@@ -1497,6 +1619,8 @@ function update() {
   b.classList.toggle('done', S.trans);
   b.innerHTML = `${use(S.trans ? 'i-check' : 'i-leaf')}Bonus: Transpirasi`;
   b.setAttribute('aria-label', S.trans ? 'Bonus transpirasi sudah ditemukan' : 'Bonus transpirasi: ketuk pohon');
+  const ec = $('#btnEggs'); ec.classList.toggle('done', S.eggs.size === EGG_IDS.length);
+  ec.innerHTML = `${use('i-sparkle')}Rahasia ${S.eggs.size}/${EGG_IDS.length}`;
   const cta = $('#cta'); cta.disabled = S.busy;
   if (st < 5) {
     const s = STAGES[st];
@@ -1564,7 +1688,7 @@ function resetSmallClouds(hiddenStart) {
 }
 function resetAll() {
   if (S.busy) return;
-  S.stage = 0; S.trans = false; S.chestDone = false;
+  S.stage = 0; S.trans = false; S.chestDone = false; S.eggs.clear();
   Object.assign(cipi, { x: HOME.x, y: HOME.y, s: 1, o: 1 }); drawCipi(); mood('happy');
   sun.x = 120; sun.y = 105; place(sunEl, sun);
   resetSmallClouds(false);
@@ -1630,7 +1754,7 @@ function closeModal(m) {
   setTimeout(showLevelUp, 350);
 }
 function requestClose(m) {
-  if (m.id === 'chestModal') return;
+  if (m.id === 'chestModal' || m.id === 'nameModal') return;
   if (m.id === 'quiz' && Q.active) { const lv = $('#qLeave'); lv.hidden = false; $('#qStay').focus(); return; }
   closeModal(m);
 }
@@ -1720,7 +1844,8 @@ function answer(k, btn) {
 function result() {
   Q.active = false; $('#qLeave').hidden = true;
   const n = QUIZ_SIZE, s = Q.score, stars = s >= 9 ? 3 : s >= 6 ? 2 : 1;
-  const msg = s === n ? 'Sempurna! Kamu benar-benar ahli siklus air.' : s >= 6 ? 'Keren! Sedikit lagi kamu jadi ahli siklus air.' : 'Tidak apa-apa. Ayo main lagi bersama Cipi, lalu coba paket soal yang baru.';
+  const nm = esc(S.name || 'teman');
+  const msg = s === n ? `Sempurna, ${nm}! Kamu benar-benar ahli siklus air.` : s >= 6 ? `Keren, ${nm}! Sedikit lagi kamu jadi ahli siklus air.` : `Tidak apa-apa, ${nm}. Ayo main lagi bersama Cipi, lalu coba paket soal yang baru.`;
   $('#qCount').textContent = `Paket #${Q.round} selesai`;
   qProgress(n);
   $('#qBody').innerHTML = `<div class="result">
@@ -1744,7 +1869,38 @@ $('#qStay').addEventListener('click', () => { $('#qLeave').hidden = true; $('#qB
 $('#qExit').addEventListener('click', () => { Q.active = false; closeModal($('#quiz')); });
 
 /* ---------- wiring ---------- */
-scene.addEventListener('click', e => { const t = e.target.closest('[data-act]'); if (t) act(t.dataset.act); });
+scene.addEventListener('click', e => {
+  ac();
+  const eg = e.target.closest('[data-egg]'); if (eg) return egg(eg.dataset.egg, e);
+  const t = e.target.closest('[data-act]'); if (!t) return;
+  if (t.dataset.act === 'trans') treeTap();
+  act(t.dataset.act);
+});
+$('#btnEggs').addEventListener('click', () => {
+  sfx.pop();
+  const found = EGG_IDS.filter(id => S.eggs.has(id)).map(id => EGGS[id].name);
+  say(found.length ? `Rahasia yang sudah kamu temukan: ${found.join(', ')}.` : 'Belum ada rahasia yang ditemukan.',
+    { name: `Rahasia ${S.eggs.size}/${EGG_IDS.length}`, color: '#E0A417', fact: 'Petunjuk: coba ketuk pohon berkali-kali, ikan yang melompat, burung yang terbang, perahu, sumur, dan puncak gunung bersalju.' },
+    S.stage < 5 ? STAGES[S.stage].ask : null);
+});
+
+/* ---------- player name ---------- */
+const cleanName = v => v.replace(/\s+/g, ' ').trim().slice(0, 20);
+function greet() {
+  const nm = S.name || 'Teman';
+  $('#helloName').textContent = nm;
+  if (S.stage === 0 && !S.busy) say(`Halo, ${nm}! Aku Cipi si tetes air. Ayo ikut aku keliling siklus air, dari laut ke langit lalu kembali lagi ke laut.`, INTRO, 'Ketuk Tuan Matahari atau tombol di bawah untuk mulai.');
+}
+function askName() { $('#nameInput').value = S.name; openModal('nameModal'); setTimeout(() => $('#nameInput').focus(), 120); }
+$('#nameForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const inp = $('#nameInput'), v = cleanName(inp.value);
+  if (!v) { inp.classList.remove('shake'); void inp.offsetWidth; inp.classList.add('shake'); inp.focus(); return; }
+  S.name = v; store.set('cipi-name', v);
+  closeModal($('#nameModal')); greet(); sfx.ding();
+});
+$('#nameSkip').addEventListener('click', () => { store.set('cipi-name-skip', true); closeModal($('#nameModal')); greet(); });
+$('#btnName').addEventListener('click', askName);
 scene.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset?.act) { e.preventDefault(); act(e.target.dataset.act); } });
 $('#cta').addEventListener('click', () => { ac(); if (S.busy) return; S.stage < 5 ? runStage(S.stage) : S.chestDone ? startQuiz() : openChest(); });
 $('#quests').addEventListener('click', e => {
@@ -1784,6 +1940,8 @@ new ResizeObserver(([en]) => { card.classList.toggle('compact', en.contentRect.w
 
 renderLevel();
 syncAudioUI();
+greet();
+if (!S.name && !store.get('cipi-name-skip', false)) askName();
 buildLabels();
 if (document.fonts?.ready) document.fonts.ready.then(buildLabels);
 update();
