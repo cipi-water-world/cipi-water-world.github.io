@@ -17,7 +17,7 @@ Bisa dibuka langsung di browser HP atau laptop, tanpa install dan tanpa login.
 ## Update situs
 
 ```bash
-python3 build.py https://bayuananda.github.io/cipi-water-world/
+python3 build.py https://cipi-water-world.github.io/
 git add -A && git commit -m "Update soal" && git push
 ```
 
